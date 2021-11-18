@@ -170,3 +170,5 @@ if [ -f '/home/fjolne/yandex-cloud/completion.zsh.inc' ]; then source '/home/fjo
 alias tf=terraform
 alias export-yc-token="export YC_TOKEN=$(yc config get token)"
 export-yc-token
+
+HISTORY_IGNORE="(doppler secrets set*)"
