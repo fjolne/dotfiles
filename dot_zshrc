@@ -1,10 +1,14 @@
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+export PATH="/mnt/c/Program Files/Google/Chrome/Application/":$PATH
+export PATH=/usr/local/go/bin:$PATH
 export ZSH="/home/fjolne/.oh-my-zsh"
 ZSH_THEME="fjolne"
 HYPHEN_INSENSITIVE="true"
 DISABLE_AUTO_UPDATE="true"
 HIST_STAMPS="yyyy-mm-dd"
+export NVM_LAZY=1
 plugins=(
+    nvm
     git
     ssh-agent
     )
@@ -22,7 +26,7 @@ export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 
 # gui
-export DISPLAY=$(cat /etc/resolv.pre-tailscale-backup.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+export DISPLAY=$((cat /etc/resolv.conf.old 2>/dev/null || cat /etc/resolv.conf) | grep nameserver | awk '{print $2}'):0.0
 #export GDK_SCALE=2
 
 # search utils
@@ -31,9 +35,7 @@ alias fd='fdfind'
 export FZF_DEFAULT_COMMAND='fdfind --type f'
 
 # node
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="/home/fjolne/.nvm/versions/node/v16.13.0/bin:$PATH"
 export NODE_OPTIONS=--max_old_space_size=8192
 
 # babashka
@@ -63,5 +65,18 @@ function dokku-app-local-ip {
     ssh $1 docker inspect --format \'{{ .NetworkSettings.IPAddress }}\' $2.web.1
 }
 function dokku-ssh-tunnel {
-    ssh -v -N -L localhost:37129:$(dokku-app-local-ip $1 $2):37129 $1
+    ssh -v -N -L localhost:${3-37129}:$(dokku-app-local-ip $1 $2):${3-37129} $1
 }
+
+# nnn
+export NNN_PLUG=''
+export NNN_FCOLORS='0000E63100000000000000000'alias nnn='nnn -e'
+alias nnn='nnn -e'
+
+timezsh() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 2); do /usr/bin/time $shell -i -c exit; done
+}
+
+export PATH="$HOME/.emacs.d/bin:$PATH"
+alias fix-dns='sudo mv /etc/resolv.conf /etc/resolv.conf.old ; echo "nameserver 100.100.100.100\nsearch budu.jobs.beta.tailscale.net" | sudo tee /etc/resolv.conf'
