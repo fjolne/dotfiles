@@ -25,7 +25,7 @@ with lib;
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-  ] ++ optional (host != "g14-fedora") openssh;
+  ];
 
   home.file = {
     ".tmux.conf".source = ./tmux.conf;
