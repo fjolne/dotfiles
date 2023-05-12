@@ -24,18 +24,18 @@
             "fjolne@g14-fedora" = home-manager.lib.homeManagerConfiguration {
               inherit pkgs;
               modules = [ ./hosts/desktop/fjolne.g14-fedora.nix ];
-              extraSpecialArgs = { user = "fjolne"; };
+              extraSpecialArgs = { user = "fjolne"; host = "g14-fedora"; };
             };
             "fjolne@devcontainer" = home-manager.lib.homeManagerConfiguration {
               inherit pkgs;
               modules = [ ./hosts/server/fjolne.devcontainer.nix ];
-              extraSpecialArgs = { user = "fjolne"; };
+              extraSpecialArgs = { user = "fjolne"; host = "devcontainer"; };
             };
           } // mapMerge [ "fjolne" "ec2-user" ] (user: {
             ${user} = home-manager.lib.homeManagerConfiguration {
               inherit pkgs;
               modules = [ ./hosts/server/fjolne.host.nix ];
-              extraSpecialArgs = { user = user; };
+              extraSpecialArgs = { user = user; host = "host"; };
             };
           });
         });

@@ -1,5 +1,6 @@
-{ config, pkgs, user, lib, ... }:
+{ config, pkgs, user, host, lib, ... }:
 
+with lib;
 {
   home = {
     username = user;
@@ -13,7 +14,6 @@
     bottom
     ripgrep
     less
-    openssh
     git-crypt
     pinentry
 
@@ -25,7 +25,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-  ];
+  ] ++ optional (host != "g14-fedora") openssh;
 
   home.file = {
     ".tmux.conf".source = ./tmux.conf;
