@@ -3,7 +3,7 @@
 {
   imports = [ ../common/common.nix ];
 
-  # programs.ssh.extraConfig = builtins.readFile ./ssh_config;
+  programs.ssh.extraConfig = builtins.readFile ./ssh_config;
 
   home.packages = [
     (pkgs.writeShellScriptBin "rersync" ''

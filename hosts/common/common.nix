@@ -101,8 +101,7 @@
     enable = true;
     userName = "Oleg Martynov";
     userEmail = "fjolne.yngling@gmail.com";
-    aliases = {
-    };
+    aliases = { };
     difftastic = {
       enable = true;
       display = "inline";
@@ -128,7 +127,10 @@
     keys = [ "id_ed25519" ];
   };
 
-  programs.gpg.enable = true;
+  programs.gpg = {
+    enable = true;
+    settings = { default-key = "D0CF68225E03419DBB5E266913B5BA0469A51BAE"; };
+  };
   services.gpg-agent = {
     enable = true;
     defaultCacheTtl = 1800;
