@@ -8,15 +8,17 @@
   };
   programs.home-manager.enable = true;
 
-  home.packages = [
-    pkgs.lf
-    pkgs.bottom
-    pkgs.ripgrep
-    pkgs.less
-    pkgs.openssh
+  home.packages = with pkgs; [
+    lf
+    bottom
+    ripgrep
+    less
+    openssh
+    git-crypt
+    pinentry
 
-    pkgs.nixpkgs-fmt
-    pkgs.nil
+    nixpkgs-fmt
+    nil
 
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
@@ -95,25 +97,11 @@
     defaultOptions = [ "--border" "--inline-info" ];
   };
 
-  programs.ssh = {
-    enable = true;
-    # controlMaster = "auto";
-    # controlPersist = "5m";
-  };
-
-  programs.keychain = {
-    enable = true;
-    keys = [ "id_rsa" ];
-  };
-
   programs.git = {
     enable = true;
     userName = "Oleg Martynov";
     userEmail = "fjolne.yngling@gmail.com";
     aliases = {
-      count = "rev-list --all --count";
-      snapshot =
-        ''!git stash save "snapshot: $(date)" && git stash apply "stash@{0}"'';
     };
     difftastic = {
       enable = true;
@@ -127,6 +115,25 @@
       init.defaultBranch = "main";
       # rerere.enabled = true;
     };
+  };
+
+  programs.ssh = {
+    enable = true;
+    # controlMaster = "auto";
+    # controlPersist = "5m";
+  };
+
+  programs.keychain = {
+    enable = true;
+    keys = [ "id_ed25519" ];
+  };
+
+  programs.gpg.enable = true;
+  services.gpg-agent = {
+    enable = true;
+    defaultCacheTtl = 1800;
+    # enableSshSupport = true;
+    pinentryFlavor = "gtk2";
   };
 
   # systemd.user.startServices = "sd-switch";
