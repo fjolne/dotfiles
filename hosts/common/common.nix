@@ -13,6 +13,7 @@ with lib;
     lf
     bottom
     ripgrep
+    fd
     less
     git-crypt
     pinentry
@@ -137,6 +138,4 @@ with lib;
     # enableSshSupport = true;
     pinentryFlavor = "gtk2";
   };
-
-  # systemd.user.startServices = "sd-switch";
 }

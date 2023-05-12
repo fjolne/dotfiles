@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./common.nix ];
+  imports = [ ./common.nix ./clojure.nix ./web.nix ./android.nix ];
 
 }
