@@ -1,0 +1,22 @@
+{
+    "name": "Ubuntu",
+    "dockerFile": "Dockerfile",
+    "runArgs": [
+        "--hostname",
+        "g14-fedora"
+    ],
+    "mounts": [
+        {
+            "source": "/nix",
+            "target": "/nix",
+            "type": "bind"
+        }
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "jnoortheen.nix-ide"
+            ]
+        }
+    }
+}
