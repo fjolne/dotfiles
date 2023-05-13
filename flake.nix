@@ -42,6 +42,12 @@
                 modules = [ ./hosts/server/fjolne.host.nix ];
                 extraSpecialArgs = { inherit lib; user = user; host = "host"; };
               };
+            }) // mapMerge [ "fjolne" "ec2-user" ] (user: {
+              "${user}@base" = home-manager.lib.homeManagerConfiguration {
+                inherit pkgs;
+                modules = [ ./hosts/base/common.nix ];
+                extraSpecialArgs = { user = user; host = "base"; };
+              };
             });
           });
     };
