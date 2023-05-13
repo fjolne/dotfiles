@@ -5,6 +5,10 @@
 
   programs.ssh.extraConfig = builtins.readFile ./ssh_config;
 
+  programs.keychain = {
+    keys = [ "id_rsa" ];
+  };
+
   home.packages = [
     (pkgs.writeShellScriptBin "rersync" ''
       while [ $? -ne 0 ] ; do

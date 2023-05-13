@@ -125,7 +125,7 @@ with lib;
 
   programs.keychain = {
     enable = true;
-    keys = [ "id_ed25519" ];
+    keys = [ ];
   };
 
   programs.gpg = {
