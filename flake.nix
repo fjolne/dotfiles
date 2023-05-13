@@ -9,35 +9,40 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }: {
-    packages =
-      let
-        systems = [ "x86_64-linux" "aarch64-linux" ];
-        mapMerge = xs: f: builtins.foldl' (x: y: x // y) { } (map f xs);
-      in
-      mapMerge systems (system:
+  outputs = { nixpkgs, home-manager, ... }:
+    let
+      lib = nixpkgs.lib.extend
+        (final: prev: (import ./lib final) // home-manager.lib);
+    in
+    {
+      packages =
         let
-          pkgs = nixpkgs.legacyPackages.${system};
+          systems = [ "x86_64-linux" "aarch64-linux" ];
+          mapMerge = xs: f: builtins.foldl' (x: y: x // y) { } (map f xs);
         in
-        {
-          ${system}.homeConfigurations = {
-            "fjolne@g14-fedora" = home-manager.lib.homeManagerConfiguration {
-              inherit pkgs;
-              modules = [ ./hosts/desktop/fjolne.g14-fedora.nix ];
-              extraSpecialArgs = { user = "fjolne"; host = "g14-fedora"; };
-            };
-            "fjolne@devcontainer" = home-manager.lib.homeManagerConfiguration {
-              inherit pkgs;
-              modules = [ ./hosts/server/fjolne.devcontainer.nix ];
-              extraSpecialArgs = { user = "fjolne"; host = "devcontainer"; };
-            };
-          } // mapMerge [ "fjolne" "ec2-user" ] (user: {
-            ${user} = home-manager.lib.homeManagerConfiguration {
-              inherit pkgs;
-              modules = [ ./hosts/server/fjolne.host.nix ];
-              extraSpecialArgs = { user = user; host = "host"; };
-            };
+        mapMerge systems (system:
+          let
+            pkgs = nixpkgs.legacyPackages.${system};
+          in
+          {
+            ${system}.homeConfigurations = {
+              "fjolne@g14-fedora" = home-manager.lib.homeManagerConfiguration {
+                inherit pkgs;
+                modules = [ ./hosts/desktop/fjolne.g14-fedora.nix ];
+                extraSpecialArgs = { inherit lib; user = "fjolne"; host = "g14-fedora"; };
+              };
+              "fjolne@devcontainer" = home-manager.lib.homeManagerConfiguration {
+                inherit pkgs;
+                modules = [ ./hosts/server/fjolne.devcontainer.nix ];
+                extraSpecialArgs = { inherit lib; user = "fjolne"; host = "devcontainer"; };
+              };
+            } // mapMerge [ "fjolne" "ec2-user" ] (user: {
+              ${user} = home-manager.lib.homeManagerConfiguration {
+                inherit pkgs;
+                modules = [ ./hosts/server/fjolne.host.nix ];
+                extraSpecialArgs = { inherit lib; user = user; host = "host"; };
+              };
+            });
           });
-        });
-  };
+    };
 }

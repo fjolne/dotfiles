@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+with lib;
 {
   imports = [ ../common/common.nix ];
 
-  programs.ssh.extraConfig = builtins.readFile ./ssh_config;
+  programs.ssh.extraConfig = utils.readSecretFile ./ssh_config;
 
   home.shellAliases = {
     hm-switch = "~/dotfiles/switch.sh";

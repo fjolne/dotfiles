@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
+with lib;
 {
   imports = [ ../common/common.nix ];
 
-  programs.ssh.extraConfig = builtins.readFile ./ssh_config;
+  programs.ssh.extraConfig = utils.readSecretFile ./ssh_config;
 
   programs.keychain = {
     keys = [ "id_rsa" ];
