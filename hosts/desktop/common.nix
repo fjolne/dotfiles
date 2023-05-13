@@ -2,7 +2,7 @@
 
 with lib;
 {
-  imports = [ ../common/common.nix ];
+  imports = [ ../base/common.nix ];
 
   programs.ssh.extraConfig = utils.readSecretFile ./ssh_config;
 
