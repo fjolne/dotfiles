@@ -4,7 +4,11 @@ set -euo pipefail
 
 sh <(curl -L https://nixos.org/nix/install) --no-daemon
 mkdir -p ~/.config/nix && echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
-echo 'nix run nixpkgs#git-crypt -- "$@"' > ~/.local/bin/git-crypt && chmod u+x ~/.local/bin/git-crypt
+
+# nix profile install --profile bootstrap nixpkgs#nix nixpkgs#git nixpkgs#git-crypt nixpkgs#gnupg
+# nix-env --switch-profile bootstrap
+# <do nasty things with git-crypt>
+# nix-env --switch-profile ~/.local/state/nix/profiles/profile 
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 "$SCRIPT_DIR"/switch.sh "$@"
