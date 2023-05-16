@@ -7,7 +7,7 @@ with lib;
   programs.ssh.extraConfig = utils.readSecretFile ./ssh_config;
 
   programs.keychain = {
-    inheritType = "local-once";
+    inheritType = "any-once";
     keys = [ "id_rsa" ];
   };
 
