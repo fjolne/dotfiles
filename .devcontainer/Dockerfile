@@ -4,7 +4,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && \
     apt install -y --no-install-recommends \
-    git \
     curl \
     ca-certificates \
     xz-utils
