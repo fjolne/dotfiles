@@ -60,8 +60,6 @@ with lib;
 
     # Need to be after starship init since it overwrites PROMPT_COMMAND.
     initExtra = lib.mkAfter ''
-      [[ -f ~/.nix-profile/etc/profile.d/nix.sh ]] && . ~/.nix-profile/etc/profile.d/nix.sh
-
       ${lib.optionalString (!config.programs.mcfly.enable) ''
         PROMPT_COMMAND="''${PROMPT_COMMAND:+''${PROMPT_COMMAND/%;*( )};}history -a"
         HISTTIMEFORMAT='%F %T '
@@ -69,6 +67,10 @@ with lib;
 
       # Must C-d at least twice to close shell.
       export IGNOREEOF=1
+    '';
+
+    profileExtra = ''
+      [[ -f ~/.nix-profile/etc/profile.d/nix.sh ]] && . ~/.nix-profile/etc/profile.d/nix.sh
     '';
   };
 

@@ -9,4 +9,8 @@ with lib;
   home.shellAliases = {
     hm-switch = "~/dotfiles/switch.sh";
   };
+
+  programs.keychain = {
+    inheritType = "local-once";
+  };
 }
