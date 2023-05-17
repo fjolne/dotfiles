@@ -49,7 +49,8 @@ gpg --import <(curl https://github.com/fjolne.gpg)
 
 # Devcontainer
 ```shell
-REPO=~/whatever echo '$HOME/shared/dotfiles/install.sh' \
+export REPO=~/whatever
+echo '$HOME/shared/dotfiles/install.sh' \
   > $REPO/.devcontainer/post_create.sh \
   && chmod +x $REPO/.devcontainer/post_create.sh
 ```
