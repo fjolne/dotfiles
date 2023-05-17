@@ -46,3 +46,10 @@ gpg --import <(curl https://github.com/fjolne.gpg)
 `gpg --armor --export fjolne`
 - extract privkey for transfer (if not using gpg agent forwarding):
 `gpg --output fjolne.privkey.gpg --armor --export-secret-key fjolne`
+
+# Devcontainer
+```shell
+REPO=~/whatever echo '$HOME/shared/dotfiles/install.sh' \
+  > $REPO/.devcontainer/post_create.sh \
+  && chmod +x $REPO/.devcontainer/post_create.sh
+```
