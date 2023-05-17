@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [ ./common.nix ];
@@ -7,6 +7,5 @@
     openssh
   ];
 
-  programs.git.enabled = false;
-  programs.keychain.enabled = false; # pass SSH_AUTH_SOCK from the host
+  programs.keychain.enable = lib.mkForce false; # pass SSH_AUTH_SOCK from the host
 }
