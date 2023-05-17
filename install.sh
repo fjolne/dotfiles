@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 # install nix
 sh <(curl -L https://nixos.org/nix/install) --no-daemon
 mkdir -p ~/.config/nix && echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
@@ -15,9 +17,9 @@ if [[ "${CLONE:-}" == true ]]; then
     gpg --import <<< "$key"
     git-crypt unlock
 EOF
+    SCRIPT_DIR="$SCRIPT_DIR/dotfiles"
 fi
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 nix shell nixpkgs#git nixpkgs#git-crypt nixpkgs#gnupg nixpkgs#pinentry-gtk2 <<EOF
 "$SCRIPT_DIR/switch.sh" "$@"
 EOF
