@@ -31,10 +31,10 @@
                 modules = [ ./hosts/desktop/fjolne.g14-fedora.nix ];
                 extraSpecialArgs = { inherit lib; user = "fjolne"; host = "g14-fedora"; };
               };
-              "fjolne@devcontainer" = home-manager.lib.homeManagerConfiguration {
+              "ec2-user@devcontainer" = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 modules = [ ./hosts/server/fjolne.devcontainer.nix ];
-                extraSpecialArgs = { inherit lib; user = "fjolne"; host = "devcontainer"; };
+                extraSpecialArgs = { inherit lib; user = "ec2-user"; host = "devcontainer"; };
               };
             } // mapMerge [ "fjolne" "ec2-user" ] (user: {
               ${user} = home-manager.lib.homeManagerConfiguration {
