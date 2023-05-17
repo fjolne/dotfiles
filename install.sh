@@ -3,7 +3,6 @@ set -euo pipefail
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-# install nix
 sh <(curl -L https://nixos.org/nix/install) --no-daemon
 mkdir -p ~/.config/nix && echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
 . ~/.nix-profile/etc/profile.d/nix.sh
@@ -20,6 +19,6 @@ EOF
     SCRIPT_DIR="$SCRIPT_DIR/dotfiles"
 fi
 
-nix shell nixpkgs#git nixpkgs#git-crypt nixpkgs#gnupg nixpkgs#pinentry-gtk2 <<EOF
+nix shell nixpkgs#git nixpkgs#git-crypt <<EOF
 "$SCRIPT_DIR/switch.sh" "$@"
 EOF
