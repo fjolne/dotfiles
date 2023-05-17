@@ -4,7 +4,7 @@ Requires only stuff neccessary to install the nix itself from the official insta
 sudo apt install curl ca-certificates xz-utils
 ```
 ```shell
-curl https://raw.githubusercontent.com/fjolne/dotfiles/main/install.sh | CLONE=true bash -x
+curl -O https://raw.githubusercontent.com/fjolne/dotfiles/main/install.sh && chmod +x install.sh && CLONE=true ./install.sh
 ```
 
 # Tips
@@ -34,3 +34,15 @@ gpg --import <(curl https://github.com/fjolne.gpg)
 
 - https://wiki.gnupg.org/AgentForwarding
 - https://gist.github.com/TimJDFletcher/85fafd023c81aabfad57454111c1564d
+
+# GPG Cheatsheet
+- create GPG key (with passphrase):
+`gpg --full-generate-key`
+- extract the fingerprint and remove spaces manually:
+`gpg --list-keys`
+- add fingerprint as user id to git-crypt:
+`git-crypt add-gpg-user XYZ...ABC`
+- put public key on github:
+`gpg --armor --export fjolne`
+- extract privkey for transfer (if not using gpg agent forwarding):
+`gpg --output fjolne.privkey.gpg --armor --export-secret-key fjolne`
