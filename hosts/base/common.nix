@@ -42,6 +42,7 @@ with lib;
     TERM = "xterm-256color";
     VISUAL = "code";
     EDITOR = "nvim";
+    SUDO_EDITOR = "nvim";
   };
 
   programs.bash = {
