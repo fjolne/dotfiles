@@ -15,7 +15,7 @@
         (final: prev: (import ./lib final) // home-manager.lib);
     in
     {
-      packages =
+      legacyPackages =
         let
           systems = [ "x86_64-linux" "aarch64-linux" ];
           mapMerge = xs: f: builtins.foldl' (x: y: x // y) { } (map f xs);
