@@ -1,10 +1,10 @@
-{ config, pkgs, user, host, lib, ... }:
+{ config, pkgs, username, lib, ... }:
 
 with lib;
 {
   home = {
-    username = user;
-    homeDirectory = "/home/${user}";
+    username = username;
+    homeDirectory = "/home/${username}";
     stateVersion = "22.11";
   };
   programs.home-manager.enable = true;
