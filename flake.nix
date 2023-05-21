@@ -26,6 +26,11 @@
           in
           {
             ${system}.homeConfigurations = {
+              "fjolne@nixos" = home-manager.lib.homeManagerConfiguration {
+                inherit pkgs;
+                modules = [ ./hosts/desktop/fjolne.nixos.nix ];
+                extraSpecialArgs = { inherit lib; user = "fjolne"; host = "nixos"; };
+              };
               "fjolne@g14-fedora" = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
                 modules = [ ./hosts/desktop/fjolne.g14-fedora.nix ];

@@ -136,7 +136,7 @@ with lib;
     settings = { default-key = "D0CF68225E03419DBB5E266913B5BA0469A51BAE"; };
   };
   services.gpg-agent = {
-    enable = true;
+    enable = mkDefault true;
     defaultCacheTtl = 1800;
     enableExtraSocket = true;
     enableSshSupport = false;
