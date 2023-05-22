@@ -55,5 +55,8 @@ with lib.hm.gvariant;
       show-extensions-notice = false;
     };
 
+    "org/gnome/desktop/wm/keybindings" = {
+      close = [ "<Alt>w" ];
+    };
   };
 }
