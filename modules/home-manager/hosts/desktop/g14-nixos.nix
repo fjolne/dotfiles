@@ -3,9 +3,9 @@
 {
   imports = [ ./common.nix ./clojure.nix ./web.nix ./android.nix ./gnome ];
 
-  # programs.keychain = {
-  #   keys = [ "id_ed25519" "yoko_vm_rsa" "yoko_ama.pem" ];
-  # };
+  programs.keychain = {
+    enable = false;
+  };
 
 
   home.packages = with pkgs; [

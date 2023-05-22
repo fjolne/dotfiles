@@ -127,7 +127,7 @@ with lib;
   };
 
   programs.keychain = {
-    enable = true;
+    enable = mkDefault true;
     keys = [ ];
   };
 
