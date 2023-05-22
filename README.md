@@ -54,3 +54,8 @@ echo '$HOME/shared/dotfiles/install.sh' \
   > $REPO/.devcontainer/post_create.sh \
   && chmod +x $REPO/.devcontainer/post_create.sh
 ```
+
+# Inspirations
+There are many, here are just some:
+- https://github.com/kclejeune/system
+- https://git.sr.ht/~rycee/configurations
