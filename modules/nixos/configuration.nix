@@ -2,8 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+with lib;
 {
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -138,5 +139,13 @@
   zramSwap = {
     enable = true;
     algorithm = "zstd";
+  };
+
+  specialisation = {
+    external-display.configuration = {
+      system.nixos.tags = [ "external-display" ];
+      hardware.nvidia.prime.offload.enable = mkForce false;
+      hardware.nvidia.powerManagement.enable = mkForce false;
+    };
   };
 }
