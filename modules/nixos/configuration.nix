@@ -128,6 +128,7 @@
     enableSSHSupport = false;
     pinentryFlavor = "gtk2";
   };
+  services.tailscale.enable = true;
 
   # List services that you want to enable:
 
