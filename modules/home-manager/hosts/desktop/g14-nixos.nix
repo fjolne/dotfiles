@@ -11,6 +11,7 @@
   home.packages = with pkgs; [
     gnome.gnome-tweaks
     tdesktop
+    wl-clipboard
   ];
 
   services.gpg-agent.enable = false;
