@@ -114,6 +114,7 @@ with lib;
     };
     extraConfig = {
       core.whitespace = "trailing-space,space-before-tab";
+      core.editor = "nvim";
       merge.conflictstyle = "diff3";
       pull.ff = "only";
       rebase.autoStash = true;
