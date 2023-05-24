@@ -58,5 +58,32 @@ with lib.hm.gvariant;
     "org/gnome/desktop/wm/keybindings" = {
       close = [ "<Alt>w" ];
     };
+
+    "org/gnome/settings-daemon/plugins/media-keys" = {
+      custom-keybindings = [
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
+      ];
+    };
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      binding = "<Control><Super>c";
+      command = "google-chrome-stable";
+      iname = "Chrome";
+    };
+
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+      binding = "<Control><Super>e";
+      command = "code";
+      iname = "Code";
+    };
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
+      binding = "<Control><Super>t";
+      command = "kgx";
+      iname = "Console";
+    };
   };
 }
