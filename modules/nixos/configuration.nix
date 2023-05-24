@@ -48,7 +48,11 @@ with lib;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.displayManager.setupCommands = ''
+  #   sudo install -m 0664 -o gdm -g gdm ~fjolne/.config/monitors.xml ~gdm/.config/monitors.xml
+  # '';
   services.xserver.desktopManager.gnome.enable = true;
+  services.gnome.gnome-keyring.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -83,7 +87,7 @@ with lib;
   users.users.fjolne = {
     isNormalUser = true;
     description = "Oleg Martynov";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       firefox
       google-chrome
@@ -148,4 +152,6 @@ with lib;
       hardware.nvidia.powerManagement.enable = mkForce false;
     };
   };
+
+  virtualisation.docker.enable = true;
 }

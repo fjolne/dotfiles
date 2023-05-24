@@ -6,10 +6,6 @@ with lib;
 
   programs.ssh.extraConfig = utils.readSecretFile ./ssh_config;
 
-  home.shellAliases = {
-    hm-switch = "~/dotfiles/switch.sh";
-  };
-
   programs.keychain = {
     inheritType = "local-once";
   };
