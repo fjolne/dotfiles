@@ -145,13 +145,16 @@ with lib;
     algorithm = "zstd";
   };
 
+  hardware.nvidia.prime.offload.enable = false;
+  hardware.nvidia.powerManagement.enable = false;
   specialisation = {
-    external-display.configuration = {
-      system.nixos.tags = [ "external-display" ];
-      hardware.nvidia.prime.offload.enable = mkForce false;
-      hardware.nvidia.powerManagement.enable = mkForce false;
+    power-saving.configuration = {
+      system.nixos.tags = [ "power-saving" ];
+      hardware.nvidia.prime.offload.enable = mkForce true;
+      hardware.nvidia.powerManagement.enable = mkForce true;
     };
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.enableNvidia = true;
 }
