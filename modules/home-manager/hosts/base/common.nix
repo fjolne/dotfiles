@@ -10,6 +10,7 @@ with lib;
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
+    jq
     lf
     bottom
     ripgrep
