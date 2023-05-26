@@ -111,7 +111,14 @@ with lib;
     enable = true;
     userName = "Oleg Martynov";
     userEmail = "fjolne.yngling@gmail.com";
-    aliases = { };
+    aliases = {
+      s = "status";
+      d = "diff";
+      c = "commit";
+      a = "add";
+      p = "push";
+      l = "log";
+    };
     difftastic = {
       enable = true;
       display = "inline";
