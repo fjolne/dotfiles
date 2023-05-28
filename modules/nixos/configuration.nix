@@ -91,7 +91,6 @@ with lib;
     packages = with pkgs; [
       firefox
       google-chrome
-      #  thunderbird
     ];
   };
 
