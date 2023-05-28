@@ -156,4 +156,6 @@ with lib;
 
   virtualisation.docker.enable = true;
   virtualisation.docker.enableNvidia = true;
+
+  programs.steam.enable = true;
 }
