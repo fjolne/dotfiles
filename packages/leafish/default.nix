@@ -12,13 +12,13 @@
 , cmake
 }:
 
-rustPlatform.buildRustPackage rec {
-  pname = "Leafish";
+rustPlatform.buildRustPackage {
+  pname = "leafish";
   version = "0.0.1";
 
   src = fetchFromGitHub {
     owner = "Lea-fish";
-    repo = pname;
+    repo = "Leafish";
     rev = "dd283d3ce841c000c348a6b7b18a447cfbcc83e0";
     hash = "sha256-iNwlaejVfa2WJVuqSU3sqBpxBv+uDLWYIYBT5Vd4/+k=";
   };
