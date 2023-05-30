@@ -12,6 +12,7 @@
     gnome.gnome-tweaks
     tdesktop
     wl-clipboard
+    heroic
   ];
 
   services.gpg-agent.enable = false;
