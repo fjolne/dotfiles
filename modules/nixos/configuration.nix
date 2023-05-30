@@ -103,7 +103,6 @@ with lib;
     vim
     git
     gnumake
-    vscode
     nixpkgs-fmt
     nil
     git-crypt

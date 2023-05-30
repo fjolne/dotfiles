@@ -49,7 +49,7 @@
             (final: prev: (import ./lib final) // home-manager.lib);
         in
         inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${system};
+          pkgs = nixpkgs.legacyPackages.${system} // { config.allowUnfree = true; };
           extraSpecialArgs = { inherit self inputs nixpkgs lib username; };
           modules = baseModules ++ extraModules;
         };
