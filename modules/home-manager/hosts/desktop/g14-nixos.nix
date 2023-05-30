@@ -21,6 +21,9 @@
       });
       version = "latest";
     }))
+    (pkgs.writeShellScriptBin "code" ''
+      code-insiders "$@"
+    '')
   ];
 
   services.gpg-agent.enable = false;
