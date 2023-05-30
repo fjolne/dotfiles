@@ -22,7 +22,7 @@ with lib;
     nixpkgs-fmt
     nil
 
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    (pkgs.nerdfonts.override { fonts = [ "Iosevka" ]; })
 
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
@@ -71,6 +71,8 @@ with lib;
       # export IGNOREEOF=1
 
       export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
+
+      export PATH="$HOME/.local/bin:$PATH"
     '';
 
     profileExtra = ''
