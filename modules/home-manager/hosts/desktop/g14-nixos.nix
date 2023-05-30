@@ -9,6 +9,7 @@
 
 
   home.packages = with pkgs; [
+    google-chrome
     gnome.gnome-tweaks
     tdesktop
     wl-clipboard

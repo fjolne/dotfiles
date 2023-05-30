@@ -89,25 +89,17 @@ with lib;
     description = "Oleg Martynov";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
-      firefox
-      google-chrome
     ];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim
     git
     gnumake
-    nixpkgs-fmt
-    nil
     git-crypt
     pinentry
-    i3
   ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
