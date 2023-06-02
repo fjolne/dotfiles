@@ -13,7 +13,6 @@
     gnome.gnome-tweaks
     tdesktop
     wl-clipboard
-    heroic
     ((pkgs.vscode.override { isInsiders = true; }).overrideAttrs (oldAttrs: {
       src = (builtins.fetchTarball {
         url = "https://code.visualstudio.com/sha/download?build=insider&os=linux-x64";
@@ -24,6 +23,10 @@
     (pkgs.writeShellScriptBin "code" ''
       code-insiders "$@"
     '')
+    
+    # games
+    minecraft
+    heroic
   ];
 
   services.gpg-agent.enable = false;
