@@ -160,4 +160,6 @@ with lib;
   };
 
   systemd.user.startServices = "sd-switch";
+
+  programs.direnv.enable = true;
 }
