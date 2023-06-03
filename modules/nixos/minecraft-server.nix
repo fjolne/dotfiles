@@ -1,3 +1,5 @@
+# https://tailscale.com/blog/nixos-minecraft/
+
 { pkgs, ... }:
 
 {
