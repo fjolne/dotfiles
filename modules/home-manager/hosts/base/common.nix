@@ -18,6 +18,7 @@ with lib;
     less
     git-crypt
     pinentry
+    just
 
     nixpkgs-fmt
     nil
