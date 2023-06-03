@@ -62,12 +62,22 @@
       legacyPackages = {
         nixosConfigurations = {
           "g14-nixos" = mkNixosConfig {
-            system = "x86_64-linux";
+            inherit system;
             hardwareModules = [
               ./modules/hardware/g14.nix
               nixos-hardware.nixosModules.asus-zephyrus-ga401
             ];
             extraModules = [ ];
+          };
+          "g14-nixos/minecraft-server" = mkNixosConfig {
+            inherit system;
+            hardwareModules = [
+              ./modules/hardware/g14.nix
+              nixos-hardware.nixosModules.asus-zephyrus-ga401
+            ];
+            extraModules = [
+              ./modules/nixos/minecraft-server.nix
+            ];
           };
         };
 
