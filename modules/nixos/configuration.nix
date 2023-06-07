@@ -149,4 +149,11 @@ with lib;
   virtualisation.docker.enableNvidia = true;
 
   programs.steam.enable = true;
+
+  hardware.bluetooth.settings = {
+    General = {
+      ControllerMode = "bredr";
+      "ControllerMode " = "dual";
+    };
+  };
 }
