@@ -19,6 +19,7 @@ with lib;
     git-crypt
     pinentry
     just
+    mosh
 
     nixpkgs-fmt
     nil
