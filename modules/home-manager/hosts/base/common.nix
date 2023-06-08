@@ -109,9 +109,9 @@ with lib;
       s = "status";
       d = "diff";
       c = "commit";
-      a = "add";
-      p = "push";
-      l = "log";
+      a = "add -p";
+      p = "pull --rebase --autostash";
+      l = "log --stat";
     };
     difftastic = {
       enable = true;
