@@ -3,6 +3,12 @@
 {
   imports = [ ./common.nix ./clojure.nix ./web.nix ./android.nix ./gnome ];
 
+  programs.bash = {
+    initExtra = ''
+      export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
+    '';
+  };
+
   programs.keychain = {
     enable = false;
   };

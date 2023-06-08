@@ -64,8 +64,6 @@ with lib;
       # Must C-d at least twice to close shell.
       # export IGNOREEOF=1
 
-      export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
-
       export PATH="$HOME/.local/bin:$PATH"
     '';
 
