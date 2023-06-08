@@ -22,6 +22,7 @@
     (pkgs.writeShellScriptBin "code" ''
       code-insiders "$@"
     '')
+    mosh
 
     # games
     minecraft
