@@ -19,26 +19,17 @@ with lib;
     git-crypt
     pinentry
     just
-    mosh
 
     nixpkgs-fmt
     nil
 
-    (pkgs.nerdfonts.override { fonts = [ "Iosevka" ]; })
-
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+    (nerdfonts.override { fonts = [ "Iosevka" ]; })
   ];
+
+  fonts.fontconfig.enable = true;
 
   home.file = {
     ".tmux.conf".source = ./tmux.conf;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
   };
 
   home.sessionVariables = {

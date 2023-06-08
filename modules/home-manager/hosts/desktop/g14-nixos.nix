@@ -7,7 +7,6 @@
     enable = false;
   };
 
-
   home.packages = with pkgs; [
     google-chrome
     gnome.gnome-tweaks
@@ -23,11 +22,28 @@
     (pkgs.writeShellScriptBin "code" ''
       code-insiders "$@"
     '')
-    
+    mosh
+
     # games
     minecraft
     heroic
   ];
 
   services.gpg-agent.enable = false;
+
+  programs.kitty = {
+    enable = true;
+    settings = {
+      scrollback_lines = 10000;
+      enable_audio_bell = false;
+      update_check_interval = 0;
+    };
+    font = {
+      name = "IosevkaNerdFont";
+      size = 12;
+    };
+    extraConfig = ''
+      window_padding_width 2
+    '';
+  };
 }

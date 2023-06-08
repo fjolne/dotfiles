@@ -82,7 +82,7 @@ with lib.hm.gvariant;
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
       binding = "<Control><Super>t";
-      command = "kgx";
+      command = "kitty";
       iname = "Console";
     };
   };
