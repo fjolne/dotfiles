@@ -17,9 +17,13 @@
       motd = "fjolne-missed-childhood";
       max-players = 2;
       level-seed = "10292992";
-
+      white-list = true;
       enable-rcon = false;
       # "rcon.password" = "camelot";
+    };
+    whitelist = {
+      "fjolne" = "bd49ca96-e31a-4be7-8a15-0046ab5e2833";
+      "nbstrva" = "d1c16aa0-beca-4641-94d8-f512ea08161b";
     };
   };
 }
