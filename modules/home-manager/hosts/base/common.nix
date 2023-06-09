@@ -108,6 +108,7 @@ with lib;
     aliases = {
       s = "status";
       d = "diff";
+      ds = "diff --staged";
       c = "commit";
       a = "add -p";
       p = "pull --rebase --autostash";
