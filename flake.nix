@@ -79,6 +79,13 @@
               ./modules/nixos/minecraft-server.nix
             ];
           };
+          "g2-nixos" = mkNixosConfig {
+            inherit system;
+            hardwareModules = [
+              # ./modules/hardware/g2.nix
+            ];
+            extraModules = [ ];
+          };
         };
 
         homeConfigurations = {
