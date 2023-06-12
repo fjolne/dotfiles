@@ -84,7 +84,7 @@
             hardwareModules = [
               ./modules/hardware/g2.nix
             ];
-            extraModules = [ ];
+            extraModules = [ ./modules/nixos/g2 ];
           };
         };
 

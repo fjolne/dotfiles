@@ -15,7 +15,6 @@ with lib;
     "/crypto_keyfile.bin" = null;
   };
 
-  networking.hostName = "g14-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -90,6 +89,11 @@ with lib;
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
     ];
+    openssh.authorizedKeys = {
+      keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPyva32b9/JANUGZEgQny/wemAETo4z6wAkF16CLk7fF"
+      ];
+    };
   };
 
   # Allow unfree packages
