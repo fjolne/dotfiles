@@ -67,17 +67,7 @@
               ./modules/hardware/g14.nix
               nixos-hardware.nixosModules.asus-zephyrus-ga401
             ];
-            extraModules = [ ];
-          };
-          "g14-nixos/minecraft-server" = mkNixosConfig {
-            inherit system;
-            hardwareModules = [
-              ./modules/hardware/g14.nix
-              nixos-hardware.nixosModules.asus-zephyrus-ga401
-            ];
-            extraModules = [
-              ./modules/nixos/minecraft-server.nix
-            ];
+            extraModules = [ ./modules/nixos/g14 ];
           };
           "g2-nixos" = mkNixosConfig {
             inherit system;
