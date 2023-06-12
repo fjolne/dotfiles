@@ -47,6 +47,13 @@ gpg --import <(curl https://github.com/fjolne.gpg)
 - extract privkey for transfer (if not using gpg agent forwarding):
 `gpg --output fjolne.privkey.gpg --armor --export-secret-key fjolne`
 
+# VPC
+```shell
+mkdir ~/shared && cd ~/shared
+sudo hostname vpc
+# curl <install.sh>
+```
+
 # Devcontainer
 ```shell
 export REPO=~/whatever
