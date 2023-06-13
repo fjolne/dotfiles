@@ -3,6 +3,14 @@
 {
   imports = [ ./common.nix ];
 
+  home.file = {
+    ".local/bin/mosh-server".source = pkgs.writeScript "mosh-server" ''
+      #!/bin/sh
+      export LOCALE_ARCHIVE=${pkgs.glibcLocales}/lib/locale/locale-archive
+      exec ${pkgs.mosh}/bin/mosh-server "$@"
+    '';
+  };
+
   programs.bash = {
     profileExtra = ''
       export LANG=en_US.utf-8
