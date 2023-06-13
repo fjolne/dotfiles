@@ -5,6 +5,10 @@ with lib.hm.gvariant;
 
 {
   dconf.settings = {
+    "org/gnome/mutter" = {
+      check-alive-timeout = 0;
+    };
+
     "org/gnome/control-center" = {
       last-panel = "keyboard";
       window-state = mkTuple [ 980 640 ];
