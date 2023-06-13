@@ -4,6 +4,9 @@ nixos-switch target=".":
 home-switch target=".":
   nix run home-manager/master -- switch --flake {{target}}
 
+home-switch-skip-secrets target=".":
+  SKIP_SECRETS=true nix run home-manager/master -- switch --impure --flake {{target}}
+
 reload-gpg:
   -pkill -f gpg-agent
   -pkill -f pinentry

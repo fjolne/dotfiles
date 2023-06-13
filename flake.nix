@@ -84,6 +84,11 @@
             username = "fjolne";
             extraModules = [ ./modules/home-manager/hosts/desktop/g14-nixos.nix ];
           };
+          "fjolne@g2-nixos" = mkHomeConfig {
+            inherit system;
+            username = "fjolne";
+            extraModules = [ ./modules/home-manager/hosts/desktop/g2-nixos.nix ];
+          };
           "fjolne@g14-fedora" = mkHomeConfig {
             inherit system;
             username = "fjolne";
