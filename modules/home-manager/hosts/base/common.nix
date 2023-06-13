@@ -72,6 +72,10 @@ with lib;
     '';
   };
 
+  home.shellAliases = {
+    "mo" = "mosh --server=/home/ec2-user/.local/bin/mosh-server";
+  };
+
   programs.neovim = {
     enable = true;
     viAlias = true;
