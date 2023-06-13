@@ -14,5 +14,8 @@
     (pkgs.writeShellScriptBin "code" ''
       code-insiders "$@"
     '')
+
+    pcsx2
+    retroarchFull
   ];
 }
