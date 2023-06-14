@@ -1,10 +1,17 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
-{ lib, ... }:
+{ pkgs, lib, ... }:
 
 with lib.hm.gvariant;
 
-{
+rec {
+  home.packages = with pkgs.gnomeExtensions; [
+    pop-shell
+  ];
+
   dconf.settings = {
+    "org/gnome/shell".enabled-extensions = map (extension: extension.extensionUuid) home.packages;
+    "org/gnome/shell".disabled-extensions = [ ];
+
     "org/gnome/mutter" = {
       check-alive-timeout = 0;
     };
