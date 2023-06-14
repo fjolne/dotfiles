@@ -80,7 +80,7 @@ rec {
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       binding = "<Control><Super>c";
-      command = "google-chrome-stable";
+      command = "google-chrome-stable --force-dark-mode";
       iname = "Chrome";
     };
 
