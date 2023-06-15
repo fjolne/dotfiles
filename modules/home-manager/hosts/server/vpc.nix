@@ -4,8 +4,7 @@
   imports = [ ./common.nix ];
 
   home.file = {
-    ".local/bin/mosh-server".source = pkgs.writeScript "mosh-server" ''
-      #!/bin/sh
+    ".local/bin/mosh-server".source = pkgs.writeShellScript "mosh-server" ''
       export LOCALE_ARCHIVE=${pkgs.glibcLocales}/lib/locale/locale-archive
       exec ${pkgs.mosh}/bin/mosh-server "$@"
     '';
