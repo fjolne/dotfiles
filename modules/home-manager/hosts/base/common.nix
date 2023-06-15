@@ -20,7 +20,6 @@ with lib;
     pinentry
     just
     mosh
-    tmux
 
     nixpkgs-fmt
     nil
@@ -30,8 +29,9 @@ with lib;
 
   fonts.fontconfig.enable = true;
 
-  home.file = {
-    ".tmux.conf".source = ./tmux.conf;
+  programs.tmux = {
+    enable = true;
+    extraConfig = builtins.readFile ./tmux.conf;
   };
 
   home.sessionVariables = {
