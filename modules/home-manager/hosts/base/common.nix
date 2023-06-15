@@ -20,6 +20,7 @@ with lib;
     pinentry
     just
     mosh
+    tmux
 
     nixpkgs-fmt
     nil
