@@ -6,6 +6,7 @@ with lib.hm.gvariant;
 rec {
   home.packages = with pkgs.gnomeExtensions; [
     pop-shell
+    workspace-matrix
   ];
 
   dconf.settings = {
