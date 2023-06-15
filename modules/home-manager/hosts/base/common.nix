@@ -32,6 +32,9 @@ with lib;
   programs.tmux = {
     enable = true;
     extraConfig = builtins.readFile ./tmux.conf;
+    plugins = with pkgs.tmuxPlugins; [
+      fingers
+    ];
   };
 
   home.sessionVariables = {
