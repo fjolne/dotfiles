@@ -162,5 +162,20 @@ with lib;
 
   systemd.user.startServices = "sd-switch";
 
-  programs.direnv.enable = true;
+  programs.direnv = {
+    enable = true;
+    stdlib = ''
+      layout_poetry() {
+        if [[ ! -f pyproject.toml ]]; then
+          log_error 'No pyproject.toml found.  Use `poetry new` or `poetry init` to create one first.'
+          exit 2
+        fi
+
+        local VENV_BIN=$(dirname $(poetry run which python))
+        export VIRTUAL_ENV=$(dirname "$VENV_BIN")
+        export POETRY_ACTIVE=1
+        PATH_add "$VENV_BIN"
+      }
+    '';
+  };
 }
