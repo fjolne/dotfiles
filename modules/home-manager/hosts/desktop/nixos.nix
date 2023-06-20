@@ -22,6 +22,12 @@
     # games
     minecraft
     heroic
+
+    # go
+    go
+    gopls
+    delve
+    go-tools
   ];
 
   services.gpg-agent.enable = false;
