@@ -28,6 +28,8 @@
     gopls
     delve
     go-tools
+
+    asciinema
   ];
 
   services.gpg-agent.enable = false;
