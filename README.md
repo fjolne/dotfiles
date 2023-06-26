@@ -4,7 +4,7 @@ Requires only stuff neccessary to install the nix itself from the official insta
 sudo apt install curl ca-certificates xz-utils
 ```
 ```shell
-curl -O https://raw.githubusercontent.com/fjolne/dotfiles/main/install.sh && chmod +x install.sh && CLONE=true ./install.sh
+curl -O https://raw.githubusercontent.com/fjolne/dotfiles/main/install.sh && chmod +x install.sh && CLONE=true ./install.sh fjolne@vpc
 ```
 
 # Tips
