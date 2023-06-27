@@ -90,6 +90,7 @@ with lib;
     enable = true;
     settings = {
       command_timeout = 24 * 60 * 60 * 1000; # 1 day
+      aws = { disabled = true; };
     };
   };
 
