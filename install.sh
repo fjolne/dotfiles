@@ -4,9 +4,9 @@ set -euo pipefail
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install ${NO_SYSTEMD:+linux --init none} --no-confirm
-bash
+. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
-if [[ "${CLONE:-}" == true ]]; then
+if [[ "${CLONE:-}" == 1 ]]; then
     echo "Paste your private (passhprase-protected) GPG key:"
     key=$(cat) nix shell nixpkgs#git nixpkgs#git-crypt nixpkgs#gnupg nixpkgs#pinentry-gtk2 <<"EOF"
     git clone https://github.com/fjolne/dotfiles && cd dotfiles
