@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-if command -v nix &> /dev/null; then
+if ! command -v nix &> /dev/null; then
     curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install ${NO_SYSTEMD:+linux --init none} --no-confirm
     . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 fi
