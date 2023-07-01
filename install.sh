@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --no-confirm
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install ${NO_SYSTEMD:+linux --init none} --no-confirm
 bash
 
 if [[ "${CLONE:-}" == true ]]; then
@@ -20,5 +20,5 @@ EOF
 fi
 
 nix shell nixpkgs#git nixpkgs#git-crypt <<EOF
-nix run home-manager/master -- switch -b bak --flake "$SCRIPT_DIR${1:+#$1}" ${EXTRA_ARGS:-}
+nix run home-manager/master -- switch -b bak --flake "$SCRIPT_DIR${1:+#$1}"
 EOF
