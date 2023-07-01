@@ -3,8 +3,10 @@ set -euo pipefail
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install ${NO_SYSTEMD:+linux --init none} --no-confirm
-. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+if command -v nix &> /dev/null; then
+    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install ${NO_SYSTEMD:+linux --init none} --no-confirm
+    . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
 
 if [[ -n "${GPG_PRIVATE_KEY:-}" ]]; then
     nix shell nixpkgs#git nixpkgs#git-crypt nixpkgs#gnupg nixpkgs#pinentry-gtk2 <<EOF
