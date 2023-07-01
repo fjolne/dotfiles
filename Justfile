@@ -2,7 +2,7 @@ nixos-switch target=".":
   sudo nixos-rebuild --install-bootloader switch --flake {{target}}
 
 home-switch target=".":
-  nix run home-manager/master -- switch --flake {{target}}
+  nix run home-manager/master -- switch -b bak --flake {{target}}
 
 home-switch-skip-secrets target=".":
   SKIP_SECRETS=true nix run home-manager/master -- switch --impure --flake {{target}}
