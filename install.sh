@@ -3,9 +3,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-sh <(curl -L https://nixos.org/nix/install) --no-daemon
-mkdir -p ~/.config/nix && echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
-. ~/.nix-profile/etc/profile.d/nix.sh
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --no-confirm
+bash
 
 if [[ "${CLONE:-}" == true ]]; then
     echo "Paste your private (passhprase-protected) GPG key:"
@@ -21,5 +20,5 @@ EOF
 fi
 
 nix shell nixpkgs#git nixpkgs#git-crypt <<EOF
-"$SCRIPT_DIR/switch.sh" "$@"
+nix run home-manager/master -- switch -b bak --flake "$SCRIPT_DIR${1:+#$1}" ${EXTRA_ARGS:-}
 EOF
