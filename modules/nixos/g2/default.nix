@@ -1,7 +1,12 @@
-{ ... }:
+{ inputs, ... }:
 
+with inputs;
 {
-  imports = [ ../minecraft-server.nix ];
+  imports = [
+    ../minecraft-server.nix
+    vscode-server.nixosModules.default
+  ];
+
   networking.hostName = "g2-nixos";
   services.openssh = {
     enable = true;
@@ -20,4 +25,6 @@
       "sv_gametype dm"
     ];
   };
+
+  services.vscode-server.enable = true;
 }

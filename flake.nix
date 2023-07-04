@@ -10,6 +10,8 @@
       url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
   outputs =
@@ -18,6 +20,7 @@
     , flake-utils
     , nixos-hardware
     , home-manager
+    , ...
     } @ inputs:
     let
       mkNixosConfig =
