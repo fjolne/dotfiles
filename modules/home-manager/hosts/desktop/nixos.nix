@@ -22,6 +22,7 @@
     # games
     minecraft
     heroic
+    teeworlds
 
     # go
     go

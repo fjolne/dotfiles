@@ -10,4 +10,14 @@
       PasswordAuthentication = false;
     };
   };
+
+  services.teeworlds = {
+    enable = true;
+    openPorts = true;
+    name = "fjolne-world";
+    extraOptions = [
+      "sv_map dm1"
+      "sv_gametype dm"
+    ];
+  };
 }
