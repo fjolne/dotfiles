@@ -6,6 +6,9 @@
   programs.bash = {
     initExtra = ''
       export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
+
+      export WINEARCH=win64
+      export WINEPREFIX=$HOME/.wine-battlenet
     '';
   };
 
@@ -23,6 +26,12 @@
     minecraft
     heroic
     teeworlds
+    (wineWowPackages.full.override {
+      wineRelease = "staging";
+      mingwSupport = true;
+    })
+    winetricks
+    lutris
 
     # go
     go
