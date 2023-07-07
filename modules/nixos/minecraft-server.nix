@@ -1,22 +1,34 @@
 # https://tailscale.com/blog/nixos-minecraft/
 
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
+let
+  modpack = pkgs.fetchPackwizModpack {
+    url = "https://github.com/Misterio77/Modpack/raw/0.2.9/pack.toml";
+    packHash = "sha256-L5RiSktqtSQBDecVfGj1iDaXV+E90zrNEcf4jtsg+wk=";
+  };
+in
 {
-  services.minecraft-server = {
+  imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
+  nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
+
+  services.minecraft-servers.servers.cool-modpack = {
     enable = true;
+    package = pkgs.fabricServers.fabric-1_18_2-0_14_9;
+    symlinks = {
+      "mods" = "${modpack}/mods";
+    };
+
     eula = true;
-    package = pkgs.minecraftServers.vanilla-1-18;
     openFirewall = true;
     declarative = true;
 
-    # see here for more info: https://minecraft.gamepedia.com/Server.properties#server.properties
     serverProperties = {
       server-port = 25565;
       gamemode = "survival";
-      motd = "fjolne-missed-childhood";
+      motd = "modz";
       max-players = 2;
-      level-seed = "10292992";
+      level-seed = "789645678";
       white-list = true;
       enable-rcon = false;
       # "rcon.password" = "camelot";

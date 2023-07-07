@@ -12,6 +12,7 @@
     };
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
 
   outputs =
