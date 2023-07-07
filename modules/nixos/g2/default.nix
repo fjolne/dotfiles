@@ -16,16 +16,6 @@ with inputs;
     };
   };
 
-  services.teeworlds = {
-    enable = true;
-    openPorts = true;
-    name = "fjolne-world";
-    extraOptions = [
-      "sv_map dm1"
-      "sv_gametype dm"
-    ];
-  };
-
   services.vscode-server.enable = true;
   services.vscode-server.installPath = "~/.vscode-server-insiders";
 }

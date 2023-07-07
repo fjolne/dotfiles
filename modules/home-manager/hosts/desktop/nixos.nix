@@ -26,7 +26,6 @@
     minecraft
     prismlauncher
     heroic
-    teeworlds
     (wineWowPackages.full.override {
       wineRelease = "staging";
       mingwSupport = true;
