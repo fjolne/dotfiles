@@ -25,6 +25,7 @@
     # games
     minecraft
     prismlauncher
+    mcrcon
     heroic
     (wineWowPackages.full.override {
       wineRelease = "staging";
