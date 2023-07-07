@@ -24,6 +24,7 @@
 
     # games
     minecraft
+    prismlauncher
     heroic
     teeworlds
     (wineWowPackages.full.override {
