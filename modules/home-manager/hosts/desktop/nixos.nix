@@ -21,6 +21,7 @@
     gnome.gnome-tweaks
     tdesktop
     wl-clipboard
+    python312
 
     # games
     minecraft
