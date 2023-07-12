@@ -34,12 +34,6 @@
     winetricks
     lutris
 
-    # go
-    go
-    gopls
-    delve
-    go-tools
-
     asciinema
   ];
 
