@@ -72,7 +72,8 @@ with lib;
   };
 
   home.shellAliases = {
-    "mo" = "mosh --server=/home/ec2-user/.local/bin/mosh-server";
+    # FIXME
+    # "mo" = "mosh --server=/home/ec2-user/.local/bin/mosh-server";
   };
 
   programs.neovim = {
