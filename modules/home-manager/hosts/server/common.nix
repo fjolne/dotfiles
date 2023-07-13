@@ -12,9 +12,6 @@ with lib;
   };
 
   home.packages = [
-    (pkgs.writeShellScriptBin "code" ''
-      code-insiders "$@"
-    '')
     (pkgs.writeShellScriptBin "rersync" ''
       while [ $? -ne 0 ] ; do
           timeout 240 rsync --partial "$@"
