@@ -1,8 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./nixos.nix ];
-
+  imports = [ ./common.nix ];
 
   programs.vscode = {
     enable = true;

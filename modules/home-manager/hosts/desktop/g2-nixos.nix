@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./nixos.nix ];
+  imports = [ ./common.nix ];
 
   home.packages = with pkgs; [
     vscode
