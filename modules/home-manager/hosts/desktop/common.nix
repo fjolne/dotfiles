@@ -16,13 +16,19 @@ with lib;
     '';
   };
 
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+      vscodevim.vim
+    ];
+  };
+
   home.packages = with pkgs; [
     google-chrome
     gnome.gnome-tweaks
     tdesktop
     wl-clipboard
     python312
-
     asciinema
   ];
 
