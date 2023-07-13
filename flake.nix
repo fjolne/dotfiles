@@ -86,17 +86,17 @@
           "fjolne@g14-nixos" = mkHomeConfig {
             inherit system;
             username = "fjolne";
-            extraModules = [ ./modules/home-manager/hosts/desktop/g14-nixos.nix ];
+            extraModules = [ ./modules/home-manager/hosts/desktop/g14.nix ];
+          };
+          "gamer@g14-nixos" = mkHomeConfig {
+            inherit system;
+            username = "gamer";
+            extraModules = [ ./modules/home-manager/hosts/desktop/g14-gamer.nix ];
           };
           "fjolne@g2-nixos" = mkHomeConfig {
             inherit system;
             username = "fjolne";
-            extraModules = [ ./modules/home-manager/hosts/desktop/g2-nixos.nix ];
-          };
-          "fjolne@g14-fedora" = mkHomeConfig {
-            inherit system;
-            username = "fjolne";
-            extraModules = [ ./modules/home-manager/hosts/desktop/g14-fedora.nix ];
+            extraModules = [ ./modules/home-manager/hosts/desktop/g2.nix ];
           };
           "ec2-user@devcontainer" = mkHomeConfig {
             inherit system;
