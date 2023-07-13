@@ -64,11 +64,6 @@ with lib;
         PROMPT_COMMAND="''${PROMPT_COMMAND:+''${PROMPT_COMMAND/%;*( )};}history -a"
         HISTTIMEFORMAT='%F %T '
       ''}
-
-      # Must C-d at least twice to close shell.
-      # export IGNOREEOF=1
-
-      export PATH="$HOME/.local/bin:$PATH"
     '';
 
     profileExtra = ''
