@@ -10,12 +10,6 @@ with lib;
     extraConfig = utils.readSecretFile ./ssh_config;
   };
 
-  programs.bash = {
-    initExtra = ''
-      export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
-    '';
-  };
-
   programs.vscode = {
     enable = true;
     extensions = with pkgs.vscode-extensions; [
