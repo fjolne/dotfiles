@@ -87,6 +87,7 @@ with lib;
     isNormalUser = true;
     description = "Oleg Martynov";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
+    shell = pkgs.nushell;
     openssh.authorizedKeys = {
       keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPyva32b9/JANUGZEgQny/wemAETo4z6wAkF16CLk7fF"
@@ -97,12 +98,15 @@ with lib;
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-    git
-    gnumake
-    git-crypt
-    pinentry
-  ];
+  environment = {
+    shells = with pkgs; [ nushell ];
+    systemPackages = with pkgs; [
+      git
+      gnumake
+      git-crypt
+      pinentry
+    ];
+  };
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Some programs need SUID wrappers, can be configured further or are
