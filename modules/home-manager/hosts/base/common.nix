@@ -114,14 +114,12 @@ with lib;
       s = "status";
       d = "diff";
       ds = "diff --staged";
+      dt = "difftool";
+      dts = "difftool --staged";
       c = "commit";
       a = "add -p";
       p = "pull --rebase --autostash";
       l = "log --stat";
-    };
-    difftastic = {
-      enable = true;
-      display = "inline";
     };
     extraConfig = {
       core.whitespace = "trailing-space,space-before-tab";
@@ -131,6 +129,11 @@ with lib;
       rebase.autoStash = true;
       init.defaultBranch = "main";
       # rerere.enabled = true;
+
+      diff.tool = "difftastic";
+      difftool.prompt = false;
+      difftool.difftastic.cmd = ''${pkgs.difftastic}/bin/difft "$LOCAL" "$REMOTE" --color auto --background light --display inline'';
+      pager.difftool = true;
     };
   };
 
