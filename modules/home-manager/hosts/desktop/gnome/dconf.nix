@@ -7,6 +7,7 @@ rec {
   home.packages = with pkgs.gnomeExtensions; [
     pop-shell
     workspace-matrix
+    vitals
   ];
 
   dconf.settings = {
