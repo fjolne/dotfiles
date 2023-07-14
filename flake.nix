@@ -43,9 +43,7 @@
         { username
         , system ? "x86_64-linux"
         , nixpkgs ? inputs.nixpkgs
-        , baseModules ? [
-            ./modules/home-manager
-          ]
+        , baseModules ? [ ]
         , extraModules ? [ ]
         }:
         let
