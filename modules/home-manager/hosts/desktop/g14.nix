@@ -22,11 +22,4 @@
       def lla [] { ls -la | select uid mode name type size modified target | sort-by type name -i }
     '';
   };
-
-  programs.vscode = {
-    enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      vscodevim.vim
-    ];
-  };
 }

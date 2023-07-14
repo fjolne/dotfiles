@@ -12,6 +12,7 @@ with lib;
 
   programs.vscode = {
     enable = true;
+    package = pkgs.unstable.vscode;
     extensions = with pkgs.vscode-extensions; [
       vscodevim.vim
     ];
