@@ -21,9 +21,6 @@ with lib;
     just
     mosh
 
-    nixpkgs-fmt
-    nil
-
     (nerdfonts.override { fonts = [ "Iosevka" ]; })
   ];
 

@@ -62,6 +62,14 @@
     {
       packages = import ./packages { inherit pkgs; };
 
+      devShells.default = pkgs.mkShell {
+        packages = with pkgs; [
+          nixpkgs-fmt
+          nil
+          nushell
+        ];
+      };
+
       legacyPackages = {
         nixosConfigurations = {
           "g14-nixos" = mkNixosConfig {
