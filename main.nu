@@ -23,6 +23,15 @@ def "main switch gpg-agent" [] {
   systemctl --user restart gpg-agent.socket gpg-agent-extra.socket gpg-agent-ssh.socket
 }
 
+# import private GPG key from stdin
+def "main import gpg" [] {
+  if not ("~/.gnupg/gpg-agent.conf" | path exists) {
+    install -d -m700 -o $env.USER -g $env.USER ~/.gnupg
+    $"grab\npinentry-program ((which pinentry).0.path)\n" | save ~/.gnupg/gpg-agent.conf
+  }
+  cat | GPG_TTY=$"(tty)" gpg --import
+}
+
 def main [ ] {
     help main
 }

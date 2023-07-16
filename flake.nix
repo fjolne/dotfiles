@@ -64,10 +64,15 @@
 
       devShells.default = pkgs.mkShell {
         packages = with pkgs; [
-          nixpkgs-fmt
-          nil
+          git
+          git-crypt
+          gnupg
+          pinentry-gtk2
           nushell
           (pkgs.writeShellScriptBin "main" ''${./main.nu} "$@"'')
+
+          nixpkgs-fmt
+          nil
         ];
       };
 
