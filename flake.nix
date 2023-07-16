@@ -67,6 +67,7 @@
           nixpkgs-fmt
           nil
           nushell
+          (pkgs.writeShellScriptBin "main" ''${./main.nu} "$@"'')
         ];
       };
 
