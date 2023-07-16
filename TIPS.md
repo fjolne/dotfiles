@@ -1,11 +1,3 @@
-# Nix
-
-- To make nix rebuild the flake after unlock:
-
-```shell
-nix store gc
-```
-
 # GPG Agent Forwarding
 
 Ensure that you local agent is using the `extra` socket and add this to local `.ssh/config`. Replace XXXX with `$(id -u)` on remote and YYYY with `$(id -u)` on local device:
