@@ -30,8 +30,8 @@ Use `main` to setup the system:
 
 ```shell
 # with secrets
-main import gpg
-git-crypt unlock
+main secrets import-gpg
+main secrets unlock
 main switch home .#fjolne@vpc
 
 # without secrets

@@ -24,12 +24,18 @@ def "main switch gpg-agent" [] {
 }
 
 # import private GPG key from stdin
-def "main import gpg" [] {
+def "main secrets import-gpg" [] {
   if not ("~/.gnupg/gpg-agent.conf" | path exists) {
     install -d -m700 -o $env.USER -g $env.USER ~/.gnupg
     $"grab\npinentry-program ((which pinentry).0.path)\n" | save ~/.gnupg/gpg-agent.conf
   }
   cat | GPG_TTY=$"(tty)" gpg --import
+}
+
+# decrypt git-crypt files
+def "main secrets unlock" [] {
+  git-crypt unlock
+  nix store gc
 }
 
 def main [ ] {
