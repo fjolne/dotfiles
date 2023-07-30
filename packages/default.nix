@@ -4,4 +4,5 @@ let
 in
 {
   leafish = callPackage ./leafish { };
+  bws = callPackage ./bws { };
 }
