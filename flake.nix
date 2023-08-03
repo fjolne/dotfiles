@@ -77,6 +77,8 @@
       };
 
       legacyPackages = {
+        inherit (pkgs) home-manager;
+
         nixosConfigurations = {
           "g14-nixos" = mkNixosConfig {
             inherit system;
