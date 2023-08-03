@@ -37,19 +37,11 @@
           modules = baseModules ++ hardwareModules ++ extraModules;
           specialArgs = { inherit self inputs nixpkgs; };
         };
-      mkHomeConfig = { system, username, extraModules ? [ ] }:
+      mkHomeConfig = { pkgs, username, extraModules ? [ ] }:
         let
           baseModules = [ ];
           lib = nixpkgs.lib.extend
             (final: prev: (import ./lib final) // home-manager.lib);
-          unstableOverlay = final: prev: {
-            unstable = import nixpkgs-unstable {
-              inherit system;
-              config.allowUnfree = true;
-            };
-          };
-          pkgs = (nixpkgs.legacyPackages.${system}.extend unstableOverlay)
-            // { config.allowUnfree = true; };
         in
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
@@ -58,7 +50,16 @@
         };
     in
     flake-utils.lib.eachDefaultSystem (system:
-    let pkgs = nixpkgs.legacyPackages.${system}; in
+    let
+      unstableOverlay = final: prev: {
+        unstable = import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      };
+      pkgs = (nixpkgs.legacyPackages.${system}.extend unstableOverlay)
+        // { config.allowUnfree = true; };
+    in
     {
       packages = import ./packages { inherit pkgs; };
 
@@ -68,7 +69,7 @@
           git-crypt
           gnupg
           pinentry-gtk2
-          nushell
+          unstable.nushell
           (pkgs.writeShellScriptBin "main" ''${./main.nu} "$@"'')
 
           nixpkgs-fmt
@@ -99,32 +100,32 @@
 
         homeConfigurations = {
           "fjolne@g14-nixos" = mkHomeConfig {
-            inherit system;
+            inherit pkgs;
             username = "fjolne";
             extraModules = [ ./modules/home-manager/hosts/desktop/g14.nix ];
           };
           "gamer@g14-nixos" = mkHomeConfig {
-            inherit system;
+            inherit pkgs;
             username = "gamer";
             extraModules = [ ./modules/home-manager/hosts/desktop/g14-gamer.nix ];
           };
           "fjolne@g2-nixos" = mkHomeConfig {
-            inherit system;
+            inherit pkgs;
             username = "fjolne";
             extraModules = [ ./modules/home-manager/hosts/desktop/g2.nix ];
           };
           "ec2-user@devcontainer" = mkHomeConfig {
-            inherit system;
+            inherit pkgs;
             username = "ec2-user";
             extraModules = [ ./modules/home-manager/hosts/server/devcontainer.nix ];
           };
           "fjolne@vpc" = mkHomeConfig {
-            inherit system;
+            inherit pkgs;
             username = "fjolne";
             extraModules = [ ./modules/home-manager/hosts/server/vpc.nix ];
           };
           "ec2-user@vpc" = mkHomeConfig {
-            inherit system;
+            inherit pkgs;
             username = "ec2-user";
             extraModules = [ ./modules/home-manager/hosts/server/vpc.nix ];
           };
