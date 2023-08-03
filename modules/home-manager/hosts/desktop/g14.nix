@@ -35,8 +35,8 @@
       | transpose -r -d
       | load-env
 
-      def ll [] { ls -l | select name type target mode user group size created accessed modified | sort-by type name -i }
-      def lla [] { ls -la | select name type target mode user group size created accessed modified | sort-by type name -i }
+      def ll [] { ls -l | select name type target mode user group size created modified | sort-by type name -i }
+      def lla [] { ls -la | select name type target mode user group size created modified | sort-by type name -i }
 
       use ${pkgs.nu_scripts}/share/nu_scripts/custom-completions/git/git-completions.nu *
       use ${pkgs.nu_scripts}/share/nu_scripts/custom-completions/nix/nix-completions.nu *
