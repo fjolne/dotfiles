@@ -83,11 +83,12 @@ with lib;
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  programs.fish.enable = true;
   users.users.fjolne = {
     isNormalUser = true;
     description = "Oleg Martynov";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    shell = pkgs.nushell;
+    shell = pkgs.fish;
     openssh.authorizedKeys = {
       keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPyva32b9/JANUGZEgQny/wemAETo4z6wAkF16CLk7fF"
@@ -99,7 +100,7 @@ with lib;
   nixpkgs.config.allowUnfree = true;
 
   environment = {
-    shells = with pkgs; [ nushell ];
+    shells = with pkgs; [ fish ];
     systemPackages = with pkgs; [
       git
       gnumake

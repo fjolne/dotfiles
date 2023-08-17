@@ -71,6 +71,7 @@ with lib;
   home.shellAliases = {
     # FIXME
     # "mo" = "mosh --server=/home/ec2-user/.local/bin/mosh-server";
+    "fish-direnv" = "direnv exec / fish";
   };
 
   programs.neovim = {
@@ -118,6 +119,7 @@ with lib;
       p = "pull --rebase --autostash";
       l = "log --stat";
     };
+    lfs.enable = true;
     extraConfig = {
       core.whitespace = "trailing-space,space-before-tab";
       core.editor = "nvim";
