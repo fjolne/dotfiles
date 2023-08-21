@@ -20,6 +20,8 @@ with lib;
     pinentry
     just
     mosh
+    nixpkgs-fmt
+    nil
 
     (nerdfonts.override { fonts = [ "Iosevka" ]; })
   ];
