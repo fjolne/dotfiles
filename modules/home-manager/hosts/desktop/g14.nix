@@ -8,9 +8,16 @@
     enable = true;
     interactiveShellInit = ''
       set fish_greeting
+      set -gx TERM xterm-256color
     '';
   };
   programs.zoxide.enable = true;
+
+  home.shellAliases = {
+    # FIXME
+    # "mo" = "mosh --server=/home/ec2-user/.local/bin/mosh-server";
+    "fish-direnv" = "direnv exec / fish";
+  };
 
   # programs.direnv.enableNushellIntegration = false;
   # programs.nushell = {

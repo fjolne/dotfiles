@@ -8,6 +8,6 @@ with lib;
 
   programs.keychain = {
     inheritType = "any-once";
-    keys = [ "id_rsa" ];
+    keys = [ ];
   };
 }

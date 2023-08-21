@@ -16,17 +16,10 @@ with lib;
     ripgrep
     fd
     less
-    git-crypt
     pinentry
-    just
-    mosh
     nixpkgs-fmt
     nil
-
-    (nerdfonts.override { fonts = [ "Iosevka" ]; })
   ];
-
-  fonts.fontconfig.enable = true;
 
   programs.tmux = {
     enable = true;
@@ -68,12 +61,6 @@ with lib;
     profileExtra = ''
       [[ -f ~/.nix-profile/etc/profile.d/nix.sh ]] && . ~/.nix-profile/etc/profile.d/nix.sh
     '';
-  };
-
-  home.shellAliases = {
-    # FIXME
-    # "mo" = "mosh --server=/home/ec2-user/.local/bin/mosh-server";
-    "fish-direnv" = "direnv exec / fish";
   };
 
   programs.neovim = {

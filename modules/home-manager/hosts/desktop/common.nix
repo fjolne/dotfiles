@@ -25,8 +25,11 @@ with lib;
     wl-clipboard
     python312
     asciinema
+    mosh
+    (nerdfonts.override { fonts = [ "Iosevka" ]; })
   ];
 
+  fonts.fontconfig.enable = true;
   programs.keychain.enable = false;
   services.gpg-agent.enable = false;
 
