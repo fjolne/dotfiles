@@ -36,6 +36,11 @@ with lib;
     SUDO_EDITOR = "nvim";
   };
 
+  home.shellAliases = {
+    "sy" = "sudo systemctl";
+    "ju" = "journalctl";
+  };
+
   programs.bash = {
     enable = true;
 
