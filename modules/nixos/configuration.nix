@@ -100,6 +100,9 @@ with lib;
   nixpkgs.config.allowUnfree = true;
 
   environment = {
+    variables = {
+      # QT_QPA_PLATFORMTHEME = "Adwaita-Dark";
+    };
     shells = with pkgs; [ fish ];
     systemPackages = with pkgs; [
       git
@@ -154,8 +157,12 @@ with lib;
 
   virtualisation.docker.enable = true;
   virtualisation.docker.enableNvidia = true;
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "fjolne" ];
+
 
   programs.steam.enable = true;
+  services.flatpak.enable = true;
 
   hardware.bluetooth.settings = {
     General = {

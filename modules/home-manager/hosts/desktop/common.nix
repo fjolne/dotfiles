@@ -13,13 +13,10 @@ with lib;
   programs.vscode = {
     enable = true;
     package = pkgs.unstable.vscode;
-    extensions = with pkgs.vscode-extensions; [
-      vscodevim.vim
-    ];
   };
 
   home.packages = with pkgs; [
-    google-chrome
+    unstable.google-chrome
     gnome.gnome-tweaks
     tdesktop
     wl-clipboard

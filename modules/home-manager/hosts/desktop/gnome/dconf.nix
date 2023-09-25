@@ -31,8 +31,8 @@ rec {
     "org/gnome/desktop/interface" = {
       font-antialiasing = "grayscale";
       font-hinting = "slight";
-      gtk-theme = "Yaru-dark";
-      icon-theme = "Yaru";
+      # gtk-theme = "Yaru-dark";
+      # icon-theme = "Yaru";
     };
 
     "org/gnome/desktop/notifications" = {
