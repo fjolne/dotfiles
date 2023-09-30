@@ -124,6 +124,11 @@
             username = "fjolne";
             extraModules = [ ./modules/home-manager/hosts/server/vpc.nix ];
           };
+          "ilaut@vpc" = mkHomeConfig {
+            inherit pkgs;
+            username = "ilaut";
+            extraModules = [ ./modules/home-manager/hosts/server/vpc.nix ];
+          };
           "ec2-user@vpc" = mkHomeConfig {
             inherit pkgs;
             username = "ec2-user";
