@@ -17,6 +17,7 @@
     # FIXME
     # "mo" = "mosh --server=/home/ec2-user/.local/bin/mosh-server";
     "fish-direnv" = "direnv exec / fish";
+    "cat" = "bat -pp";
   };
 
   # programs.direnv.enableNushellIntegration = false;

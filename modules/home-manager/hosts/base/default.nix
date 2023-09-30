@@ -19,6 +19,7 @@ with lib;
     pinentry
     nixpkgs-fmt
     nil
+    delta
   ];
 
   programs.tmux = {

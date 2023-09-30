@@ -47,9 +47,7 @@ with lib;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.displayManager.setupCommands = ''
-  #   sudo install -m 0664 -o gdm -g gdm ~fjolne/.config/monitors.xml ~gdm/.config/monitors.xml
-  # '';
+  # services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.gnome.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
