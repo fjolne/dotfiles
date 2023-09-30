@@ -43,6 +43,26 @@ with lib;
       set fish_greeting
       set -gx TERM xterm-256color
     '';
+    plugins = [
+      {
+        name = "autopair";
+        src = pkgs.fetchFromGitHub {
+          owner = "jorgebucaran";
+          repo = "autopair.fish";
+          rev = "4d1752ff5b39819ab58d7337c69220342e9de0e2";
+          sha256 = "sha256-qt3t1iKRRNuiLWiVoiAYOu+9E7jsyECyIqZJ/oRIT1A=";
+        };
+      }
+      {
+        name = "replay";
+        src = pkgs.fetchFromGitHub {
+          owner = "jorgebucaran";
+          repo = "replay.fish";
+          rev = "bd8e5b89ec78313538e747f0292fcaf631e87bd2";
+          sha256 = "sha256-bM6+oAd/HXaVgpJMut8bwqO54Le33hwO9qet9paK1kY=";
+        };
+      }
+    ];
   };
 
   programs.bash = {
