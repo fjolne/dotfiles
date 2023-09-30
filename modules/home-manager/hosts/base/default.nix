@@ -22,14 +22,6 @@ with lib;
     delta
   ];
 
-  programs.tmux = {
-    enable = true;
-    extraConfig = builtins.readFile ./tmux.conf;
-    plugins = with pkgs.tmuxPlugins; [
-      fingers
-    ];
-  };
-
   home.sessionVariables = {
     TERM = "xterm-256color";
     VISUAL = "code";
@@ -40,10 +32,21 @@ with lib;
   home.shellAliases = {
     "sy" = "sudo systemctl";
     "ju" = "journalctl";
+    "fish-direnv" = "direnv exec / fish";
+    "cat" = "bat -pp";
+    # FIXME "mo" = "mosh --server=/home/ec2-user/.local/bin/mosh-server";
+  };
+
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      set fish_greeting
+      set -gx TERM xterm-256color
+    '';
   };
 
   programs.bash = {
-    enable = true;
+    enable = false;
 
     shellOptions =
       lib.mkOptionDefault [ "cdspell" "dirspell" "histreedit" "histverify" ];
@@ -69,6 +72,14 @@ with lib;
     '';
   };
 
+  programs.tmux = {
+    enable = true;
+    extraConfig = builtins.readFile ./tmux.conf;
+    plugins = with pkgs.tmuxPlugins; [
+      fingers
+    ];
+  };
+
   programs.neovim = {
     enable = true;
     viAlias = true;
@@ -82,6 +93,8 @@ with lib;
       aws = { disabled = true; };
     };
   };
+
+  programs.zoxide.enable = true;
 
   programs.exa = {
     enable = true;
@@ -135,11 +148,6 @@ with lib;
     enable = true;
     # controlMaster = "auto";
     # controlPersist = "5m";
-  };
-
-  programs.keychain = {
-    enable = mkDefault true;
-    keys = [ ];
   };
 
   programs.gpg = {

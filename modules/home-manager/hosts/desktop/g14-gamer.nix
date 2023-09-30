@@ -11,8 +11,6 @@
   };
 
   home.packages = with pkgs; [
-    google-chrome
-
     minecraft
     prismlauncher
     mcrcon
