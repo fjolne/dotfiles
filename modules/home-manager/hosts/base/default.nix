@@ -20,7 +20,6 @@ with lib;
     nixpkgs-fmt
     nil
     delta
-    busybox
   ];
 
   home.sessionVariables = {
