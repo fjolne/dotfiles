@@ -1,8 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./common.nix
-    # ./mosh.nix
-  ];
+  imports = [ ./common.nix ];
+
+  programs.keychain = {
+    enable = true;
+    inheritType = "local-once";
+  };
 }

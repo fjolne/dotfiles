@@ -134,6 +134,11 @@
             username = "ec2-user";
             extraModules = [ ./modules/home-manager/hosts/server/vpc.nix ];
           };
+          "ec2-user@nixos" = mkHomeConfig {
+            inherit pkgs;
+            username = "ec2-user";
+            extraModules = [ ./modules/home-manager/hosts/server/nixos.nix ];
+          };
         };
       };
     });
