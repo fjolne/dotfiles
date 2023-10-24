@@ -37,6 +37,9 @@ with lib;
       update_check_interval = 0;
       window_padding_width = 2;
     };
+    keybindings = {
+      "ctrl+shift+enter" = "new_window_with_cwd";
+    };
     theme = "Gruvbox Dark";
     font = {
       name = "IosevkaNerdFont";
