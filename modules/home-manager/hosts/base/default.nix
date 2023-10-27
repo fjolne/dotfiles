@@ -30,8 +30,8 @@ with lib;
   };
 
   home.shellAliases = {
-    "sy" = "sudo systemctl";
-    "ju" = "journalctl";
+    "sctl" = "systemctl --user";
+    "jctl" = "journalctl --user";
     "fish-direnv" = "direnv exec / fish";
     "cat" = "bat -pp";
     # FIXME "mo" = "mosh --server=/home/ec2-user/.local/bin/mosh-server";
