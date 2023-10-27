@@ -17,4 +17,5 @@ with inputs;
   };
 
   services.vscode-server.enable = true;
+  boot.supportedFilesystems = [ "ntfs" ];
 }
