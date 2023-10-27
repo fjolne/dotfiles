@@ -6,5 +6,6 @@
   home.packages = with pkgs; [
     pcsx2
     retroarchFull
+    mcrcon
   ];
 }

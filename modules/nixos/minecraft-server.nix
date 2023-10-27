@@ -11,15 +11,15 @@
     eula = true;
     openFirewall = true;
     servers = {
-      terralith = {
+      terralith20 = {
         enable = true;
-        package = pkgs.fabricServers.fabric-1_18_2-0_14_9;
+        package = pkgs.fabricServers.fabric-1_20_2;
         symlinks = {
           mods = pkgs.linkFarmFromDrvs "mods" (builtins.attrValues {
-            Terralith = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/8oi3bsk5/versions/aYOzrVFZ/Terralith_1.18.2_v2.2.4.jar"; sha512 = "7fea7c2c5007101a82c0f8d952c074603866c1ca4fa72dadd870c6616eae75c4959d7d1586ca0e5a72a49e99813b2ba120005328f8cacc41e603692e393b8d4f"; };
-            Cristel = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/cl223EMc/versions/HocdgthH/cristellib-fabric-1.0.0.jar"; sha512 = "633b73cab4bf3f175209c27b2fc49fca81409e2d502d372666ae3d087bf55f98790cf2a39d9b6eb49a818704d21473aaee439bd2f66030d2c098705f89b61bc4"; };
-            FabricAPI = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/95QMsRyb/fabric-api-0.76.0%2B1.18.2.jar"; sha512 = "4c8b663ac80a58baa9d6e2589c32dab822d199439cf7dde5421891242c1b49ef1040e3cbf68c97d58e51094d15435f7593c83febd1ffb4942af3ae7cbe828218"; };
-            UnfixedSeeds = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/BMKSAGRn/versions/TDwrdjSl/unfixed-seeds-1.0.2.jar"; sha512 = "20c397c2defccdaa498b2b89d602b297ef933dda38282a5ccea36871e249d723d678657717e0c65932396e2549f531512482d1dec6d3d5c297f9fd5ff3a2284a"; };
+            Terralith = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/8oi3bsk5/versions/qFd4s3fV/Terralith_1.20.2_v2.4.7.jar"; sha512 = "10ef14d491b920390229f34615323cd6a28b16a27cd29c5472349b642df3fd7bb70f6a14f6b78cc18153e6d7445967d0436ad8ac14e14a75f3d02a8e63b4da5c"; };
+#            Cristel = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/cl223EMc/versions/LRFIdFuW/cristellib-1.1.4-fabric.jar"; sha512 = "2fd41c8ad8f1d4c883371673d2d9bacd52ae1e69119679ce02a0016b192925cabab9956ebae5bff9fc10ace7d5c4d7d1e79b6b7653f33aa53fd54e9bfe10435b"; };
+            FabricAPI = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/ZI1BEw1i/fabric-api-0.90.4%2B1.20.2.jar"; sha512 = "31f3b114c2b37bae5419e162d212bc7aaffcad9df122e94d2a461e9f92d694af6ab5b7a2d9684f6df75dd7df5c7b0d2ce8df2046fd6bccd8dd4fa0fa3a3727de"; };
+#            UnfixedSeeds = pkgs.fetchurl { url = "https://cdn.modrinth.com/data/BMKSAGRn/versions/TDwrdjSl/unfixed-seeds-1.0.2.jar"; sha512 = "20c397c2defccdaa498b2b89d602b297ef933dda38282a5ccea36871e249d723d678657717e0c65932396e2549f531512482d1dec6d3d5c297f9fd5ff3a2284a"; };
           });
         };
 
