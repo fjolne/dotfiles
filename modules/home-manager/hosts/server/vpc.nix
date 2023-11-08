@@ -6,5 +6,6 @@
   programs.keychain = {
     enable = true;
     inheritType = "local-once";
+    keys = [ ];
   };
 }
