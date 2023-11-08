@@ -102,7 +102,6 @@ with lib;
 
   programs.neovim = {
     enable = true;
-    vimAlias = true;
   };
 
   programs.starship = {
