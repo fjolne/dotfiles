@@ -146,11 +146,11 @@ with lib;
   hardware.nvidia.prime.offload.enable = false;
   hardware.nvidia.powerManagement.enable = false;
   specialisation = {
-    power-saving.configuration = {
-      system.nixos.tags = [ "power-saving" ];
-      hardware.nvidia.prime.offload.enable = mkForce true;
-      hardware.nvidia.powerManagement.enable = mkForce true;
-    };
+    # power-saving.configuration = {
+    #   system.nixos.tags = [ "power-saving" ];
+    #   hardware.nvidia.prime.offload.enable = mkForce true;
+    #   hardware.nvidia.powerManagement.enable = mkForce true;
+    # };
   };
 
   virtualisation.docker.enable = true;
