@@ -6,6 +6,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "github:nixos/nixos-hardware";
+    agenix.url = "github:ryantm/agenix";
     home-manager = {
       url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,6 +22,7 @@
     , nixpkgs-unstable
     , flake-utils
     , nixos-hardware
+    , agenix
     , home-manager
     , ...
     } @ inputs:
@@ -87,7 +89,10 @@
               ./modules/hardware/g14.nix
               nixos-hardware.nixosModules.asus-zephyrus-ga401
             ];
-            extraModules = [ ./modules/nixos/g14 ];
+            extraModules = [
+              ./modules/nixos/g14
+              agenix.nixosModules.default
+            ];
           };
           "g2-nixos" = mkNixosConfig {
             inherit system;
