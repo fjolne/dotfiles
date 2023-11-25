@@ -65,7 +65,7 @@ rec {
     };
 
     "org/gnome/desktop/wm/keybindings" = {
-      close = [ "<Alt>w" ];
+      close = [ "<Super>q" ];
     };
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
@@ -74,32 +74,46 @@ rec {
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
       ];
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      binding = "<Control><Super>c";
+      binding = "<Super>c";
       command = "google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --force-dark-mode";
       iname = "Chrome";
     };
 
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-      binding = "<Control><Super>e";
+      binding = "<Super>e";
       command = "code --enable-features=UseOzonePlatform --ozone-platform=wayland";
       iname = "Code";
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
-      binding = "<Control><Super>t";
+      binding = "<Super>t";
       command = "kitty";
       iname = "Console";
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
-      binding = "<Control><Super>b";
+      binding = "<Super>b";
       command = "google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --force-dark-mode chrome-extension://nngceckbapebfimnlniiiahkandclblb/popup/index.html?uilocation=popout";
       iname = "Bitwarden";
+    };
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
+      binding = "<Super><Alt><Control><Shift>s";
+      command = "systemctl suspend";
+      iname = "Suspend";
+    };
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
+      binding = "<Super><Alt><Control><Shift>l";
+      command = "loginctl lock-session";
+      iname = "Lock";
     };
   };
 }
