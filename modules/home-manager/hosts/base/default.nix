@@ -20,6 +20,9 @@ with lib;
     nixpkgs-fmt
     nil
     delta
+
+    (pkgs.writeShellScriptBin "," ''nix run nixpkgs#$1 -- "''${@:2}"'')
+    (pkgs.writeShellScriptBin ",," ''nix shell nixpkgs#$1'')
   ];
 
   home.sessionVariables = {
