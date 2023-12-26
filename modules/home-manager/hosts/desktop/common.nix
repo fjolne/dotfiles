@@ -18,7 +18,7 @@ with lib;
   home.packages = with pkgs; [
     unstable.google-chrome
     gnome.gnome-tweaks
-    unstable.tdesktop
+    unstable.telegram-desktop
     wl-clipboard
     python312
     asciinema
