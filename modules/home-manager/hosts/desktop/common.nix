@@ -16,13 +16,19 @@ with lib;
   };
 
   home.packages = with pkgs; [
+    # desktop apps
     unstable.google-chrome
-    gnome.gnome-tweaks
     unstable.telegram-desktop
+    unstable.zulip
+    gnome.gnome-tweaks
+
+    # terminal apps
     wl-clipboard
     python312
     asciinema
     mosh
+
+    # fonts
     (nerdfonts.override { fonts = [ "Iosevka" ]; })
   ];
 
