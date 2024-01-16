@@ -118,7 +118,7 @@ with lib;
 
   programs.zoxide.enable = true;
 
-  programs.exa = {
+  programs.eza = {
     enable = true;
     enableAliases = true;
   };
