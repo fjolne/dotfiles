@@ -32,10 +32,10 @@ Use `main` to setup the system:
 # with secrets
 main secrets import-gpg
 main secrets unlock
-main switch home .#fjolne@vpc
+main switch home .#fjolne@vps
 
 # without secrets
-main switch home -s .#fjolne@vpc
+main switch home -s .#fjolne@vps
 ```
 
 # Inspirations

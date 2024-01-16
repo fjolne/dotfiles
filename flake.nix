@@ -119,20 +119,20 @@
             username = "ec2-user";
             extraModules = [ ./modules/home-manager/hosts/server/devcontainer.nix ];
           };
-          "fjolne@vpc" = mkHomeConfig {
+          "fjolne@vps" = mkHomeConfig {
             inherit pkgs;
             username = "fjolne";
-            extraModules = [ ./modules/home-manager/hosts/server/vpc.nix ];
+            extraModules = [ ./modules/home-manager/hosts/server/vps.nix ];
           };
-          "ilaut@vpc" = mkHomeConfig {
+          "ilaut@vps" = mkHomeConfig {
             inherit pkgs;
             username = "ilaut";
-            extraModules = [ ./modules/home-manager/hosts/server/vpc.nix ];
+            extraModules = [ ./modules/home-manager/hosts/server/vps.nix ];
           };
-          "ec2-user@vpc" = mkHomeConfig {
+          "ec2-user@vps" = mkHomeConfig {
             inherit pkgs;
             username = "ec2-user";
-            extraModules = [ ./modules/home-manager/hosts/server/vpc.nix ];
+            extraModules = [ ./modules/home-manager/hosts/server/vps.nix ];
           };
           "ec2-user@nixos" = mkHomeConfig {
             inherit pkgs;
