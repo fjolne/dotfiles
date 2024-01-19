@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, unstableOverlay, ... }:
 
 with lib;
 {
@@ -94,8 +94,8 @@ with lib;
     };
   };
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [ unstableOverlay ];
 
   environment = {
     variables = {

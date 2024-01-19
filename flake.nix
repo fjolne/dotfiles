@@ -25,7 +25,7 @@
     , ...
     } @ inputs:
     let
-      mkNixosConfig = { system, hardwareModules, extraModules ? [ ] }:
+      mkNixosConfig = { system, unstableOverlay, hardwareModules, extraModules ? [ ] }:
         let
           baseModules = [
             home-manager.nixosModules.home-manager
@@ -35,7 +35,7 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           modules = baseModules ++ hardwareModules ++ extraModules;
-          specialArgs = { inherit self inputs nixpkgs; };
+          specialArgs = { inherit self inputs nixpkgs unstableOverlay; };
         };
       mkHomeConfig = { pkgs, username, extraModules ? [ ] }:
         let
@@ -82,7 +82,7 @@
 
         nixosConfigurations = {
           "g14-nixos" = mkNixosConfig {
-            inherit system;
+            inherit system unstableOverlay;
             hardwareModules = [
               ./modules/hardware/g14.nix
               nixos-hardware.nixosModules.asus-zephyrus-ga401
