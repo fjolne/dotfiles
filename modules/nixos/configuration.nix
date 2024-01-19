@@ -121,6 +121,7 @@ with lib;
   };
   services.tailscale.enable = true;
   services.tailscale.package = pkgs.unstable.tailscale;
+  services.tailscale.useRoutingFeatures = "client";
 
   # List services that you want to enable:
 
