@@ -22,8 +22,8 @@ with lib;
     delta
     unzip
 
-    (pkgs.writeShellScriptBin "," ''nix run nixpkgs#$1 -- "''${@:2}"'')
-    (pkgs.writeShellScriptBin ",," ''nix shell nixpkgs#$1'')
+    (pkgs.writeShellScriptBin "," ''nix run nixpkgs/nixos-23.11#$1 -- "''${@:2}"'')
+    (pkgs.writeShellScriptBin ",," ''nix shell nixpkgs/nixos-23.11#$1'')
   ];
 
   home.sessionVariables = {
