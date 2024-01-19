@@ -120,6 +120,7 @@ with lib;
     pinentryFlavor = "gtk2";
   };
   services.tailscale.enable = true;
+  services.tailscale.package = pkgs.unstable.tailscale;
 
   # List services that you want to enable:
 
