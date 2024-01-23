@@ -21,6 +21,7 @@ with lib;
     unstable.telegram-desktop
     unstable.zulip
     unstable.calibre
+    unstable.rclone
     gnome.gnome-tweaks
 
     # terminal apps
