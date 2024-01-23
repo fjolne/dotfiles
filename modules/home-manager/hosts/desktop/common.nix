@@ -20,6 +20,7 @@ with lib;
     unstable.google-chrome
     unstable.telegram-desktop
     unstable.zulip
+    unstable.calibre
     gnome.gnome-tweaks
 
     # terminal apps
