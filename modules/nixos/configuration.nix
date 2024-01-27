@@ -110,6 +110,14 @@ with lib;
     ];
   };
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.substituters = [
+    "https://cuda-maintainers.cachix.org"
+    "https://numtide.cachix.org"
+  ];
+  nix.settings.trusted-public-keys = [
+    "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+    "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
