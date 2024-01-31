@@ -55,6 +55,9 @@
         unstable = import nixpkgs-unstable {
           inherit system;
           config.allowUnfree = true;
+          config.permittedInsecurePackages = [
+            "electron-25.9.0"
+          ];
         };
       };
       pkgs = (nixpkgs.legacyPackages.${system}.extend unstableOverlay)

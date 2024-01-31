@@ -22,6 +22,7 @@ with lib;
     unstable.zulip
     unstable.calibre
     unstable.rclone
+    unstable.obsidian
     gnome.gnome-tweaks
 
     # terminal apps
