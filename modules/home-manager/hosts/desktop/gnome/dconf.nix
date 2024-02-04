@@ -80,26 +80,26 @@ rec {
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      binding = "<Super>c";
+      binding = "<Super><Control>c";
       command = "google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --force-dark-mode";
       iname = "Chrome";
     };
 
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-      binding = "<Super>e";
+      binding = "<Super><Control>e";
       command = "code --enable-features=UseOzonePlatform --ozone-platform=wayland";
       iname = "Code";
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
-      binding = "<Super>t";
+      binding = "<Super><Control>t";
       command = "kitty";
       iname = "Console";
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
-      binding = "<Super>b";
+      binding = "<Super><Control>b";
       command = "google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --force-dark-mode chrome-extension://nngceckbapebfimnlniiiahkandclblb/popup/index.html?uilocation=popout";
       iname = "Bitwarden";
     };
