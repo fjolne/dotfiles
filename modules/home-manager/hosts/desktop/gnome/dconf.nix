@@ -4,9 +4,10 @@
 with lib.hm.gvariant;
 
 rec {
-  home.packages = with pkgs.gnomeExtensions; [
-    pop-shell
-    workspace-matrix
+  home.packages = with pkgs.unstable.gnomeExtensions; [
+    paperwm
+    # pop-shell
+    # workspace-matrix
     vitals
   ];
 
