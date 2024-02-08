@@ -149,6 +149,7 @@ with lib;
       a = "add -p";
       p = "pull --rebase --autostash";
       l = "log --stat";
+      pl = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(r) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
     };
     lfs.enable = true;
     extraConfig = {
