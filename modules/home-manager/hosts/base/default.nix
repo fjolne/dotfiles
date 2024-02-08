@@ -31,6 +31,7 @@ with lib;
     VISUAL = "code";
     EDITOR = "nvim";
     SUDO_EDITOR = "nvim";
+    PAGER = "less -FiSwX";
   };
 
   home.shellAliases = {
