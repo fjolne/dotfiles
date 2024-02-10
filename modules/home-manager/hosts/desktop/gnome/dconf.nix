@@ -82,14 +82,14 @@ rec {
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       binding = "<Super><Control>c";
-      command = "google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --force-dark-mode";
+      command = "google-chrome-stable --force-dark-mode";
       iname = "Chrome";
     };
 
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
       binding = "<Super><Control>e";
-      command = "code --enable-features=UseOzonePlatform --ozone-platform=wayland";
+      command = "code";
       iname = "Code";
     };
 
@@ -101,7 +101,7 @@ rec {
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
       binding = "<Super><Control>b";
-      command = "google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --force-dark-mode chrome-extension://nngceckbapebfimnlniiiahkandclblb/popup/index.html?uilocation=popout";
+      command = "google-chrome-stable --force-dark-mode chrome-extension://nngceckbapebfimnlniiiahkandclblb/popup/index.html?uilocation=popout";
       iname = "Bitwarden";
     };
 

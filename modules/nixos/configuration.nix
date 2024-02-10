@@ -2,8 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, lib, unstableOverlay, ... }:
+{ pkgs, lib, unstableOverlay, inputs, ... }:
 
+with inputs;
 with lib;
 {
   # Bootloader.
@@ -153,18 +154,21 @@ with lib;
     algorithm = "zstd";
   };
 
-  hardware.nvidia.prime.offload.enable = false;
-  hardware.nvidia.powerManagement.enable = false;
+  imports = [ nixos-hardware.nixosModules.common-gpu-nvidia-disable ];
+  # hardware.nvidia.prime.offload.enable = true;
+  # hardware.nvidia.powerManagement.enable = true;
   specialisation = {
-    # power-saving.configuration = {
-    #   system.nixos.tags = [ "power-saving" ];
-    #   hardware.nvidia.prime.offload.enable = mkForce true;
-    #   hardware.nvidia.powerManagement.enable = mkForce true;
-    # };
+    nvidia.configuration = {
+      system.nixos.tags = [ "nvidiaXXX" ];
+      imports = [ nixos-hardware.nixosModules.common-gpu-nvidia ];
+      hardware.nvidia.prime.offload.enable = mkForce false;
+      hardware.nvidia.powerManagement.enable = mkForce false;
+      virtualisation.docker.enableNvidia = true; # for torch+cuda
+      environment.sessionVariables.NIXOS_OZONE_WL = "1"; # for Electron apps
+    };
   };
 
   virtualisation.docker.enable = true;
-  virtualisation.docker.enableNvidia = true;
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "fjolne" ];
 
