@@ -162,7 +162,7 @@ with lib;
   specialisation = {
     nvidia.configuration = {
       system.nixos.tags = [ "nvidiaXXX" ];
-      imports = [ nixos-hardware.nixosModules.common-gpu-nvidia ];
+      imports = [ nixos-hardware.nixosModules.common-gpu-nvidia ]; # .../prime.nix
       virtualisation.docker.enableNvidia = true; # for torch+cuda
       environment.sessionVariables.NIXOS_OZONE_WL = "1"; # for Electron apps
     };
