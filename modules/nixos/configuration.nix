@@ -100,6 +100,7 @@ with lib;
 
   environment = {
     variables = {
+      QT_QPA_PLATFORM = "wayland";
       # QT_QPA_PLATFORMTHEME = "Adwaita-Dark";
     };
     shells = with pkgs; [ fish ];
