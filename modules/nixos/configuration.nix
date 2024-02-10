@@ -156,14 +156,13 @@ with lib;
   };
 
   imports = [ nixos-hardware.nixosModules.common-gpu-nvidia-disable ];
-  # hardware.nvidia.prime.offload.enable = true;
-  # hardware.nvidia.powerManagement.enable = true;
+  hardware.nvidia.prime.offload.enable = false;
+  hardware.nvidia.powerManagement.enable = false;
+  hardware.nvidia.dynamicBoost.enable = mkForce false;
   specialisation = {
     nvidia.configuration = {
       system.nixos.tags = [ "nvidiaXXX" ];
       imports = [ nixos-hardware.nixosModules.common-gpu-nvidia ];
-      hardware.nvidia.prime.offload.enable = mkForce false;
-      hardware.nvidia.powerManagement.enable = mkForce false;
       virtualisation.docker.enableNvidia = true; # for torch+cuda
       environment.sessionVariables.NIXOS_OZONE_WL = "1"; # for Electron apps
     };
