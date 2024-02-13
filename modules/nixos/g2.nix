@@ -3,7 +3,7 @@
 with inputs;
 {
   imports = [
-    ../minecraft-server.nix
+    ./minecraft-server.nix
     vscode-server.nixosModules.default
   ];
 
