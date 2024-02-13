@@ -7,7 +7,7 @@ def "main switch home" [
 ] {
   let hm_cmd = "nix run .#home-manager --"
   let hm_args = $"switch -b bak --flake ($target) (if $skip_secrets { "--impure" })"
-  let flake_args = $"SKIP_SECRETS=($skip_secrets)"
+  let flake_args = $"SKIP_SECRETS=(if $skip_secrets { "1" } else { "0" })"
   nu -c $"($flake_args) ($hm_cmd) ($hm_args)"
 }
 
