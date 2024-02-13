@@ -27,6 +27,7 @@ with lib;
 
     # terminal apps
     wl-clipboard
+    xclip
     python312
     asciinema
     mosh
