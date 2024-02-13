@@ -29,7 +29,7 @@
         let
           baseModules = [
             home-manager.nixosModules.home-manager
-            ./modules/nixos
+            ./modules/nixos/configuration.nix
           ];
         in
         nixpkgs.lib.nixosSystem {
@@ -90,14 +90,14 @@
               ./modules/hardware/g14.nix
               nixos-hardware.nixosModules.asus-zephyrus-ga401
             ];
-            extraModules = [ ./modules/nixos/g14 ];
+            extraModules = [ ./modules/nixos/g14.nix ];
           };
           "g2-nixos" = mkNixosConfig {
             inherit system;
             hardwareModules = [
               ./modules/hardware/g2.nix
             ];
-            extraModules = [ ./modules/nixos/g2 ];
+            extraModules = [ ./modules/nixos/g2.nix ];
           };
         };
 

@@ -161,7 +161,7 @@ with lib;
   specialisation = {
     nvidia.configuration = {
       imports = [ nixos-hardware.nixosModules.common-gpu-nvidia ]; # .../prime.nix
-      services.xserver.displayManager.gdm.wayland = true;
+      services.xserver.displayManager.gdm.wayland = mkForce true;
       virtualisation.docker.enableNvidia = true; # for torch+cuda
       environment.sessionVariables.NIXOS_OZONE_WL = "1"; # for Electron apps
     };
