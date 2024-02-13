@@ -1,20 +1,9 @@
-# Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
-{ pkgs, lib, ... }:
+# (Initially) generated via dconf2nix: https://github.com/gvolpe/dconf2nix
+{ lib, ... }:
 
 with lib.hm.gvariant;
-
-rec {
-  home.packages = with pkgs.unstable.gnomeExtensions; [
-    paperwm
-    # pop-shell
-    # workspace-matrix
-    vitals
-  ];
-
+{
   dconf.settings = {
-    "org/gnome/shell".enabled-extensions = map (extension: extension.extensionUuid) home.packages;
-    "org/gnome/shell".disabled-extensions = [ ];
-
     "org/gnome/mutter" = {
       check-alive-timeout = 0;
     };
@@ -32,8 +21,6 @@ rec {
     "org/gnome/desktop/interface" = {
       font-antialiasing = "grayscale";
       font-hinting = "slight";
-      # gtk-theme = "Yaru-dark";
-      # icon-theme = "Yaru";
     };
 
     "org/gnome/desktop/notifications" = {

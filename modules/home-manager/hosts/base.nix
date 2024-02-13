@@ -99,10 +99,17 @@ with lib;
 
   programs.tmux = {
     enable = true;
-    extraConfig = builtins.readFile ./tmux.conf;
-    plugins = with pkgs.tmuxPlugins; [
-      fingers
-    ];
+    extraConfig = ''
+      set -ga terminal-overrides ",*256col*:Tc"
+
+      bind -n S-Left  previous-window
+      bind -n S-Right next-window
+
+      bind -n M-S-Left  select-pane -L
+      bind -n M-S-Right select-pane -R
+      bind -n M-S-Up    select-pane -U
+      bind -n M-S-Down  select-pane -D
+    '';
   };
 
   programs.neovim = {

@@ -2,7 +2,7 @@
 
 with lib;
 {
-  imports = [ ../base ./gnome ];
+  imports = [ ../base.nix ./gnome.nix ];
 
   programs.ssh = {
     serverAliveInterval = 60;

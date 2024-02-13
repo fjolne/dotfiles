@@ -2,5 +2,5 @@
 
 with lib;
 {
-  imports = [ ../base ];
+  imports = [ ../base.nix ];
 }
