@@ -105,42 +105,42 @@
           "fjolne@g14-nixos" = mkHomeConfig {
             inherit pkgs;
             username = "fjolne";
-            extraModules = [ ./modules/home-manager/hosts/desktop/g14.nix ];
+            extraModules = [ ./modules/home-manager/desktop/g14.nix ];
           };
           "gamer@g14-nixos" = mkHomeConfig {
             inherit pkgs;
             username = "gamer";
-            extraModules = [ ./modules/home-manager/hosts/desktop/g14-gamer.nix ];
+            extraModules = [ ./modules/home-manager/desktop/g14-gamer.nix ];
           };
           "fjolne@g2-nixos" = mkHomeConfig {
             inherit pkgs;
             username = "fjolne";
-            extraModules = [ ./modules/home-manager/hosts/desktop/g2.nix ];
+            extraModules = [ ./modules/home-manager/desktop/g2.nix ];
           };
           "ec2-user@devcontainer" = mkHomeConfig {
             inherit pkgs;
             username = "ec2-user";
-            extraModules = [ ./modules/home-manager/hosts/server/devcontainer.nix ];
+            extraModules = [ ./modules/home-manager/server/devcontainer.nix ];
           };
           "fjolne@vps" = mkHomeConfig {
             inherit pkgs;
             username = "fjolne";
-            extraModules = [ ./modules/home-manager/hosts/server/vps.nix ];
+            extraModules = [ ./modules/home-manager/server/vps.nix ];
           };
           "ilaut@vps" = mkHomeConfig {
             inherit pkgs;
             username = "ilaut";
-            extraModules = [ ./modules/home-manager/hosts/server/vps.nix ];
+            extraModules = [ ./modules/home-manager/server/vps.nix ];
           };
           "ec2-user@vps" = mkHomeConfig {
             inherit pkgs;
             username = "ec2-user";
-            extraModules = [ ./modules/home-manager/hosts/server/vps.nix ];
+            extraModules = [ ./modules/home-manager/server/vps.nix ];
           };
           "ec2-user@nixos" = mkHomeConfig {
             inherit pkgs;
             username = "ec2-user";
-            extraModules = [ ./modules/home-manager/hosts/server/nixos.nix ];
+            extraModules = [ ./modules/home-manager/server/nixos.nix ];
           };
         };
       };
