@@ -21,6 +21,7 @@ with lib;
     nil
     delta
     unzip
+    tree
 
     (pkgs.writeShellScriptBin "," ''nix run nixpkgs/nixos-23.11#$1 -- "''${@:2}"'')
     (pkgs.writeShellScriptBin ",," ''nix shell nixpkgs/nixos-23.11#$1'')
@@ -39,7 +40,9 @@ with lib;
     "jctl" = "journalctl --user";
     "fish-direnv" = "direnv exec / fish";
     "cat" = "bat -pp";
-    # FIXME "mo" = "mosh --server=/home/ec2-user/.local/bin/mosh-server";
+    "ll" = "ls -l";
+    "lla" = "ls -la";
+    "llt" = "tree -C";
   };
 
   programs.fish = {
@@ -163,22 +166,8 @@ with lib;
     };
   };
 
-  programs.zoxide.enable = true;
-
-  programs.eza = {
-    enable = true;
-    enableAliases = true;
-  };
-
   programs.bat = {
     enable = true;
-  };
-
-  programs.fzf = {
-    enable = true;
-    fileWidgetCommand = "${pkgs.fd}/bin/fd --type f";
-    changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type d";
-    defaultOptions = [ "--border" "--inline-info" ];
   };
 
   programs.git = {
