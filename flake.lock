@@ -205,6 +205,40 @@
         "type": "github"
       }
     },
+    "nvim-plenary": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1697031827,
+        "narHash": "sha256-zR44d9MowLG1lIbvrRaFTpO/HXKKrO6lbtZfvvTdx+o=",
+        "owner": "nvim-lua",
+        "repo": "plenary.nvim",
+        "rev": "50012918b2fc8357b87cff2a7f7f0446e47da174",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvim-lua",
+        "ref": "v0.1.4",
+        "repo": "plenary.nvim",
+        "type": "github"
+      }
+    },
+    "nvim-telescope": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1701167040,
+        "narHash": "sha256-H5RpyWMluE+Yxg7xFX43AZTVW+Yg70DF3FmEGXBUSNg=",
+        "owner": "nvim-telescope",
+        "repo": "telescope.nvim",
+        "rev": "d90956833d7c27e73c621a61f20b29fdb7122709",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvim-telescope",
+        "ref": "0.1.5",
+        "repo": "telescope.nvim",
+        "type": "github"
+      }
+    },
     "nvim-treesitter": {
       "flake": false,
       "locked": {
@@ -231,6 +265,8 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nvim-conform": "nvim-conform",
+        "nvim-plenary": "nvim-plenary",
+        "nvim-telescope": "nvim-telescope",
         "nvim-treesitter": "nvim-treesitter",
         "vim-copilot": "vim-copilot",
         "vscode-server": "vscode-server"

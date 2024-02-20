@@ -13,6 +13,18 @@ final: prev: {
     #   buildPhase = ":";
     # };
 
+    nvim-plenary = vimUtils.buildVimPlugin {
+      name = "nvim-plenary";
+      src = inputs.nvim-plenary;
+      # buildPhase = ":";
+    };
+
+    nvim-telescope = vimUtils.buildVimPlugin {
+      name = "nvim-telescope";
+      src = inputs.nvim-telescope;
+      # buildPhase = ":";
+    };
+
     nvim-conform = vimUtils.buildVimPlugin {
       name = "nvim-conform";
       src = inputs.nvim-conform;

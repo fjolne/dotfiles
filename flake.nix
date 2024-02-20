@@ -16,6 +16,10 @@
 
     nvim-conform.url = "github:stevearc/conform.nvim/v5.2.1";
     nvim-conform.flake = false;
+    nvim-plenary.url = "github:nvim-lua/plenary.nvim/v0.1.4";
+    nvim-plenary.flake = false;
+    nvim-telescope.url = "github:nvim-telescope/telescope.nvim/0.1.5";
+    nvim-telescope.flake = false;
     nvim-treesitter.url = "github:nvim-treesitter/nvim-treesitter/v0.9.1";
     nvim-treesitter.flake = false;
     vim-copilot.url = "github:github/copilot.vim/v1.11.1";
