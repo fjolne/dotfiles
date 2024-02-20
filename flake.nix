@@ -13,6 +13,13 @@
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+
+    nvim-conform.url = "github:stevearc/conform.nvim/v5.2.1";
+    nvim-conform.flake = false;
+    nvim-treesitter.url = "github:nvim-treesitter/nvim-treesitter/v0.9.1";
+    nvim-treesitter.flake = false;
+    vim-copilot.url = "github:github/copilot.vim/v1.11.1";
+    vim-copilot.flake = false;
   };
 
   outputs =
@@ -60,7 +67,8 @@
           ];
         };
       };
-      pkgs = (nixpkgs.legacyPackages.${system}.extend unstableOverlay)
+      vimOverlay = import ./modules/home-manager/vim.nix { inherit inputs; };
+      pkgs = ((nixpkgs.legacyPackages.${system}.extend unstableOverlay).extend vimOverlay)
         // { config.allowUnfree = true; };
     in
     {

@@ -22,6 +22,7 @@ with lib;
     delta
     unzip
     tree
+    nodejs # for vim-copilot
 
     (pkgs.writeShellScriptBin "," ''nix run nixpkgs/nixos-23.11#$1 -- "''${@:2}"'')
     (pkgs.writeShellScriptBin ",," ''nix shell nixpkgs/nixos-23.11#$1'')
@@ -120,7 +121,7 @@ with lib;
     vimAlias = true;
     withPython3 = true;
     plugins = with pkgs; [
-      # customVim.vim-copilot
+      customVim.vim-copilot
       # customVim.vim-cue
       # customVim.vim-fish
       # customVim.vim-fugitive
@@ -134,11 +135,11 @@ with lib;
 
       # customVim.vim-nord
       # customVim.nvim-comment
-      # customVim.nvim-conform
+      customVim.nvim-conform
       # customVim.nvim-lspconfig
       # customVim.nvim-plenary # required for telescope
       # customVim.nvim-telescope
-      # customVim.nvim-treesitter
+      customVim.nvim-treesitter
       # customVim.nvim-treesitter-playground
       # customVim.nvim-treesitter-textobjects
       # customVim.vim-devicons
