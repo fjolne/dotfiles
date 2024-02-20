@@ -71,7 +71,7 @@
           ];
         };
       };
-      vimOverlay = import ./modules/home-manager/vim.nix { inherit inputs; };
+      vimOverlay = import ./modules/home-manager/vim-plugins.nix { inherit inputs; };
       pkgs = ((nixpkgs.legacyPackages.${system}.extend unstableOverlay).extend vimOverlay)
         // { config.allowUnfree = true; };
     in
