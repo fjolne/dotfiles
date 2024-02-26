@@ -154,9 +154,8 @@ with lib;
       # vimPlugins.typescript-vim
       # vimPlugins.nvim-treesitter-parsers.elixir
     ];
-    extraLuaConfig = ''
-      vim.o.clipboard = "unnamedplus"
-    '';
+    extraConfig = builtins.readFile ./vimrc.vim;
+    extraLuaConfig = builtins.readFile ./vimrc.lua;
   };
 
   programs.starship = {
