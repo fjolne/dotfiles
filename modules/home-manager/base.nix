@@ -2,6 +2,10 @@
 
 with lib;
 {
+  imports = [
+    ./nvim/nixvim.nix
+  ];
+
   home = {
     username = username;
     homeDirectory = "/home/${username}";
@@ -114,48 +118,6 @@ with lib;
       bind -n M-S-Up    select-pane -U
       bind -n M-S-Down  select-pane -D
     '';
-  };
-
-  programs.neovim = {
-    enable = true;
-    vimAlias = true;
-    withPython3 = true;
-    plugins = with pkgs; [
-      customVim.vim-copilot
-      # customVim.vim-cue
-      # customVim.vim-fish
-      # customVim.vim-fugitive
-      # customVim.vim-glsl
-      # customVim.vim-misc
-      # customVim.vim-pgsql
-      # customVim.vim-tla
-      # customVim.vim-zig
-      # customVim.pigeon
-      # customVim.AfterColors
-
-      # customVim.vim-nord
-      # customVim.nvim-comment
-      customVim.nvim-conform
-      # customVim.nvim-lspconfig
-      customVim.nvim-plenary # required for telescope
-      customVim.nvim-telescope
-      customVim.nvim-treesitter
-      # customVim.nvim-treesitter-playground
-      # customVim.nvim-treesitter-textobjects
-      # customVim.vim-devicons
-
-      vimPlugins.vim-airline
-      vimPlugins.vim-airline-themes
-      vimPlugins.vim-eunuch
-      vimPlugins.vim-gitgutter
-
-      vimPlugins.vim-markdown
-      vimPlugins.vim-nix
-      # vimPlugins.typescript-vim
-      # vimPlugins.nvim-treesitter-parsers.elixir
-    ];
-    extraConfig = builtins.readFile ./vimrc.vim;
-    extraLuaConfig = builtins.readFile ./vimrc.lua;
   };
 
   programs.starship = {

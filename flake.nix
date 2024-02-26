@@ -14,16 +14,10 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
 
-    nvim-conform.url = "github:stevearc/conform.nvim/v5.2.1";
-    nvim-conform.flake = false;
-    nvim-plenary.url = "github:nvim-lua/plenary.nvim/v0.1.4";
-    nvim-plenary.flake = false;
-    nvim-telescope.url = "github:nvim-telescope/telescope.nvim/0.1.5";
-    nvim-telescope.flake = false;
-    nvim-treesitter.url = "github:nvim-treesitter/nvim-treesitter/v0.9.1";
-    nvim-treesitter.flake = false;
-    vim-copilot.url = "github:github/copilot.vim/v1.11.1";
-    vim-copilot.flake = false;
+    nixvim = {
+      url = "github:nix-community/nixvim/nixos-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -50,7 +44,9 @@
         };
       mkHomeConfig = { pkgs, username, extraModules ? [ ] }:
         let
-          baseModules = [ ];
+          baseModules = [
+            inputs.nixvim.homeManagerModules.nixvim
+          ];
           lib = nixpkgs.lib.extend
             (final: prev: (import ./lib final) // home-manager.lib);
         in
@@ -71,8 +67,7 @@
           ];
         };
       };
-      vimOverlay = import ./modules/home-manager/vim-plugins.nix { inherit inputs; };
-      pkgs = ((nixpkgs.legacyPackages.${system}.extend unstableOverlay).extend vimOverlay)
+      pkgs = (nixpkgs.legacyPackages.${system}.extend unstableOverlay)
         // { config.allowUnfree = true; };
     in
     {
