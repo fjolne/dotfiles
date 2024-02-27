@@ -26,13 +26,32 @@
     keymaps = [
       { mode = "n"; key = "<Esc>"; action = "<cmd>nohlsearch<CR>"; }
       { mode = "n"; key = "<C-s>"; action = "<cmd>write<CR>"; }
-      { mode = "t"; key = "<Esc>"; action = "<C-\\><C-n>"; }
+      { mode = "t"; key = "<C-i>"; action = "<C-\\><C-n>"; }
+      # conjure
+      { mode = [ "n" ]; key = "<C-CR>"; action = "<cmd>ConjureEval<CR>"; }
+      { mode = [ "v" ]; key = "<C-CR>"; action = "<cmd>ConjureEvalVisual<CR>"; }
     ];
 
     plugins.gitsigns.enable = true;
     plugins.diffview.enable = true;
     plugins.comment-nvim.enable = true;
     plugins.auto-session.enable = true;
+    plugins.which-key.enable = true;
+    plugins.conjure.enable = true; # for python REPL
+
+    plugins.treesitter = {
+      enable = true;
+      ensureInstalled = [ "bash" "go" "python" ];
+    };
+
+    plugins.mini = {
+      enable = true;
+      modules = {
+        ai = { };
+        surround = { };
+        pairs = { };
+      };
+    };
 
     plugins.toggleterm = {
       enable = true;
@@ -88,6 +107,7 @@
         "<leader>ar" = "rename";
       };
       servers = {
+        pyright.enable = true;
         nil_ls = {
           enable = true;
           settings.formatting.command = [ "nixpkgs-fmt" ];
