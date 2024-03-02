@@ -5,4 +5,5 @@ in
 {
   leafish = callPackage ./leafish { };
   bws = callPackage ./bws { };
+  tic-80 = pkgs.xorg.callPackage ./tic-80 { };
 }
