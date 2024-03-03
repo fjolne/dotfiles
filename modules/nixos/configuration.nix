@@ -153,7 +153,10 @@ with lib;
     algorithm = "zstd";
   };
 
-  imports = [ nixos-hardware.nixosModules.common-gpu-nvidia-disable ];
+  imports = [
+    nixos-hardware.nixosModules.common-gpu-nvidia-disable
+    ./nix-ld.nix
+  ];
   hardware.nvidia.prime.offload.enable = false;
   hardware.nvidia.powerManagement.enable = false;
   hardware.nvidia.dynamicBoost.enable = mkForce false;
