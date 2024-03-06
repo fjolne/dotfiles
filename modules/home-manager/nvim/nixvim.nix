@@ -19,6 +19,7 @@
       scrolloff = 999; # keep cursor centered
       list = true;
       listchars = { tab = "» "; trail = "·"; nbsp = "␣"; };
+      termguicolors = true;
     };
 
     colorschemes.gruvbox.enable = true;

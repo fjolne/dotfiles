@@ -115,6 +115,7 @@ with lib;
   programs.tmux = {
     enable = true;
     extraConfig = ''
+      set -g default-terminal "xterm-256color"
       set -ga terminal-overrides ",*256col*:Tc"
 
       bind -n S-Left  previous-window
