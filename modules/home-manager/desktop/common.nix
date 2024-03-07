@@ -41,6 +41,7 @@ with lib;
 
   programs.kitty = {
     enable = true;
+    package = pkgs.unstable.kitty;
     settings = {
       scrollback_lines = 10000;
       enable_audio_bell = false;
@@ -48,7 +49,7 @@ with lib;
       window_padding_width = 2;
     };
     keybindings = {
-      "ctrl+shift+enter" = "new_window_with_cwd";
+      "ctrl+shift+enter" = "launch --type=tab --cwd=current";
     };
     theme = "Gruvbox Dark";
     font = {
