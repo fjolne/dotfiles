@@ -7,30 +7,28 @@
     globals.mapleader = " ";
     globals.maplocalleader = " ";
     options = {
+      autoindent = true;
       clipboard = "unnamedplus";
-      number = true;
-      relativenumber = true;
-      shiftwidth = 2; # tab width, but mostly managed by vim-sleuth
       ignorecase = true;
-      smartcase = true;
-      updatetime = 250;
-      timeoutlen = 300;
       inccommand = "split";
-      scrolloff = 999; # keep cursor centered
       list = true;
       listchars = { tab = "» "; trail = "·"; nbsp = "␣"; };
+      number = true;
+      relativenumber = true;
+      scrolloff = 999; # keep cursor centered
+      shiftwidth = 2; # tab width, but mostly managed by vim-sleuth
+      smartcase = true;
       termguicolors = true;
+      timeoutlen = 300;
+      updatetime = 250;
     };
 
     colorschemes.gruvbox.enable = true;
 
     keymaps = [
       { mode = "n"; key = "<Esc>"; action = "<cmd>nohlsearch<CR>"; }
-      { mode = "n"; key = "<C-s>"; action = "<cmd>write<CR>"; }
+      { mode = ["n" "i"]; key = "<C-s>"; action = "<cmd>write<CR>"; }
       { mode = "t"; key = "<C-i>"; action = "<C-\\><C-n>"; }
-      # conjure
-      { mode = [ "n" ]; key = "<C-CR>"; action = "<cmd>ConjureEval<CR>"; }
-      { mode = [ "v" ]; key = "<C-CR>"; action = "<cmd>ConjureEvalVisual<CR>"; }
     ];
 
     plugins.gitsigns.enable = true;
@@ -38,12 +36,11 @@
     plugins.comment-nvim.enable = true;
     plugins.auto-session.enable = true;
     plugins.which-key.enable = true;
-    plugins.conjure.enable = true; # for python REPL
 
-    plugins.treesitter = {
-      enable = true;
-      ensureInstalled = [ "bash" "go" "python" ];
-    };
+    # plugins.treesitter = {
+    #   enable = true;
+    #   ensureInstalled = [ "bash" "go" "python" ];
+    # };
 
     plugins.mini = {
       enable = true;
@@ -54,22 +51,17 @@
       };
     };
 
-    plugins.toggleterm = {
-      enable = true;
-      openMapping = "<C-`>";
-      size = 48;
-    };
-
     plugins.telescope = {
       enable = true;
       keymaps = {
         "<C-p>" = "find_files";
         "<C-f>" = "live_grep";
-        "<C-b>" = "buffers";
+        "<C-M-p>" = "buffers";
         "<C-/>" = "help_tags";
       };
     };
 
+    plugins.luasnip.enable = true;
     plugins.nvim-cmp = {
       enable = true;
       autoEnableSources = true;
@@ -79,15 +71,16 @@
         { name = "buffer"; }
         # { name = "luasnip"; }
       ];
+      snippet.expand = "luasnip";
       mapping = {
         "<C-Space>" = "cmp.mapping.complete()";
-        "<C-e>" = "cmp.mapping.close()";
+        "<C-g>" = "cmp.mapping.close()";
         "<CR>" = "cmp.mapping.confirm({ select = true })";
-        "<S-Tab>" = {
+        "<up>" = {
           action = "cmp.mapping.select_prev_item()";
           modes = [ "i" "s" ];
         };
-        "<Tab>" = {
+        "<down>" = {
           action = "cmp.mapping.select_next_item()";
           modes = [ "i" "s" ];
         };
@@ -108,6 +101,8 @@
         "<leader>ar" = "rename";
       };
       servers = {
+        zls.enable = true;
+        zls.installLanguageServer = false;
         pyright.enable = true;
         nil_ls = {
           enable = true;
