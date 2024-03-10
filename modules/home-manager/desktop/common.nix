@@ -49,7 +49,7 @@ with lib;
       window_padding_width = 2;
     };
     keybindings = {
-      "ctrl+shift+enter" = "launch --type=tab --cwd=current";
+      "ctrl+shift+enter" = "launch --type=tab --tab-title=current --location=after --cwd=current";
     };
     theme = "Gruvbox Dark";
     font = {
