@@ -47,9 +47,14 @@ with lib;
       enable_audio_bell = false;
       update_check_interval = 0;
       window_padding_width = 2;
+      enabled_layouts = "vertical";
     };
     keybindings = {
       "ctrl+shift+enter" = "launch --type=tab --tab-title=current --location=after --cwd=current";
+      "ctrl+shift+b" = "launch --allow-remote-control kitty +kitten broadcast --match-tab state:focused";
+      "ctrl+shift+/" = "launch --type=window";
+      "ctrl+shift+pageup" = "neighboring_window up";
+      "ctrl+shift+pagedown" = "neighboring_window down";
     };
     theme = "Gruvbox Dark";
     font = {
