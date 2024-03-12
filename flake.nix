@@ -41,6 +41,7 @@
         config.permittedInsecurePackages = [ "electron-25.9.0" ];
       };
       pkgs = nixpkgs.legacyPackages.${system} // pkgs-params;
+      # home-manager doesn't see config.* without using `import`
       pkgs-unstable = import nixpkgs-unstable ({ inherit system; } // pkgs-params);
 
       mkNixosConfig = { hardwareModules, extraModules ? [ ] }:
