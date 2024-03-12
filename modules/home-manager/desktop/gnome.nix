@@ -1,7 +1,7 @@
-{ pkgs, ... }: rec {
+{ pkgs, pkgs-unstable, ... }: rec {
   imports = [ ./dconf.nix ];
 
-  home.packages = with pkgs.unstable.gnomeExtensions; [
+  home.packages = with pkgs-unstable.gnomeExtensions; [
     paperwm
     # pop-shell
     # workspace-matrix

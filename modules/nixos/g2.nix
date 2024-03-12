@@ -1,6 +1,6 @@
-{ inputs, ... }:
+{ self, ... }:
 
-with inputs;
+with self.inputs;
 {
   imports = [
     ./minecraft-server.nix

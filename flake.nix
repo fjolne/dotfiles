@@ -32,48 +32,41 @@
     , flake-utils
     , nixos-hardware
     , home-manager
+    , nixvim
     , ...
-    } @ inputs:
+    }: flake-utils.lib.eachDefaultSystem (system:
     let
-      mkNixosConfig = { system, unstableOverlay, hardwareModules, extraModules ? [ ] }:
+      pkgs-params = {
+        config.allowUnfree = true;
+        config.permittedInsecurePackages = [ "electron-25.9.0" ];
+      };
+      pkgs = nixpkgs.legacyPackages.${system} // pkgs-params;
+      pkgs-unstable = import nixpkgs-unstable ({ inherit system; } // pkgs-params);
+
+      mkNixosConfig = { hardwareModules, extraModules ? [ ] }:
         let
           baseModules = [
-            home-manager.nixosModules.home-manager
             ./modules/nixos/configuration.nix
           ];
         in
         nixpkgs.lib.nixosSystem {
           inherit system;
           modules = baseModules ++ hardwareModules ++ extraModules;
-          specialArgs = { inherit self inputs nixpkgs unstableOverlay; };
+          specialArgs = { inherit self pkgs-unstable; };
         };
-      mkHomeConfig = { pkgs, username, extraModules ? [ ] }:
+
+      mkHomeConfig = { username, extraModules ? [ ] }:
         let
           baseModules = [
-            inputs.nixvim.homeManagerModules.nixvim
+            nixvim.homeManagerModules.nixvim
           ];
-          lib = nixpkgs.lib.extend
-            (final: prev: (import ./lib final) // home-manager.lib);
+          utils = import ./lib/utils.nix;
         in
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit self inputs nixpkgs lib username; };
+          extraSpecialArgs = { inherit self utils username pkgs-unstable; };
           modules = baseModules ++ extraModules;
         };
-    in
-    flake-utils.lib.eachDefaultSystem (system:
-    let
-      unstableOverlay = final: prev: {
-        unstable = import nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-          config.permittedInsecurePackages = [
-            "electron-25.9.0"
-          ];
-        };
-      };
-      pkgs = (nixpkgs.legacyPackages.${system}.extend unstableOverlay)
-        // { config.allowUnfree = true; };
     in
     {
       packages = import ./packages { inherit pkgs; };
@@ -84,7 +77,7 @@
           git-crypt
           gnupg
           pinentry-gtk2
-          unstable.nushell
+          nushell
           (pkgs.writeShellScriptBin "main" ''${./main.nu} "$@"'')
 
           nixpkgs-fmt
@@ -97,7 +90,6 @@
 
         nixosConfigurations = {
           "g14-nixos" = mkNixosConfig {
-            inherit system unstableOverlay;
             hardwareModules = [
               ./modules/hardware/g14.nix
               nixos-hardware.nixosModules.asus-zephyrus-ga401
@@ -105,7 +97,6 @@
             extraModules = [ ./modules/nixos/g14.nix ];
           };
           "g2-nixos" = mkNixosConfig {
-            inherit system;
             hardwareModules = [
               ./modules/hardware/g2.nix
             ];
@@ -115,42 +106,34 @@
 
         homeConfigurations = {
           "fjolne@g14-nixos" = mkHomeConfig {
-            inherit pkgs;
             username = "fjolne";
             extraModules = [ ./modules/home-manager/desktop/g14.nix ];
           };
           "gamer@g14-nixos" = mkHomeConfig {
-            inherit pkgs;
             username = "gamer";
             extraModules = [ ./modules/home-manager/desktop/g14-gamer.nix ];
           };
           "fjolne@g2-nixos" = mkHomeConfig {
-            inherit pkgs;
             username = "fjolne";
             extraModules = [ ./modules/home-manager/desktop/g2.nix ];
           };
           "ec2-user@devcontainer" = mkHomeConfig {
-            inherit pkgs;
             username = "ec2-user";
             extraModules = [ ./modules/home-manager/server/devcontainer.nix ];
           };
           "fjolne@vps" = mkHomeConfig {
-            inherit pkgs;
             username = "fjolne";
             extraModules = [ ./modules/home-manager/server/vps.nix ];
           };
           "ilaut@vps" = mkHomeConfig {
-            inherit pkgs;
             username = "ilaut";
             extraModules = [ ./modules/home-manager/server/vps.nix ];
           };
           "ec2-user@vps" = mkHomeConfig {
-            inherit pkgs;
             username = "ec2-user";
-            extraModules = [ ./modules/home-manager/server/vps.nix ];
+            extraModules = [ ./modules/home-manager/server/vps.ix ];
           };
           "ec2-user@nixos" = mkHomeConfig {
-            inherit pkgs;
             username = "ec2-user";
             extraModules = [ ./modules/home-manager/server/nixos.nix ];
           };

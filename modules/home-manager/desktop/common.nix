@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, pkgs-unstable, lib, utils, ... }:
 
 with lib;
 {
@@ -12,17 +12,17 @@ with lib;
 
   programs.vscode = {
     enable = true;
-    package = pkgs.unstable.vscode;
+    package = pkgs-unstable.vscode;
   };
 
   home.packages = with pkgs; [
     # desktop apps
-    unstable.google-chrome
-    unstable.telegram-desktop
-    unstable.zulip
-    unstable.calibre
-    unstable.rclone
-    unstable.obsidian
+    pkgs-unstable.google-chrome
+    pkgs-unstable.telegram-desktop
+    pkgs-unstable.zulip
+    pkgs-unstable.calibre
+    pkgs-unstable.rclone
+    pkgs-unstable.obsidian
     gnome.gnome-tweaks
 
     # terminal apps
@@ -41,7 +41,7 @@ with lib;
 
   programs.kitty = {
     enable = true;
-    package = pkgs.unstable.kitty;
+    package = pkgs-unstable.kitty;
     settings = {
       scrollback_lines = 10000;
       enable_audio_bell = false;

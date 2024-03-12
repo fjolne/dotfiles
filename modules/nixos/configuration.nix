@@ -2,9 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, lib, unstableOverlay, inputs, ... }:
+{ self, pkgs, pkgs-unstable, lib, ... }:
 
-with inputs;
+with self.inputs;
 with lib;
 {
   # Bootloader.
@@ -95,7 +95,6 @@ with lib;
   };
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [ unstableOverlay ];
 
   environment = {
     variables = {
@@ -128,7 +127,7 @@ with lib;
     pinentryFlavor = "gtk2";
   };
   services.tailscale.enable = true;
-  services.tailscale.package = pkgs.unstable.tailscale;
+  services.tailscale.package = pkgs-unstable.tailscale;
   services.tailscale.useRoutingFeatures = "client";
 
   # List services that you want to enable:
