@@ -33,6 +33,7 @@
       # send lines to a neighboring terminal window
       { mode = [ "v" ]; key = "<C-CR>"; action = "y<C-w>wpa<CR><C-\\><C-n><C-w>p"; }
       { mode = [ "n" "i" ]; key = "<C-CR>"; action = "yy<C-w>wpa<CR><C-\\><C-n><C-w>p"; }
+      { mode = [ "v" ]; key = "<S-CR>"; action = "y<C-w>wpa<CR><C-\\><C-n><C-w>p']"; }
       { mode = [ "n" "i" ]; key = "<S-CR>"; action = "yy<C-w>wpa<CR><C-\\><C-n><C-w>pj"; }
     ];
 
