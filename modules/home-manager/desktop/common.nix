@@ -52,8 +52,10 @@ with lib;
       "ctrl+shift+enter" = "launch --type=tab --tab-title=current --location=after --cwd=current";
       "ctrl+shift+b" = "launch --allow-remote-control kitty +kitten broadcast --match-tab state:focused";
       "ctrl+shift+/" = "launch --type=window";
-      "ctrl+shift+pageup" = "neighboring_window up";
-      "ctrl+shift+pagedown" = "neighboring_window down";
+      "ctrl+shift+alt+up" = "neighboring_window up";
+      "ctrl+shift+alt+down" = "neighboring_window down";
+      "ctrl+shift+alt+left" = "neighboring_window left";
+      "ctrl+shift+alt+right" = "neighboring_window right";
     };
     theme = "Gruvbox Dark";
     font = {
