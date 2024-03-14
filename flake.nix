@@ -78,9 +78,7 @@
           git-crypt
           gnupg
           pinentry-gtk2
-          nushell
-          (pkgs.writeShellScriptBin "main" ''${./main.nu} "$@"'')
-
+          just
           nixpkgs-fmt
           nil
         ];
