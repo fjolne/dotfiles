@@ -27,8 +27,13 @@
 
     keymaps = [
       { mode = "n"; key = "<Esc>"; action = "<cmd>nohlsearch<CR>"; }
-      { mode = ["n" "i"]; key = "<C-s>"; action = "<cmd>write<CR>"; }
+      { mode = [ "n" "i" ]; key = "<C-s>"; action = "<cmd>write<CR>"; }
+      # exit terminal mode
       { mode = "t"; key = "<C-i>"; action = "<C-\\><C-n>"; }
+      # send lines to a neighboring terminal window
+      { mode = [ "v" ]; key = "<C-CR>"; action = "y<C-w>wpa<CR><C-\\><C-n><C-w>p"; }
+      { mode = [ "n" "i" ]; key = "<C-CR>"; action = "yy<C-w>wpa<CR><C-\\><C-n><C-w>p"; }
+      { mode = [ "n" "i" ]; key = "<S-CR>"; action = "yy<C-w>wpa<CR><C-\\><C-n><C-w>pj"; }
     ];
 
     plugins.gitsigns.enable = true;
@@ -38,6 +43,7 @@
     plugins.which-key.enable = true;
     plugins.surround.enable = true;
 
+    # NB maybe I'll need it one day, but for now I'm good
     # plugins.treesitter = {
     #   enable = true;
     #   ensureInstalled = [ "bash" "go" "python" ];
@@ -62,6 +68,7 @@
       };
     };
 
+    # nvim-cmp requires some snippet plugin (the choice of luasnip is arbitrary)
     plugins.luasnip.enable = true;
     plugins.nvim-cmp = {
       enable = true;
