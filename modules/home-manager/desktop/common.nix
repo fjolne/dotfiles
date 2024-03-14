@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, lib, utils, ... }:
+{ pkgs, pkgs-unstable, lib, ... }:
 
 with lib;
 {
@@ -7,7 +7,6 @@ with lib;
   programs.ssh = {
     serverAliveInterval = 60;
     serverAliveCountMax = 30;
-    extraConfig = utils.readSecretFile ./ssh_config;
   };
 
   programs.vscode = {
