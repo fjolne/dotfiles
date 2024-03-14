@@ -14,19 +14,20 @@ with lib;
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    jq
-    lf
     bottom
-    ripgrep
-    fd
-    less
-    pinentry
-    nixpkgs-fmt
-    nil
     delta
-    unzip
-    tree
+    fd
+    jq
+    just
+    less
+    lf
+    nil
+    nixpkgs-fmt
     nodejs # for vim-copilot
+    pinentry
+    ripgrep
+    tree
+    unzip
 
     (pkgs.writeShellScriptBin "," ''nix run nixpkgs/nixos-23.11#$1 -- "''${@:2}"'')
     (pkgs.writeShellScriptBin ",," ''nix shell nixpkgs/nixos-23.11#$1'')

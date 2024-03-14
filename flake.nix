@@ -78,7 +78,6 @@
           git-crypt
           gnupg
           pinentry-gtk2
-          just
           nixpkgs-fmt
           nil
         ];
