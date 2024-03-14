@@ -36,6 +36,7 @@
     plugins.comment-nvim.enable = true;
     plugins.auto-session.enable = true;
     plugins.which-key.enable = true;
+    plugins.surround.enable = true;
 
     # plugins.treesitter = {
     #   enable = true;
@@ -46,7 +47,7 @@
       enable = true;
       modules = {
         ai = { };
-        surround = { };
+        # surround = { };
         pairs = { };
       };
     };
