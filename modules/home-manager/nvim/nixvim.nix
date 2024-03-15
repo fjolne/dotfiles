@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, helpers, ... }:
 {
   programs.nixvim = {
     enable = true;
@@ -35,6 +35,8 @@
       { mode = [ "n" "i" ]; key = "<C-CR>"; action = "yy<C-w>wpa<CR><C-\\><C-n><C-w>p"; }
       { mode = [ "v" ]; key = "<S-CR>"; action = "y<C-w>wpa<CR><C-\\><C-n><C-w>p']"; }
       { mode = [ "n" "i" ]; key = "<S-CR>"; action = "yy<C-w>wpa<CR><C-\\><C-n><C-w>pj"; }
+      # lsp
+      { mode = [ "n" "i" ]; key = "<C-S-Space>"; action = "<cmd>lua vim.lsp.buf.signature_help()<CR>"; }
     ];
 
     plugins.gitsigns.enable = true;
@@ -101,13 +103,16 @@
     plugins.lsp = {
       enable = true;
       keymaps.lspBuf = {
-        gh = "hover";
-        gD = "references";
-        gd = "definition";
-        gi = "implementation";
-        gt = "type_definition";
+        "gh" = "hover";
+        "gd" = "definition";
+        "gD" = "declaration";
+        "gr" = "references";
+        "gi" = "implementation";
+        "gt" = "type_definition";
+        # "<C-S-Space>" = "signature_help";
         "<leader>af" = "format";
         "<leader>ar" = "rename";
+        "<leader>aa" = "code_action";
       };
       servers = {
         zls.enable = true;
