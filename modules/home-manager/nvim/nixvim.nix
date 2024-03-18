@@ -80,7 +80,7 @@
         { name = "nvim_lsp"; }
         { name = "path"; }
         { name = "buffer"; }
-        # { name = "luasnip"; }
+        { name = "luasnip"; }
       ];
       snippet.expand = "luasnip";
       mapping = {
