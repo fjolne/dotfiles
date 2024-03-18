@@ -9,7 +9,7 @@
       enable_audio_bell = false;
       update_check_interval = 0;
       window_padding_width = 2;
-      enabled_layouts = "splits, stack";
+      enabled_layouts = "vertical, horizontal, stack";
       disable_ligatures = "always";
     };
     keybindings = {
