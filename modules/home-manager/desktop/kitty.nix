@@ -10,6 +10,7 @@
       update_check_interval = 0;
       window_padding_width = 2;
       enabled_layouts = "splits, stack";
+      disable_ligatures = "always";
     };
     keybindings = {
       "kitty_mod+enter" = "launch --type=tab --tab-title=current --location=after --cwd=current";
