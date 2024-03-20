@@ -26,7 +26,6 @@
     colorschemes.gruvbox.enable = true;
 
     keymaps = [
-      { mode = "n"; key = "<Esc>"; action = "<cmd>nohlsearch<CR>"; }
       { mode = [ "n" "i" ]; key = "<C-s>"; action = "<cmd>write<CR>"; }
       # exit terminal mode
       { mode = "t"; key = "<C-i>"; action = "<C-\\><C-n>"; }
