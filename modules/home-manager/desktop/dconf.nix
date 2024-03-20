@@ -64,6 +64,8 @@ with lib.hm.gvariant;
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/"
       ];
     };
 
@@ -102,6 +104,18 @@ with lib.hm.gvariant;
       binding = "<Super><Alt><Control><Shift>l";
       command = "loginctl lock-session";
       iname = "Lock";
+    };
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
+      binding = "<Super><Control>v";
+      command = "kitty --session ~/src/fjolne/kitty-sessions/kitty-subs-vertical.session";
+      iname = "kitty subs vertical";
+    };
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7" = {
+      binding = "<Super><Control>h";
+      command = "kitty --session ~/src/fjolne/kitty-sessions/kitty-subs-tabs.session";
+      iname = "kitty subs tabs";
     };
   };
 }
