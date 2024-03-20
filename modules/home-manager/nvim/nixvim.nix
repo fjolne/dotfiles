@@ -37,6 +37,8 @@
       { mode = [ "n" "i" ]; key = "<S-CR>"; action = "yy<C-w>wpa<CR><C-\\><C-n><C-w>pj"; }
       # lsp
       { mode = [ "n" "i" ]; key = "<C-S-Space>"; action = "<cmd>lua vim.lsp.buf.signature_help()<CR>"; }
+      # telescope
+      { mode = [ "n" "i" ]; key = "<C-h>"; action = "<cmd>Telescope undo<CR>"; }
     ];
 
     plugins.gitsigns.enable = true;
@@ -69,9 +71,11 @@
       keymaps = {
         "<C-p>" = "find_files";
         "<C-f>" = "live_grep";
-        "<C-M-p>" = "buffers";
+        "<C-e>" = "buffers";
         "<C-/>" = "help_tags";
       };
+      extraOptions.defaults.mappings.i."<Esc>".__raw = ''require("telescope.actions").close'';
+      extensions.undo.enable = true;
     };
 
     # nvim-cmp requires some snippet plugin (the choice of luasnip is arbitrary)
