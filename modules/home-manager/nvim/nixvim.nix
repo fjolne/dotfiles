@@ -56,8 +56,11 @@
       enable = true;
       modules = {
         ai = { };
-        # surround = { };
-        pairs = { };
+        pairs = {
+          mappings = {
+            "(" = { action = "open"; pair = "()"; neigh_pattern = "[^\\][^%a]"; };
+          };
+        };
       };
     };
 
