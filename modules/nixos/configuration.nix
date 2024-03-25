@@ -7,6 +7,8 @@
 with self.inputs;
 with lib;
 {
+  nix.package = nix.packages.${pkgs.hostPlatform.system}.nix;
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
