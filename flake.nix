@@ -136,6 +136,10 @@
             username = "ec2-user";
             extraModules = [ ./modules/home-manager/server/nixos.nix ];
           };
+          "fjolne@nixos" = mkHomeConfig {
+            username = "fjolne";
+            extraModules = [ ./modules/home-manager/server/nixos.nix ];
+          };
         };
       };
     });
