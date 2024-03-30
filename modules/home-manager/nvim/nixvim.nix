@@ -41,7 +41,6 @@
     ];
 
     plugins.gitsigns.enable = true;
-    plugins.diffview.enable = true;
     plugins.comment-nvim.enable = true;
     plugins.auto-session.enable = true;
     plugins.which-key.enable = true;
