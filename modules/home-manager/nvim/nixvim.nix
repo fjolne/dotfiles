@@ -46,11 +46,10 @@
     plugins.which-key.enable = true;
     plugins.surround.enable = true;
 
-    # NB maybe I'll need it one day, but for now I'm good
-    # plugins.treesitter = {
-    #   enable = true;
-    #   ensureInstalled = [ "bash" "go" "python" ];
-    # };
+    plugins.treesitter = {
+      enable = true;
+      ensureInstalled = [ "python" ];
+    };
 
     plugins.mini = {
       enable = true;
