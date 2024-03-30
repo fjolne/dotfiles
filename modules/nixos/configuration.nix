@@ -8,6 +8,8 @@ with self.inputs;
 with lib;
 {
   nix.package = nix.packages.${pkgs.hostPlatform.system}.nix;
+  nix.registry.nixpkgs.flake = self.inputs.nixpkgs;
+  nix.nixPath = ["nixpkgs=flake:nixpkgs"];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
