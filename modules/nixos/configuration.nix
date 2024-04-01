@@ -30,7 +30,7 @@ with lib;
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "Europe/Lisbon";
+  time.timeZone = "UTC";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
