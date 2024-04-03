@@ -39,6 +39,7 @@ with lib;
     EDITOR = "nvim";
     SUDO_EDITOR = "nvim";
     PAGER = "less -FiSwX";
+    BROWSER = "google-chrome-stable";
   };
 
   home.shellAliases = {
