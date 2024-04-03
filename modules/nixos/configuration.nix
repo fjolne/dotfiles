@@ -62,16 +62,18 @@ with lib;
   services.xserver.desktopManager.gnome.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
+  # force AMD video
   hardware.nvidia.prime.offload.enable = false;
   hardware.nvidia.powerManagement.enable = false;
   hardware.nvidia.dynamicBoost.enable = mkForce false;
-  services.xserver.displayManager.gdm.wayland = false;
+  # enable Wayland
+  services.xserver.displayManager.gdm.wayland = true;
+  environment.sessionVariables.NIXOS_OZONE_WL = "1"; # for Electron apps
   specialisation = {
     nvidia.configuration = {
       imports = [ nixos-hardware.nixosModules.common-gpu-nvidia ]; # .../prime.nix
-      services.xserver.displayManager.gdm.wayland = mkForce true;
+      # services.xserver.displayManager.gdm.wayland = mkForce true;
       virtualisation.docker.enableNvidia = true; # for torch+cuda
-      environment.sessionVariables.NIXOS_OZONE_WL = "1"; # for Electron apps
     };
   };
 
