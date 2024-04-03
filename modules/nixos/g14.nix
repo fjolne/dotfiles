@@ -8,4 +8,6 @@
     description = "Games and stuff";
     extraGroups = [ "networkmanager" ];
   };
+
+  programs.steam.enable = true;
 }
