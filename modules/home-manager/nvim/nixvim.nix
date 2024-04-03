@@ -27,6 +27,7 @@
 
     keymaps = [
       { mode = [ "n" "i" ]; key = "<C-s>"; action = "<cmd>write<CR>"; }
+      { mode = [ "n" "i" ]; key = "<C-n>"; action = "<cmd>lua vim.opt.relativenumber = not vim.opt.relativenumber:get()<CR>"; }
       # exit terminal mode
       { mode = "t"; key = "<C-i>"; action = "<C-\\><C-n>"; }
       # send lines to a neighboring terminal window
