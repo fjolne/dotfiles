@@ -81,6 +81,7 @@
           pinentry-gtk2
           nixpkgs-fmt
           nil
+          just
         ];
       };
 
