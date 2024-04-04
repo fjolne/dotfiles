@@ -23,7 +23,8 @@
       updatetime = 250;
     };
 
-    colorschemes.gruvbox.enable = true;
+    colorschemes.catppuccin.enable = true;
+    colorschemes.catppuccin.flavour = "macchiato";
 
     keymaps = [
       { mode = [ "n" "i" ]; key = "<C-s>"; action = "<cmd>write<CR>"; }
