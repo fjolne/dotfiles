@@ -20,7 +20,6 @@ with lib;
     jq
     just
     less
-    lf
     nil
     nixpkgs-fmt
     nodejs # for vim-copilot
@@ -198,5 +197,12 @@ with lib;
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+  };
+
+  programs.lf = {
+    enable = true;
+    previewer.source = pkgs.writeShellScript "pv.sh" ''
+      bat -pp --color always "$@"
+    '';
   };
 }
