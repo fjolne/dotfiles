@@ -201,7 +201,11 @@ with lib;
 
   programs.lf = {
     enable = true;
-    keybindings = { i = "$bat $f"; };
+    keybindings = {
+      e = "$vim $f";
+      E = "$code $f";
+      I = "$bat -p $f";
+    };
     previewer.source = pkgs.writeShellScript "pv.sh" ''bat -pp --color always "$@"'';
   };
 }
