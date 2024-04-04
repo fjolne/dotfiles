@@ -201,8 +201,7 @@ with lib;
 
   programs.lf = {
     enable = true;
-    previewer.source = pkgs.writeShellScript "pv.sh" ''
-      bat -pp --color always "$@"
-    '';
+    keybindings = { i = "$bat $f"; };
+    previewer.source = pkgs.writeShellScript "pv.sh" ''bat -pp --color always "$@"'';
   };
 }
