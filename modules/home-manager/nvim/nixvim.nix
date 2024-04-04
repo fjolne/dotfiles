@@ -49,7 +49,7 @@
 
     plugins.treesitter = {
       enable = true;
-      ensureInstalled = [ "python" ];
+      disabledLanguages = [ "nix" ];
     };
 
     plugins.mini = {
