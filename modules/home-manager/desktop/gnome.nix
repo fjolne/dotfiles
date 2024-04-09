@@ -1,10 +1,8 @@
-{ pkgs, pkgs-unstable, ... }: rec {
+{ pkgs-unstable, ... }: rec {
   imports = [ ./dconf.nix ];
 
   home.packages = with pkgs-unstable.gnomeExtensions; [
     paperwm
-    # pop-shell
-    # workspace-matrix
     vitals
   ];
   dconf.settings = {
@@ -18,5 +16,4 @@
       gtk-application-prefer-dark-theme = 1;
     };
   };
-  services.gnome-keyring.enable = false;
 }
