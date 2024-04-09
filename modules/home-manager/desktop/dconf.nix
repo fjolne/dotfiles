@@ -52,7 +52,15 @@ with lib.hm.gvariant;
       show-extensions-notice = false;
     };
 
-    "org/gnome/desktop/wm/keybindings" = {
+    "org/gnome/desktop/wm/preferences".num-workspaces = 9;
+    "org/gnome/shell/keybindings" = lib.listToAttrs
+      (map (i: { name = "switch-to-application-${toString i}"; value = [ ]; })
+        (lib.range 1 9));
+    "org/gnome/desktop/wm/keybindings" = (lib.listToAttrs
+      (map (i: { name = "switch-to-workspace-${toString i}"; value = [ "<Super>${toString i}" ]; })
+        (lib.range 1 9))) // (lib.listToAttrs
+      (map (i: { name = "move-to-workspace-${toString i}"; value = [ "<Super><Shift>${toString i}" ]; })
+        (lib.range 1 9))) // {
       close = [ "<Super>q" ];
     };
 
