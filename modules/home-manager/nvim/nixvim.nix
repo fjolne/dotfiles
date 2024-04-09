@@ -29,8 +29,10 @@
     keymaps = [
       { mode = [ "n" "i" ]; key = "<C-s>"; action = "<cmd>write<CR>"; }
       { mode = [ "n" "i" ]; key = "<C-n>"; action = "<cmd>lua vim.opt.relativenumber = not vim.opt.relativenumber:get()<CR>"; }
-      # exit terminal mode
+      { mode = "n"; key = "s"; action = ""; }
+      # terminal mode
       { mode = "t"; key = "<C-i>"; action = "<C-\\><C-n>"; }
+      { mode = "t"; key = "<tab>"; action = "<tab>"; }
       # send lines to a neighboring terminal window
       { mode = [ "v" ]; key = "<C-CR>"; action = "y<C-w>wpa<CR><C-\\><C-n><C-w>p"; }
       { mode = [ "n" "i" ]; key = "<C-CR>"; action = "yy<C-w>wpa<CR><C-\\><C-n><C-w>p"; }
@@ -92,7 +94,7 @@
       mapping = {
         "<C-Space>" = "cmp.mapping.complete()";
         "<C-g>" = "cmp.mapping.close()";
-        "<CR>" = "cmp.mapping.confirm({ select = true })";
+        "<C-y>" = "cmp.mapping.confirm({ select = true })";
         "<up>" = {
           action = "cmp.mapping.select_prev_item()";
           modes = [ "i" "s" ];
@@ -116,7 +118,7 @@
         "gi" = "implementation";
         "gt" = "type_definition";
         # "<C-S-Space>" = "signature_help";
-        "<leader>af" = "format";
+        "<C-S-i>" = "format";
         "<leader>ar" = "rename";
         "<leader>aa" = "code_action";
       };
@@ -124,6 +126,16 @@
         zls.enable = true;
         zls.installLanguageServer = false;
         pyright.enable = true;
+        ruff-lsp = {
+          enable = true;
+          installLanguageServer = false;
+          onAttach.function = ''
+            if client.name == 'ruff_lsp' then
+              -- Disable hover in favor of Pyright
+              client.server_capabilities.hoverProvider = false
+            end
+          '';
+        };
         nil_ls = {
           enable = true;
           settings.formatting.command = [ "nixpkgs-fmt" ];
@@ -137,6 +149,7 @@
           installRustc = false;
           installCargo = false;
         };
+        html.enable = true;
       };
     };
 
