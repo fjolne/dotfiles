@@ -15,7 +15,7 @@
       listchars = { tab = "» "; trail = "·"; nbsp = "␣"; };
       number = true;
       relativenumber = true;
-      scrolloff = 999; # keep cursor centered
+      scrolloff = 10; # keep cursor centered
       shiftwidth = 2; # tab width, but mostly managed by vim-sleuth
       smartcase = true;
       termguicolors = true;
