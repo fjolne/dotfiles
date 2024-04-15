@@ -5,8 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    nix.url = "github:nixos/nix/2.20.5";
-    nix.inputs.nixpkgs.follows = "nixpkgs";
+    nix.url = "github:nixos/nix/2.21.2";
 
     flake-utils.url = "github:numtide/flake-utils";
 
