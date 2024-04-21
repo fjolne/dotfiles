@@ -143,6 +143,10 @@
             username = "fjolne";
             extraModules = [ ./modules/home-manager/server/nixos.nix ];
           };
+          "piglet@nixos" = mkHomeConfig {
+            username = "piglet";
+            extraModules = [ ./modules/home-manager/server/nixos.nix ];
+          };
         };
       };
     });
