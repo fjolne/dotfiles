@@ -1,4 +1,4 @@
-{ utils, lib, ... }:
+{ utils, lib, pkgs-unstable, ... }:
 
 {
   imports = [ ./common.nix ];
@@ -18,4 +18,8 @@
     enableSshSupport = false;
     pinentryFlavor = "gtk2";
   };
+
+  home.packages = [
+    pkgs-unstable.godot_4
+  ];
 }
