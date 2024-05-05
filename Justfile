@@ -5,7 +5,7 @@ home-switch target=".":
     nix run .#home-manager -- switch -b bak --flake {{target}}
 
 nixos-switch target=".":
-    sudo nixos-rebuild --install-bootloader switch --flake {{target}}
+    sudo nixos-rebuild switch --flake {{target}}
 
 # hard-reload gpg-agent
 gpg-agent-switch:

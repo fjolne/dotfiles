@@ -8,7 +8,6 @@ with self.inputs;
 with lib;
 {
   imports = [
-    nixos-hardware.nixosModules.common-gpu-nvidia-disable
     ./nix-ld.nix
   ];
 
@@ -61,20 +60,33 @@ with lib;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   services.gnome.gnome-keyring.enable = true;
-
-  # force AMD video
-  hardware.nvidia.prime.offload.enable = false;
-  hardware.nvidia.powerManagement.enable = false;
-  hardware.nvidia.dynamicBoost.enable = mkForce false;
-  # enable Wayland
+  # Wayland
   services.xserver.displayManager.gdm.wayland = true;
   environment.sessionVariables.NIXOS_OZONE_WL = "1"; # for Electron apps
+
+  # === graphics ===
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+  # nvidia
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia.prime.sync.enable = true;
+  hardware.nvidia.prime.offload.enable = false;
+  hardware.nvidia.prime.offload.enableOffloadCmd = false;
+  # hardware.nvidia.powerManagement.enable = false;
+  # hardware.nvidia.dynamicBoost.enable = mkForce false;
+  virtualisation.docker.enableNvidia = true; # for torch+cuda
   specialisation = {
-    nvidia.configuration = {
-      imports = [ nixos-hardware.nixosModules.common-gpu-nvidia ]; # .../prime.nix
-      # services.xserver.displayManager.gdm.wayland = mkForce true;
-      virtualisation.docker.enableNvidia = true; # for torch+cuda
+    amd.configuration = {
+      services.xserver.videoDrivers = mkForce [ "amdgpu" ];
+      imports = [ nixos-hardware.nixosModules.common-gpu-nvidia-disable ];
     };
+    # nvidia.configuration = {
+    #   # imports = [ nixos-hardware.nixosModules.common-gpu-nvidia ]; # .../prime.nix
+    # };
   };
 
   services.printing.enable = true;
