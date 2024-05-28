@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, lib, ... }:
+{ pkgs, pkgs-unstable, pkgs-unstable-vscode, lib, ... }:
 
 with lib;
 {
@@ -11,7 +11,7 @@ with lib;
 
   programs.vscode = {
     enable = true;
-    package = pkgs-unstable.vscode;
+    package = pkgs-unstable-vscode.vscode;
   };
 
   home.packages = with pkgs; [

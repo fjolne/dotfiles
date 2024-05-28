@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-unstable-vscode.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     nix.url = "github:nixos/nix/2.21.2";
 
@@ -32,6 +33,7 @@
     { self
     , nixpkgs
     , nixpkgs-unstable
+    , nixpkgs-unstable-vscode
     , flake-utils
     , nixos-hardware
     , home-manager
@@ -46,6 +48,7 @@
       pkgs = nixpkgs.legacyPackages.${system} // pkgs-params;
       # home-manager doesn't see config.* without using `import`
       pkgs-unstable = import nixpkgs-unstable ({ inherit system; } // pkgs-params);
+      pkgs-unstable-vscode = import nixpkgs-unstable-vscode ({ inherit system; } // pkgs-params);
 
       mkNixosConfig = { hardwareModules, extraModules ? [ ] }:
         let
@@ -68,7 +71,7 @@
         in
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit self utils username pkgs-unstable; };
+          extraSpecialArgs = { inherit self utils username pkgs-unstable pkgs-unstable-vscode; };
           modules = baseModules ++ extraModules;
         };
     in
