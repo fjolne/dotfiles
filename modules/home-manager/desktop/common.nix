@@ -17,7 +17,7 @@ with lib;
   home.packages = with pkgs; [
     # desktop apps
     pkgs-unstable.google-chrome
-    pkgs-unstable.telegram-desktop
+    pkgs-unstable-vscode.telegram-desktop
     pkgs-unstable.zulip
     pkgs-unstable.calibre
     pkgs-unstable.rclone
