@@ -1,4 +1,4 @@
-{ config, pkgs, username, lib, ... }:
+{ config, pkgs, pkgs-unstable, username, lib, ... }:
 
 with lib;
 {
@@ -22,7 +22,7 @@ with lib;
     less
     nil
     nixpkgs-fmt
-    nodejs # for vim-copilot
+    pkgs-unstable.nodejs_20
     pinentry
     ripgrep
     tree
