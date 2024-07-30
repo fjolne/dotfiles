@@ -132,7 +132,6 @@ with lib;
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = false;
-    pinentryFlavor = "gtk2";
   };
   services.openssh.enable = false;
   services.tailscale.enable = true;

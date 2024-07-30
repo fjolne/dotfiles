@@ -16,7 +16,6 @@
     defaultCacheTtl = 1800;
     enableExtraSocket = true;
     enableSshSupport = false;
-    pinentryFlavor = "gtk2";
   };
 
   home.packages = [
