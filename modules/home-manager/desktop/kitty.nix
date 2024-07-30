@@ -18,8 +18,8 @@
       "kitty_mod+/" = "launch --location=hsplit";
       "kitty_mod+alt+/" = "launch --location=vsplit";
       "kitty_mod+f" = "toggle_layout stack";
-      "kitty_mod+alt+up" = "neighboring_window up";
-      "kitty_mod+alt+down" = "neighboring_window down";
+      "kitty_mod+i" = "neighboring_window up";
+      "kitty_mod+e" = "neighboring_window down";
       "kitty_mod+alt+left" = "neighboring_window left";
       "kitty_mod+alt+right" = "neighboring_window right";
     };
