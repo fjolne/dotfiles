@@ -81,28 +81,24 @@
 
     # nvim-cmp requires some snippet plugin (the choice of luasnip is arbitrary)
     plugins.luasnip.enable = true;
-    plugins.nvim-cmp = {
-      enable = true;
-      autoEnableSources = true;
-      sources = [
+    plugins.cmp.settings = {
+      sources =[
         { name = "nvim_lsp"; }
         { name = "path"; }
         { name = "buffer"; }
         { name = "luasnip"; }
       ];
       snippet.expand = "luasnip";
+    };
+    plugins.nvim-cmp = {
+      enable = true;
+      autoEnableSources = true;
       mapping = {
         "<C-Space>" = "cmp.mapping.complete()";
         "<C-g>" = "cmp.mapping.close()";
         "<C-y>" = "cmp.mapping.confirm({ select = true })";
-        "<up>" = {
-          action = "cmp.mapping.select_prev_item()";
-          modes = [ "i" "s" ];
-        };
-        "<down>" = {
-          action = "cmp.mapping.select_next_item()";
-          modes = [ "i" "s" ];
-        };
+        "<up>" = "cmp.mapping.select_prev_item()";
+        "<down>" = "cmp.mapping.select_next_item()";
         # "<C-d>" = "cmp.mapping.scroll_docs(-4)";
         # "<C-f>" = "cmp.mapping.scroll_docs(4)";
       };
@@ -124,11 +120,9 @@
       };
       servers = {
         zls.enable = true;
-        zls.installLanguageServer = false;
         pyright.enable = true;
         ruff-lsp = {
           enable = true;
-          installLanguageServer = false;
           onAttach.function = ''
             if client.name == 'ruff_lsp' then
               -- Disable hover in favor of Pyright
