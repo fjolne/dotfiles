@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, pkgs-unstable-vscode, lib, ... }:
+{ self, pkgs, pkgs-unstable, pkgs-unstable-vscode, lib, ... }:
 
 with lib;
 {
@@ -23,6 +23,7 @@ with lib;
     pkgs-unstable.rclone
     pkgs-unstable.obsidian
     gnome.gnome-tweaks
+    self.packages.${pkgs.hostPlatform.system}.cursor
 
     # terminal apps
     wl-clipboard
