@@ -1,11 +1,12 @@
-{ utils, lib, pkgs-unstable, ... }:
+{ username, lib, pkgs, pkgs-unstable, ... }:
 
 {
   imports = [ ./common.nix ];
 
-  programs.ssh = {
-    extraConfig = utils.readSecretFile ./ssh_config;
-  };
+  programs.ssh.enable = lib.mkForce false;
+  systemd.user.tmpfiles.rules = [
+    "L /home/${username}/.ssh/config - - - - /home/${username}/dotfiles/modules/home-manager/desktop/ssh_config"
+  ];
 
   programs.gpg = {
     enable = true;
@@ -18,7 +19,8 @@
     enableSshSupport = false;
   };
 
-  home.packages = [
+  home.packages = with pkgs;[
+    openssh
     pkgs-unstable.godot_4
     pkgs-unstable.reaper
     pkgs-unstable.helm
