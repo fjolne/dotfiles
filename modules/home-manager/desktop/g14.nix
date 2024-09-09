@@ -20,5 +20,7 @@
 
   home.packages = [
     pkgs-unstable.godot_4
+    pkgs-unstable.reaper
+    pkgs-unstable.helm
   ];
 }
