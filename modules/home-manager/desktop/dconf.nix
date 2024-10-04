@@ -86,8 +86,8 @@ with lib.hm.gvariant;
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
       binding = "<Super><Control>e";
-      command = "code";
-      iname = "Code";
+      command = "cursor";
+      iname = "Cursor";
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
