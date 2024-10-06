@@ -6,8 +6,6 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-unstable-vscode.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    nix.url = "github:nixos/nix/2.21.4";
-
     flake-utils.url = "github:numtide/flake-utils";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";

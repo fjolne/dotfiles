@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { self, pkgs, pkgs-unstable, lib, ... }:
 
 with self.inputs;
@@ -11,8 +7,6 @@ with lib;
     ./nix-ld.nix
   ];
 
-  # use latest `nix`
-  nix.package = nix.packages.${pkgs.hostPlatform.system}.nix;
   # `nix run nixpkgs#hello` will use nixpkgs from this flake
   nix.registry.nixpkgs.flake = self.inputs.nixpkgs;
   # <nixpkgs> will resolve to this flake
