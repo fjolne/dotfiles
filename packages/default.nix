@@ -5,7 +5,6 @@ in
 {
   leafish = callPackage ./leafish { };
   bws = callPackage ./bws { };
-  cursor = callPackage ./cursor.nix { };
   tic-80 = pkgs.xorg.callPackage ./tic-80 { };
   tic-80-pro = pkgs.xorg.callPackage ./tic-80 { withPro = true; };
 }
