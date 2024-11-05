@@ -18,10 +18,6 @@ with lib;
     # desktop apps
     pkgs-unstable.google-chrome
     pkgs-unstable-vscode.telegram-desktop
-    pkgs-unstable.zulip
-    pkgs-unstable.calibre
-    pkgs-unstable.rclone
-    pkgs-unstable.obsidian
     gnome.gnome-tweaks
     self.packages.${pkgs.hostPlatform.system}.cursor
 
