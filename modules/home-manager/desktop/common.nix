@@ -16,7 +16,7 @@ with lib;
 
   home.packages = with pkgs; [
     # desktop apps
-    pkgs-unstable.google-chrome
+    google-chrome
     pkgs-unstable-vscode.telegram-desktop
     gnome.gnome-tweaks
     pkgs-unstable.code-cursor
