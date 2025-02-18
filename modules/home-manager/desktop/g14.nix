@@ -24,5 +24,6 @@
     pkgs-unstable.godot_4
     pkgs-unstable.reaper
     pkgs-unstable.helm
+    pkgs-unstable.dbeaver-bin
   ];
 }
