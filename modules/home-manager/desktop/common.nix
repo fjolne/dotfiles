@@ -1,4 +1,4 @@
-{ self, pkgs, pkgs-unstable, pkgs-unstable-vscode, lib, ... }:
+{ self, pkgs, pkgs-unstable, pkgs-unstable-vscode, pkgs-unstable-cursor, lib, ... }:
 
 with lib;
 {
@@ -19,7 +19,7 @@ with lib;
     google-chrome
     pkgs-unstable-vscode.telegram-desktop
     gnome.gnome-tweaks
-    pkgs-unstable.code-cursor
+    pkgs-unstable-cursor.code-cursor
 
     # terminal apps
     wl-clipboard

@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-unstable-vscode.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-unstable-cursor.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -32,6 +33,7 @@
     , nixpkgs
     , nixpkgs-unstable
     , nixpkgs-unstable-vscode
+    , nixpkgs-unstable-cursor
     , flake-utils
     , nixos-hardware
     , home-manager
@@ -46,6 +48,7 @@
       pkgs = import nixpkgs ({ inherit system; } // pkgs-params);
       pkgs-unstable = import nixpkgs-unstable ({ inherit system; } // pkgs-params);
       pkgs-unstable-vscode = import nixpkgs-unstable-vscode ({ inherit system; } // pkgs-params);
+      pkgs-unstable-cursor = import nixpkgs-unstable-cursor ({ inherit system; } // pkgs-params);
 
       mkNixosConfig = { hardwareModules, extraModules ? [ ] }:
         let
@@ -68,7 +71,7 @@
         in
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit self utils username pkgs-unstable pkgs-unstable-vscode; };
+          extraSpecialArgs = { inherit self utils username pkgs-unstable pkgs-unstable-vscode pkgs-unstable-cursor; };
           modules = baseModules ++ extraModules;
         };
     in

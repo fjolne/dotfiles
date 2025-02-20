@@ -364,6 +364,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-unstable-cursor": {
+      "locked": {
+        "lastModified": 1739863612,
+        "narHash": "sha256-UbtgxplOhFcyjBcNbTVO8+HUHAl/WXFDOb6LvqShiZo=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "632f04521e847173c54fa72973ec6c39a371211c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable-vscode": {
       "locked": {
         "lastModified": 1706589919,
@@ -417,6 +433,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs-unstable-cursor": "nixpkgs-unstable-cursor",
         "nixpkgs-unstable-vscode": "nixpkgs-unstable-vscode",
         "nixvim": "nixvim",
         "vscode-server": "vscode-server"
