@@ -49,6 +49,7 @@ with lib;
     "ll" = "ls -l";
     "lla" = "ls -la";
     "llt" = "tree -C";
+    "cc" = "~/node_modules/.bin/claude";
   };
 
   programs.fish = {
