@@ -158,5 +158,7 @@ with lib;
     options = "--delete-older-than 30d";
   };
 
+  services.envfs.enable = true; # populate /bin and /usr/bin with current binaries for normie scripts
+
   system.stateVersion = "23.05"; # do not change
 }
