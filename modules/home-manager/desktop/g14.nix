@@ -25,5 +25,7 @@
     pkgs-unstable.reaper
     pkgs-unstable.helm
     pkgs-unstable.dbeaver-bin
+    pkgs-unstable.prismlauncher
+    pkgs-unstable.mcrcon
   ];
 }
