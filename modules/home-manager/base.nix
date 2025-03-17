@@ -49,7 +49,7 @@ with lib;
     "ll" = "ls -l";
     "lla" = "ls -la";
     "llt" = "tree -C";
-    "cc" = "~/node_modules/.bin/claude";
+    "c" = "~/.npm-global/bin/claude";
   };
 
   programs.fish = {
