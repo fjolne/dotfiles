@@ -19,7 +19,7 @@ with lib;
     google-chrome
     pkgs-unstable-vscode.telegram-desktop
     gnome.gnome-tweaks
-    pkgs-unstable-cursor.code-cursor
+    self.packages.x86_64-linux.code-cursor
 
     # terminal apps
     wl-clipboard
