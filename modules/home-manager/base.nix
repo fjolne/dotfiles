@@ -3,7 +3,6 @@
 with lib;
 {
   imports = [
-    ./nvim/nixvim.nix
   ];
 
   home = {
@@ -27,6 +26,7 @@ with lib;
     ripgrep
     tree
     unzip
+    neovim
 
     (pkgs.writeShellScriptBin "," ''nix run nixpkgs#$1 -- "''${@:2}"'')
     (pkgs.writeShellScriptBin ",," ''nix shell nixpkgs#$1'')
@@ -50,6 +50,7 @@ with lib;
     "lla" = "ls -la";
     "llt" = "tree -C";
     "c" = "~/.npm-global/bin/claude";
+    "vim" = "nvim";
   };
 
   programs.fish = {
