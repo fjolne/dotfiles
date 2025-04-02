@@ -1,6 +1,5 @@
 { self, pkgs, pkgs-unstable, pkgs-unstable-vscode, pkgs-unstable-cursor, lib, ... }:
 
-with lib;
 {
   imports = [ ../base.nix ./gnome.nix ./kitty.nix ];
 

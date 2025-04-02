@@ -1,7 +1,5 @@
 { self, pkgs, pkgs-unstable, lib, ... }:
 
-with self.inputs;
-with lib;
 {
   imports = [
     ./nix-ld.nix
@@ -75,8 +73,8 @@ with lib;
   virtualisation.docker.enableNvidia = true; # for torch+cuda
   specialisation = {
     amd.configuration = {
-      services.xserver.videoDrivers = mkForce [ "amdgpu" ];
-      imports = [ nixos-hardware.nixosModules.common-gpu-nvidia-disable ];
+      services.xserver.videoDrivers = lib.mkForce [ "amdgpu" ];
+      imports = [ self.inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable ];
     };
     # nvidia.configuration = {
     #   # imports = [ nixos-hardware.nixosModules.common-gpu-nvidia ]; # .../prime.nix

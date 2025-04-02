@@ -1,6 +1,5 @@
 { config, pkgs, pkgs-unstable, username, lib, ... }:
 
-with lib;
 {
   imports = [
   ];
