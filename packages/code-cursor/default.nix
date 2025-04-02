@@ -6,16 +6,11 @@
 }:
 let
   pname = "cursor";
-  version = "0.47.8";
+  version = "0.48.6";
 
   source = fetchurl {
-    url ="https://downloads.cursor.com/production/client/linux/x64/appimage/Cursor-0.47.8-82ef0f61c01d079d1b7e5ab04d88499d5af500e3.deb.glibc2.25-x86_64.AppImage";
-    hash = "sha256-3Ph5A+x1hW0SOaX8CF7b/8Fq7eMeBkG1ju9vud6Cbn0=";
-  };
-
-  appimageContents = appimageTools.extractType2 {
-    inherit version pname;
-    src = source;
+    url = "https://downloads.cursor.com/production/1649e229afdef8fd1d18ea173f063563f1e722ef/linux/x64/Cursor-0.48.6-x86_64.AppImage";
+    hash = "sha256-ZiQpVRZRaFOJ8UbANRd1F+4uhv7W/t15d9wmGKshu80=";
   };
 
   wrappedAppimage = appimageTools.wrapType2 {
@@ -35,11 +30,6 @@ stdenvNoCC.mkDerivation {
     mkdir -p $out/
 
     cp -r bin $out/bin
-
-    # desktop icon
-    mkdir -p $out/share
-    cp -a ${appimageContents}/usr/share/icons $out/share/
-    install -Dm 644 ${appimageContents}/cursor.desktop -t $out/share/applications/
 
     # wayland fixes
     wrapProgram $out/bin/cursor \
