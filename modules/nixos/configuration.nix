@@ -7,7 +7,6 @@
 
   # `nix run nixpkgs#hello` will use nixpkgs from this flake
   nix.registry.nixpkgs.flake = self.inputs.nixpkgs;
-  nix.registry.nixpkgs-unstable.flake = "github:NixOS/nixpkgs/nixpkgs-unstable";
   # <nixpkgs> will resolve to this flake
   nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
