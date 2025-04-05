@@ -23,9 +23,6 @@
 
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixvim.url = "github:nix-community/nixvim/nixos-24.05";
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -37,7 +34,6 @@
     , flake-utils
     , nixos-hardware
     , home-manager
-    , nixvim
     , ...
     }: flake-utils.lib.eachDefaultSystem (system:
     let
@@ -65,7 +61,6 @@
       mkHomeConfig = { username, extraModules ? [ ] }:
         let
           baseModules = [
-            nixvim.homeManagerModules.nixvim
           ];
           utils = import ./lib/utils.nix;
         in
