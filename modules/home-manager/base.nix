@@ -197,4 +197,18 @@
     };
     previewer.source = pkgs.writeShellScript "pv.sh" ''bat -pp --color always "$@"'';
   };
+
+  programs.yazi = {
+    enable = true;
+    package = pkgs-unstable.yazi;
+    keymap = {
+      manager.prepend_keymap = [
+        {
+          on = "!";
+          run = "shell \"$SHELL\" --block";
+          desc = "Open shell here";
+        }
+      ];
+    };
+  };
 }
