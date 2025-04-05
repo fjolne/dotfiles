@@ -21,9 +21,6 @@
 
   home.packages = with pkgs;[
     openssh
-    pkgs-unstable.godot_4
-    pkgs-unstable.reaper
-    pkgs-unstable.helm
     pkgs-unstable.dbeaver-bin
     pkgs-unstable.prismlauncher
     pkgs-unstable.mcrcon
