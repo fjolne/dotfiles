@@ -12,10 +12,6 @@
     home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-ld-rs.url = "github:nix-community/nix-ld-rs";
-    nix-ld-rs.inputs.nixpkgs.follows = "nixpkgs";
-    nix-ld-rs.inputs.flake-utils.follows = "flake-utils";
-
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     nix-minecraft.inputs.nixpkgs.follows = "nixpkgs";
   };

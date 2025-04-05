@@ -46,8 +46,10 @@
   };
 
   services.xserver.enable = true;
-  services.xserver.layout = "us";
-  services.xserver.xkbVariant = "";
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
@@ -57,11 +59,7 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1"; # for Electron apps
 
   # === graphics ===
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
+  hardware.graphics.enable = true;
   # nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.modesetting.enable = true;
@@ -70,10 +68,11 @@
   hardware.nvidia.prime.offload.enableOffloadCmd = false;
   # hardware.nvidia.powerManagement.enable = false;
   # hardware.nvidia.dynamicBoost.enable = mkForce false;
-  virtualisation.docker.enableNvidia = true; # for torch+cuda
+  hardware.nvidia-container-toolkit.enable = true;
   specialisation = {
     amd.configuration = {
       services.xserver.videoDrivers = lib.mkForce [ "amdgpu" ];
+      hardware.nvidia-container-toolkit.enable = lib.mkForce false;
       imports = [ self.inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable ];
     };
     # nvidia.configuration = {
@@ -83,7 +82,6 @@
 
   services.printing.enable = true;
 
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
