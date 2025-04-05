@@ -1,4 +1,4 @@
-{ self, pkgs, pkgs-unstable, pkgs-unstable-vscode, pkgs-unstable-cursor, lib, ... }:
+{ self, pkgs, pkgs-unstable, lib, ... }:
 
 {
   imports = [ ../base.nix ./gnome.nix ./kitty.nix ];
@@ -8,15 +8,10 @@
     serverAliveCountMax = 30;
   };
 
-  programs.vscode = {
-    enable = true;
-    package = pkgs-unstable-vscode.vscode;
-  };
-
   home.packages = with pkgs; [
     # desktop apps
     google-chrome
-    pkgs-unstable-vscode.telegram-desktop
+    pkgs-unstable.telegram-desktop
     gnome.gnome-tweaks
     self.packages.x86_64-linux.code-cursor
 

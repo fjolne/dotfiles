@@ -97,9 +97,9 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
-      binding = "<Super><Control>b";
-      command = "google-chrome-stable --force-dark-mode chrome-extension://nngceckbapebfimnlniiiahkandclblb/popup/index.html?uilocation=popout";
-      iname = "Bitwarden";
+      binding = "<Super><Control>d";
+      command = "telegram-desktop";
+      iname = "Telegram";
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {

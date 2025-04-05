@@ -4,7 +4,6 @@ with self.inputs;
 {
   imports = [
     ./minecraft-server.nix
-    vscode-server.nixosModules.default
   ];
 
   services.xserver.videoDrivers = lib.mkForce [ ];
@@ -20,6 +19,5 @@ with self.inputs;
     };
   };
 
-  services.vscode-server.enable = true;
   boot.supportedFilesystems = [ "ntfs" ];
 }
