@@ -25,7 +25,7 @@
     };
     theme = "Gruvbox Dark";
     font = {
-      name = "IosevkaNerdFont";
+      name = "Iosevka Nerd Font";
       size = 12;
     };
   };

@@ -12,7 +12,7 @@
     # desktop apps
     google-chrome
     pkgs-unstable.telegram-desktop
-    gnome.gnome-tweaks
+    gnome-tweaks
     self.packages.x86_64-linux.code-cursor
 
     # terminal apps
@@ -23,7 +23,7 @@
     mosh
 
     # fonts
-    (nerdfonts.override { fonts = [ "Iosevka" ]; })
+    nerd-fonts.iosevka
   ];
 
   fonts.fontconfig.enable = true;
