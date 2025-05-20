@@ -21,8 +21,8 @@
 
   home.packages = with pkgs;[
     openssh
-    pkgs-unstable.dbeaver-bin
-    pkgs-unstable.prismlauncher
-    pkgs-unstable.mcrcon
+    # pkgs-unstable.dbeaver-bin
+    # pkgs-unstable.prismlauncher
+    # pkgs-unstable.mcrcon
   ];
 }
