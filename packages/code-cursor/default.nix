@@ -6,11 +6,11 @@
 }:
 let
   pname = "cursor";
-  version = "0.50.4";
+  version = "1.1.3";
 
   source = fetchurl {
-    url = "https://downloads.cursor.com/production/8ea935e79a50a02da912a034bbeda84a6d3d355d/linux/x64/Cursor-0.50.4-x86_64.AppImage";
-    hash = "sha256-ik+2TqmRhnzXM+qoCQ+KLQkW/cqZSqcZS2P2yuUPGI8=";
+    url = "https://downloads.cursor.com/production/979ba33804ac150108481c14e0b5cb970bda3266/linux/x64/Cursor-1.1.3-x86_64.AppImage";
+    hash = "sha256-mOwWNbKKykMaLFxfjaoGGrxfyhLX++fqJ0TXQtKVD8c=";
   };
 
   wrappedAppimage = appimageTools.wrapType2 {
