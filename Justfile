@@ -7,6 +7,9 @@ home-switch target=".":
 nixos-switch target=".":
     sudo nixos-rebuild switch --flake {{target}}
 
+nixos-boot target=".":
+    sudo nixos-rebuild boot --flake {{target}}
+
 # hard-reload gpg-agent
 gpg-agent-switch:
     pkill -f gpg-agent || true
@@ -27,4 +30,3 @@ gpg-import:
 crypt-unlock:
     git-crypt unlock
     nix store gc
-
