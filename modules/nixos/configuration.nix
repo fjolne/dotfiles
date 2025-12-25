@@ -59,7 +59,8 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1"; # for Electron apps
 
   # === graphics ===
-  boot.blacklistedKernelModules = [ "amdgpu" ];
+  boot.kernelModules = [ "video" ];
+  boot.kernelParams = [ "acpi_backlight=video" "nomodeset" "amdgpu.modeset=0" "module_blacklist=amdgpu" "modprobe.blacklist=amdgpu"];
   hardware.graphics.enable = true;
   # nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
