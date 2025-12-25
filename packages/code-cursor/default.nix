@@ -33,7 +33,7 @@ stdenvNoCC.mkDerivation {
 
     # wayland fixes
     wrapProgram $out/bin/cursor \
-      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}} --no-update"
+      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true --disable-gpu}} --no-update"
 
     runHook postInstall
   '';

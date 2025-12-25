@@ -59,6 +59,7 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1"; # for Electron apps
 
   # === graphics ===
+  boot.blacklistedKernelModules = [ "amdgpu" ];
   hardware.graphics.enable = true;
   # nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -67,14 +68,16 @@
   hardware.nvidia.prime.offload.enable = false;
   hardware.nvidia.prime.offload.enableOffloadCmd = false;
   # hardware.nvidia.powerManagement.enable = false;
-  # hardware.nvidia.dynamicBoost.enable = mkForce false;
+  hardware.nvidia.dynamicBoost.enable = false;
   hardware.nvidia-container-toolkit.enable = true;
+  services.asusd.enable = true;
+  services.asusd.enableUserService = true;
   specialisation = {
-    amd.configuration = {
-      services.xserver.videoDrivers = lib.mkForce [ "amdgpu" ];
-      hardware.nvidia-container-toolkit.enable = lib.mkForce false;
-      imports = [ self.inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable ];
-    };
+    # amd.configuration = {
+    #   services.xserver.videoDrivers = lib.mkForce [ "amdgpu" ];
+    #   hardware.nvidia-container-toolkit.enable = lib.mkForce false;
+    #   imports = [ self.inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable ];
+    # };
     # nvidia.configuration = {
     #   # imports = [ nixos-hardware.nixosModules.common-gpu-nvidia ]; # .../prime.nix
     # };
