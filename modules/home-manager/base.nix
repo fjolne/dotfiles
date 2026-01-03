@@ -40,6 +40,10 @@
     BROWSER = "google-chrome-stable";
   };
 
+  home.sessionPath = [
+    "$HOME/.npm-global/bin"
+  ];
+
   home.shellAliases = {
     "sctl" = "systemctl --user";
     "jctl" = "journalctl --user";
@@ -48,7 +52,6 @@
     "ll" = "ls -l";
     "lla" = "ls -la";
     "llt" = "tree -C";
-    "c" = "~/.npm-global/bin/claude";
     "vim" = "nvim";
   };
 
