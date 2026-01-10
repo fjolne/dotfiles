@@ -22,7 +22,11 @@
       "kitty_mod+e" = "neighboring_window down";
       "kitty_mod+alt+left" = "neighboring_window left";
       "kitty_mod+alt+right" = "neighboring_window right";
-      "ctrl+_" = "no_op";
+      "ctrl+shift+minus" = "no_op";
+      "ctrl+shift+plus" = "no_op";
+      "ctrl+shift+alt+minus" = "change_font_size all -1.0";
+      "ctrl+shift+alt+plus" = "change_font_size all +1.0";
+      "shift+enter" = "no_op";
     };
     theme = "Gruvbox Dark";
     font = {
