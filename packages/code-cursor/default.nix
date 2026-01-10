@@ -35,7 +35,7 @@ stdenvNoCC.mkDerivation {
     wrapProgram $out/bin/cursor \
       --set __NV_PRIME_RENDER_OFFLOAD 1 \
       --set __GLX_VENDOR_LIBRARY_NAME nvidia \
-      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations,UseOzonePlatform --enable-wayland-ime=true --use-gl=angle --use-angle=vulkan}} --no-update"
+      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations,UseOzonePlatform,UseSkiaRenderer,WebGPU --enable-wayland-ime=true --use-gl=angle --use-angle=vulkan}} --no-update"
 
     runHook postInstall
   '';
