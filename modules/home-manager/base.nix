@@ -137,7 +137,10 @@
     enable = true;
     settings = {
       command_timeout = 24 * 60 * 60 * 1000; # 1 day
-      aws = { disabled = true; };
+      format = "$username$hostname$directory$git_branch$git_status\n$jobs$character";
+      username.show_always = true;
+      hostname.ssh_only = false;
+      aws.disabled = true;
     };
   };
 
