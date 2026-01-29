@@ -41,6 +41,7 @@
   };
 
   home.sessionPath = [
+    "$HOME/.local/bin"
     "$HOME/.npm-global/bin"
   ];
 
