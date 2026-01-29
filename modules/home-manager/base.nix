@@ -131,6 +131,20 @@
       bind -n M-S-Right select-pane -R
       bind -n M-S-Up    select-pane -U
       bind -n M-S-Down  select-pane -D
+
+      # Ctrl+Shift+PageUp/Down for page scrolling
+      bind -n C-S-PPage copy-mode -u
+      bind -T copy-mode C-S-PPage send-keys -X page-up
+      bind -T copy-mode C-S-NPage send-keys -X page-down
+      bind -T copy-mode-vi C-S-PPage send-keys -X page-up
+      bind -T copy-mode-vi C-S-NPage send-keys -X page-down
+
+      # Ctrl+Shift+Arrow for line scrolling
+      bind -n C-S-Up copy-mode \; send-keys -X scroll-up
+      bind -T copy-mode C-S-Up send-keys -X scroll-up
+      bind -T copy-mode C-S-Down send-keys -X scroll-down
+      bind -T copy-mode-vi C-S-Up send-keys -X scroll-up
+      bind -T copy-mode-vi C-S-Down send-keys -X scroll-down
     '';
   };
 
