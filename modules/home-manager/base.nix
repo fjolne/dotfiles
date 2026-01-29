@@ -123,6 +123,7 @@
     extraConfig = ''
       set -g default-terminal "xterm-256color"
       set -ga terminal-overrides ",*256col*:Tc"
+      set -g default-command "exec fish"
 
       bind -n S-Left  previous-window
       bind -n S-Right next-window
