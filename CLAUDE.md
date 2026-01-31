@@ -119,3 +119,6 @@ The flake allows unfree packages and permits specific insecure packages (current
 
 ### GPU Configuration
 The NixOS configuration includes complex GPU setup for hybrid graphics (NVIDIA + AMD), with kernel parameters to disable amdgpu and enable NVIDIA.
+
+### Documentation
+Use `man home-configuration.nix` to look up home-manager module options.
