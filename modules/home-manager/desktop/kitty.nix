@@ -28,7 +28,7 @@
       "ctrl+shift+alt+plus" = "change_font_size all +1.0";
       "shift+enter" = "no_op";
     };
-    theme = "Gruvbox Dark";
+    themeFile = "gruvbox-dark";
     font = {
       name = "Iosevka Nerd Font";
       size = 12;
