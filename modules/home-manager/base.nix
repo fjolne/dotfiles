@@ -139,6 +139,9 @@
       bind -n M-S-Up    select-pane -U
       bind -n M-S-Down  select-pane -D
 
+      bind -n M-< swap-window -t -1 \; select-window -t -1
+      bind -n M-> swap-window -t +1 \; select-window -t +1
+
       # Ctrl+Shift+PageUp/Down for page scrolling
       bind -n C-S-PPage copy-mode -u
       bind -T copy-mode C-S-PPage send-keys -X page-up
