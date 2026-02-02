@@ -15,6 +15,8 @@ vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.termguicolors = true
 vim.o.laststatus = 3           -- Global statusline
+vim.o.background = "dark"
+vim.cmd.colorscheme("gruvbox")
 
 -- Invisible characters
 vim.o.list = true
@@ -84,7 +86,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, o)
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, o)
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, o)
+        vim.keymap.set("n", "gh", vim.lsp.buf.hover, o)
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, o)
         vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, o)
         vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, o)
@@ -99,21 +101,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
+local function get_root_dir(bufpath, markers)
+    local root_files = vim.fs.find(markers, { path = bufpath, upward = true })
+    return root_files[1] and vim.fn.fnamemodify(vim.fs.dirname(root_files[1]), ":p") or vim.fn.getcwd()
+end
+
+local function get_bufpath(ev)
+    return ev.match ~= "" and vim.fn.fnamemodify(ev.match, ":p:h") or vim.fn.getcwd()
+end
+
 -- Python (pyright)
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "python",
     callback = function(ev)
-        local bufpath = ev.match ~= "" and vim.fn.fnamemodify(ev.match, ":p:h") or vim.fn.getcwd()
-        local root_files = vim.fs.find({ "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" }, {
-            path = bufpath,
-            upward = true,
-        })
-        local root_dir = root_files[1] and vim.fn.fnamemodify(vim.fs.dirname(root_files[1]), ":p") or vim.fn.getcwd()
-
         vim.lsp.start({
             name = "pyright",
             cmd = { "pyright-langserver", "--stdio" },
-            root_dir = root_dir,
+            root_dir = get_root_dir(get_bufpath(ev), { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" }),
             settings = {
                 python = {
                     analysis = {
@@ -122,6 +126,30 @@ vim.api.nvim_create_autocmd("FileType", {
                     },
                 },
             },
+        })
+    end,
+})
+
+-- TypeScript/JavaScript (typescript-language-server)
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+    callback = function(ev)
+        vim.lsp.start({
+            name = "tsserver",
+            cmd = { "typescript-language-server", "--stdio" },
+            root_dir = get_root_dir(get_bufpath(ev), { "tsconfig.json", "jsconfig.json", "package.json", ".git" }),
+        })
+    end,
+})
+
+-- Rust (rust-analyzer)
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "rust",
+    callback = function(ev)
+        vim.lsp.start({
+            name = "rust-analyzer",
+            cmd = { "rust-analyzer" },
+            root_dir = get_root_dir(get_bufpath(ev), { "Cargo.toml", ".git" }),
         })
     end,
 })

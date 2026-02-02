@@ -18,6 +18,9 @@ in
   xdg.configFile."nvim".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/config/nvim";
 
+  # Neovim plugins from nix (symlinked to packpath)
+  xdg.dataFile."nvim/site/pack/nix/start/gruvbox-nvim".source = pkgs.vimPlugins.gruvbox-nvim;
+
   home.packages = with pkgs; [
     bottom
     delta
@@ -28,6 +31,8 @@ in
     nil
     nixpkgs-fmt
     pyright
+    rust-analyzer
+    typescript-language-server
     pkgs-unstable.nodejs_20
     pinentry
     ripgrep
