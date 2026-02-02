@@ -1,5 +1,8 @@
 { config, pkgs, pkgs-unstable, username, lib, ... }:
 
+let
+  dotfilesPath = "${config.home.homeDirectory}/dotfiles";
+in
 {
   imports = [
   ];
@@ -11,6 +14,10 @@
   };
   programs.home-manager.enable = true;
 
+  # Out-of-store symlinks for configs that change frequently
+  xdg.configFile."nvim".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/config/nvim";
+
   home.packages = with pkgs; [
     bottom
     delta
@@ -20,11 +27,13 @@
     less
     nil
     nixpkgs-fmt
+    pyright
     pkgs-unstable.nodejs_20
     pinentry
     ripgrep
     tree
     unzip
+    vim
     neovim
 
     (pkgs.writeShellScriptBin "," ''nix run nixpkgs#$1 -- "''${@:2}"'')
@@ -53,7 +62,6 @@
     "ll" = "ls -l";
     "lla" = "ls -la";
     "llt" = "tree -C";
-    "vim" = "nvim";
   };
 
   programs.fish = {
