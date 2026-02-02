@@ -12,6 +12,8 @@ in
   xdg.dataFile."nvim/site/pack/nix/start/gruvbox-nvim".source = pkgs.vimPlugins.gruvbox-nvim;
   xdg.dataFile."nvim/site/pack/nix/start/molten-nvim".source = pkgs.vimPlugins.molten-nvim;
   xdg.dataFile."nvim/site/pack/nix/start/image-nvim".source = pkgs.vimPlugins.image-nvim;
+  xdg.dataFile."nvim/site/pack/nix/start/plenary-nvim".source = pkgs.vimPlugins.plenary-nvim;
+  xdg.dataFile."nvim/site/pack/nix/start/telescope-nvim".source = pkgs.vimPlugins.telescope-nvim;
 
   home.packages = with pkgs; [
     # Neovim with magick (for image.nvim) and python packages (for molten-nvim)
