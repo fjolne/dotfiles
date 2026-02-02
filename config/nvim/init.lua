@@ -173,6 +173,23 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+-- Nix (nil)
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "nix",
+    callback = function(ev)
+        vim.lsp.start({
+            name = "nil",
+            cmd = { "nil" },
+            root_dir = get_root_dir(get_bufpath(ev), { "flake.nix", ".git" }),
+            settings = {
+                ["nil"] = {
+                    formatting = { command = { "nixpkgs-fmt" } },
+                },
+            },
+        })
+    end,
+})
+
 ----------------------------------------------------------------------
 -- Molten (Jupyter kernel integration)
 ----------------------------------------------------------------------
@@ -247,12 +264,14 @@ vim.keymap.set("n", "<leader>mr", run_cell, { noremap = true, silent = true, des
 vim.keymap.set("n", "<leader>mn", run_cell_and_move, { noremap = true, silent = true, desc = "Run cell and move to next" })
 vim.keymap.set("n", "<leader>mo", ":MoltenShowOutput<CR>", { noremap = true, silent = true, desc = "Show Molten output" })
 vim.keymap.set("n", "<leader>mh", ":MoltenHideOutput<CR>", { noremap = true, silent = true, desc = "Hide Molten output" })
+vim.keymap.set("n", "<C-A-r>", ":MoltenRestart!<CR>", { noremap = true, silent = true, desc = "Restart kernel" })
+vim.keymap.set("n", "<C-A-l>", ":MoltenDelete!<CR>", { noremap = true, silent = true, desc = "Clear all outputs" })
 
 -- Cell navigation
 vim.keymap.set("n", "]c", goto_next_cell, { noremap = true, silent = true, desc = "Next cell" })
 vim.keymap.set("n", "[c", goto_prev_cell, { noremap = true, silent = true, desc = "Previous cell" })
-vim.keymap.set("n", "<C-A-Down>", goto_next_cell, { noremap = true, silent = true, desc = "Next cell" })
-vim.keymap.set("n", "<C-A-Up>", goto_prev_cell, { noremap = true, silent = true, desc = "Previous cell" })
+vim.keymap.set("n", "<C-A-]>", goto_next_cell, { noremap = true, silent = true, desc = "Next cell" })
+vim.keymap.set("n", "<C-A-[>", goto_prev_cell, { noremap = true, silent = true, desc = "Previous cell" })
 
 -- Ctrl+Enter and Shift+Enter (terminal may need proper key codes)
 vim.keymap.set("n", "<C-CR>", run_cell, { noremap = true, silent = true, desc = "Run current cell" })
