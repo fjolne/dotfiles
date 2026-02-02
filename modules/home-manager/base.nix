@@ -121,6 +121,7 @@
     extraConfig = ''
       set -g default-terminal "xterm-256color"
       set -ga terminal-overrides ",*256col*:Tc"
+      set -g allow-passthrough all
       set -g default-command "exec fish"
       setw -g mode-keys vi
 
