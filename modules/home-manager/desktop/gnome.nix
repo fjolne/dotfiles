@@ -1,6 +1,14 @@
 { pkgs-unstable, ... }: rec {
   imports = [ ./dconf.nix ];
 
+  # Disable GNOME Keyring SSH component (unreliable - randomly sets wrong SSH_AUTH_SOCK)
+  # Using NixOS's programs.ssh.startAgent instead (systemd user service)
+  xdg.configFile."autostart/gnome-keyring-ssh.desktop".text = ''
+    [Desktop Entry]
+    Hidden=true
+  '';
+  home.sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/ssh-agent";
+
   home.packages = with pkgs-unstable.gnomeExtensions; [
     paperwm
     vitals

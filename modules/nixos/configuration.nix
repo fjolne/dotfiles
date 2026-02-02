@@ -127,6 +127,7 @@
     enable = true;
     enableSSHSupport = false;
   };
+  programs.ssh.startAgent = true;
   services.openssh.enable = false;
   services.tailscale.enable = true;
   services.tailscale.package = pkgs-unstable.tailscale;
