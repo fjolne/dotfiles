@@ -155,6 +155,91 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 ----------------------------------------------------------------------
+-- Molten (Jupyter kernel integration)
+----------------------------------------------------------------------
+vim.g.molten_auto_open_output = true
+vim.g.molten_output_win_max_height = 20
+vim.g.molten_split_direction = "right"
+vim.g.molten_virt_text_output = true
+vim.g.molten_wrap_output = true
+
+-- Image.nvim setup (for inline plots via kitty graphics protocol)
+local image_ok, image = pcall(require, "image")
+if image_ok then
+    image.setup({
+        backend = "kitty",
+        processor = "magick_cli",
+        max_height_window_percentage = 40,
+        integrations = {
+            markdown = { enabled = false },
+            neorg = { enabled = false },
+        },
+    })
+    vim.g.molten_image_provider = "image.nvim"
+end
+
+-- Cell navigation helper functions
+local function goto_next_cell()
+    vim.fn.search("^# %%", "W")
+end
+
+local function goto_prev_cell()
+    vim.fn.search("^# %%", "bW")
+end
+
+local function get_cell_range()
+    local save_pos = vim.api.nvim_win_get_cursor(0)
+    local start_line, end_line
+
+    -- Find start of current cell (search backwards including current line)
+    local found = vim.fn.search("^# %%", "bcW")
+    if found == 0 then
+        start_line = 1
+    else
+        start_line = found
+    end
+
+    -- Find end of current cell (next marker or EOF)
+    vim.api.nvim_win_set_cursor(0, { start_line, 0 })
+    local next_marker = vim.fn.search("^# %%", "W")
+    if next_marker == 0 then
+        end_line = vim.api.nvim_buf_line_count(0)
+    else
+        end_line = next_marker - 1
+    end
+
+    vim.api.nvim_win_set_cursor(0, save_pos)
+    return start_line, end_line
+end
+
+local function run_cell()
+    local start_line, end_line = get_cell_range()
+    vim.fn.MoltenEvaluateRange(start_line, end_line)
+end
+
+local function run_cell_and_move()
+    run_cell()
+    goto_next_cell()
+end
+
+-- Molten keybindings
+vim.keymap.set("n", "<leader>mi", ":MoltenInit python3<CR>", { noremap = true, silent = true, desc = "Init Molten kernel" })
+vim.keymap.set("n", "<leader>mr", run_cell, { noremap = true, silent = true, desc = "Run current cell" })
+vim.keymap.set("n", "<leader>mn", run_cell_and_move, { noremap = true, silent = true, desc = "Run cell and move to next" })
+vim.keymap.set("n", "<leader>mo", ":MoltenShowOutput<CR>", { noremap = true, silent = true, desc = "Show Molten output" })
+vim.keymap.set("n", "<leader>mh", ":MoltenHideOutput<CR>", { noremap = true, silent = true, desc = "Hide Molten output" })
+
+-- Cell navigation
+vim.keymap.set("n", "]c", goto_next_cell, { noremap = true, silent = true, desc = "Next cell" })
+vim.keymap.set("n", "[c", goto_prev_cell, { noremap = true, silent = true, desc = "Previous cell" })
+vim.keymap.set("n", "<C-A-Down>", goto_next_cell, { noremap = true, silent = true, desc = "Next cell" })
+vim.keymap.set("n", "<C-A-Up>", goto_prev_cell, { noremap = true, silent = true, desc = "Previous cell" })
+
+-- Ctrl+Enter and Shift+Enter (terminal may need proper key codes)
+vim.keymap.set("n", "<C-CR>", run_cell, { noremap = true, silent = true, desc = "Run current cell" })
+vim.keymap.set("n", "<S-CR>", run_cell_and_move, { noremap = true, silent = true, desc = "Run cell and move to next" })
+
+----------------------------------------------------------------------
 -- Autocommands
 ----------------------------------------------------------------------
 local augroup = vim.api.nvim_create_augroup("UserConfig", { clear = true })

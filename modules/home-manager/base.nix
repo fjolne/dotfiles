@@ -1,10 +1,8 @@
 { config, pkgs, pkgs-unstable, username, lib, ... }:
 
-let
-  dotfilesPath = "${config.home.homeDirectory}/dotfiles";
-in
 {
   imports = [
+    ./nvim.nix
   ];
 
   home = {
@@ -14,13 +12,6 @@ in
   };
   programs.home-manager.enable = true;
 
-  # Out-of-store symlinks for configs that change frequently
-  xdg.configFile."nvim".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/config/nvim";
-
-  # Neovim plugins from nix (symlinked to packpath)
-  xdg.dataFile."nvim/site/pack/nix/start/gruvbox-nvim".source = pkgs.vimPlugins.gruvbox-nvim;
-
   home.packages = with pkgs; [
     bottom
     delta
@@ -28,18 +19,12 @@ in
     jq
     just
     less
-    nil
-    nixpkgs-fmt
-    pyright
-    rust-analyzer
-    typescript-language-server
     pkgs-unstable.nodejs_20
     pinentry
     ripgrep
     tree
     unzip
     vim
-    neovim
 
     (pkgs.writeShellScriptBin "," ''nix run nixpkgs#$1 -- "''${@:2}"'')
     (pkgs.writeShellScriptBin ",," ''nix shell nixpkgs#$1'')
