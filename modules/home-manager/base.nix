@@ -118,6 +118,7 @@
 
   programs.tmux = {
     enable = true;
+    mouse = true;
     extraConfig = ''
       set -g default-terminal "xterm-256color"
       set -ga terminal-overrides ",*256col*:Tc"
