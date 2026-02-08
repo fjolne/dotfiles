@@ -96,6 +96,37 @@ if telescope_ok then
 end
 
 ----------------------------------------------------------------------
+-- Gitsigns (git gutter)
+----------------------------------------------------------------------
+local gitsigns_ok, gitsigns = pcall(require, "gitsigns")
+if gitsigns_ok then
+    gitsigns.setup({
+        on_attach = function(bufnr)
+            local gs = require("gitsigns")
+            local o = { noremap = true, silent = true, buffer = bufnr }
+
+            vim.keymap.set("n", "]c", function()
+                if vim.wo.diff then return "]c" end
+                vim.schedule(function() gs.nav_hunk("next") end)
+                return "<Ignore>"
+            end, { expr = true, buffer = bufnr, desc = "Next hunk" })
+
+            vim.keymap.set("n", "[c", function()
+                if vim.wo.diff then return "[c" end
+                vim.schedule(function() gs.nav_hunk("prev") end)
+                return "<Ignore>"
+            end, { expr = true, buffer = bufnr, desc = "Previous hunk" })
+
+            vim.keymap.set("n", "<leader>hs", gs.stage_hunk, o)
+            vim.keymap.set("n", "<leader>hr", gs.reset_hunk, o)
+            vim.keymap.set("n", "<leader>hu", gs.undo_stage_hunk, o)
+            vim.keymap.set("n", "<leader>hp", gs.preview_hunk, o)
+            vim.keymap.set("n", "<leader>hb", function() gs.blame_line({ full = true }) end, o)
+        end,
+    })
+end
+
+----------------------------------------------------------------------
 -- LSP
 ----------------------------------------------------------------------
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -268,8 +299,6 @@ vim.keymap.set("n", "<C-A-r>", ":MoltenRestart!<CR>", { noremap = true, silent =
 vim.keymap.set("n", "<C-A-l>", ":MoltenDelete!<CR>", { noremap = true, silent = true, desc = "Clear all outputs" })
 
 -- Cell navigation
-vim.keymap.set("n", "]c", goto_next_cell, { noremap = true, silent = true, desc = "Next cell" })
-vim.keymap.set("n", "[c", goto_prev_cell, { noremap = true, silent = true, desc = "Previous cell" })
 vim.keymap.set("n", "<C-A-]>", goto_next_cell, { noremap = true, silent = true, desc = "Next cell" })
 vim.keymap.set("n", "<C-A-[>", goto_prev_cell, { noremap = true, silent = true, desc = "Previous cell" })
 
