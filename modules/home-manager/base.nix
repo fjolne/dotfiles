@@ -37,6 +37,7 @@
     SUDO_EDITOR = "nvim";
     PAGER = "less -FiSwX";
     BROWSER = "google-chrome-stable";
+    SSH_AUTH_SOCK = lib.mkDefault "$XDG_RUNTIME_DIR/ssh-agent";
   };
 
   home.sessionPath = [
@@ -59,6 +60,9 @@
     interactiveShellInit = ''
       set fish_greeting
       set -gx TERM xterm-256color
+      if test -S "$XDG_RUNTIME_DIR/ssh-agent"
+        set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent"
+      end
     '';
     plugins = [
       {

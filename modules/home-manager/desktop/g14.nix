@@ -18,11 +18,6 @@
     enableExtraSocket = true;
     enableSshSupport = false;
   };
-  home.sessionVariables.SSH_AUTH_SOCK = lib.mkForce "$XDG_RUNTIME_DIR/ssh-agent";
-  programs.fish.interactiveShellInit = lib.mkAfter ''
-    # Keep shells pinned to system ssh-agent when GNOME keyring exports its own socket.
-    set -gx SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent
-  '';
 
   home.packages = with pkgs;[
     openssh
