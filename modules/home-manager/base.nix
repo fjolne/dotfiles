@@ -20,7 +20,7 @@
     just
     less
     pkgs-unstable.nodejs_20
-    pinentry
+    pinentry-curses
     ripgrep
     tree
     unzip

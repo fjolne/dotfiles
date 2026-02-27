@@ -54,6 +54,7 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   services.gnome.gnome-keyring.enable = true;
+  services.gnome.gcr-ssh-agent.enable = false;
   # Wayland
   services.xserver.displayManager.gdm.wayland = true;
   environment.sessionVariables.NIXOS_OZONE_WL = "1"; # for Electron apps
@@ -119,7 +120,7 @@
       git
       gnumake
       git-crypt
-      pinentry
+      pinentry-curses
     ];
   };
 
