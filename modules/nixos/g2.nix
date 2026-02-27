@@ -1,9 +1,6 @@
-{ self, lib, ... }:
-
-with self.inputs;
+{ lib, ... }:
 {
   imports = [
-    ./minecraft-server.nix
   ];
 
   services.xserver.videoDrivers = lib.mkForce [ ];
