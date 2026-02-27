@@ -61,12 +61,14 @@
 
   # === graphics ===
   boot.kernelModules = [ "video" ];
-  boot.kernelParams = [ "acpi_backlight=video" "nomodeset" "amdgpu.modeset=0" "module_blacklist=amdgpu" "modprobe.blacklist=amdgpu"];
+  # Keep amdgpu disabled for boot stability, but avoid nomodeset so
+  # nvidia-drm KMS can run GNOME Wayland smoothly.
+  boot.kernelParams = [ "acpi_backlight=video" "amdgpu.modeset=0" "module_blacklist=amdgpu" "modprobe.blacklist=amdgpu" ];
   hardware.graphics.enable = true;
   # nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.prime.sync.enable = true;
+  hardware.nvidia.prime.sync.enable = false;
   hardware.nvidia.prime.offload.enable = false;
   hardware.nvidia.prime.offload.enableOffloadCmd = false;
   # hardware.nvidia.powerManagement.enable = false;
