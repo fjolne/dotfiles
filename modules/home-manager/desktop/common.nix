@@ -3,7 +3,7 @@
 {
   imports = [ ../base.nix ./gnome.nix ./kitty.nix ];
 
-  programs.ssh = {
+  programs.ssh.matchBlocks."*" = {
     serverAliveInterval = 60;
     serverAliveCountMax = 30;
   };

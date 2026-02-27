@@ -182,22 +182,22 @@
 
   programs.git = {
     enable = true;
-    userName = "Oleg Martynov";
-    userEmail = "fjolne.yngling@gmail.com";
-    aliases = {
-      s = "status";
-      d = "diff";
-      ds = "diff --staged";
-      dt = "difftool";
-      dts = "difftool --staged";
-      c = "commit";
-      a = "add -p";
-      p = "pull --rebase --autostash";
-      l = "log --stat";
-      pl = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(r) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
-    };
     lfs.enable = true;
-    extraConfig = {
+    settings = {
+      user.name = "Oleg Martynov";
+      user.email = "fjolne.yngling@gmail.com";
+      alias = {
+        s = "status";
+        d = "diff";
+        ds = "diff --staged";
+        dt = "difftool";
+        dts = "difftool --staged";
+        c = "commit";
+        a = "add -p";
+        p = "pull --rebase --autostash";
+        l = "log --stat";
+        pl = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(r) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
+      };
       core.whitespace = "trailing-space,space-before-tab";
       core.editor = "nvim";
       merge.conflictstyle = "diff3";
