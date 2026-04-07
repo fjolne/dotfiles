@@ -55,15 +55,11 @@ vim.keymap.set("n", "<C-h>", "<C-w>h", opts)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
 
 -- System clipboard shortcuts
-vim.keymap.set("n", "<leader>y", '"+y', opts)
-vim.keymap.set("v", "<leader>y", '"+y', opts)
-vim.keymap.set("n", "<leader>p", '"+p', opts)
+vim.keymap.set("n", "<leader>p", '"0p', opts)
+vim.keymap.set("v", "<leader>p", '"0p', opts)
 
 -- Clear search highlight
 vim.keymap.set("n", "<leader>/", ":nohlsearch<CR>", opts)
-
--- Buffer management
-vim.keymap.set("n", "<leader>d", ":bd<CR>", opts)
 
 -- cd to current file's directory
 vim.keymap.set("n", "<leader>cd", ":cd %:h<CR>", opts)
@@ -73,7 +69,7 @@ vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], opts)
 vim.keymap.set("t", "jj", [[<C-\><C-n>]], opts)
 vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
 
-vim.keymap.set("n", "<leader>c", ":terminal<CR>", opts)
+vim.keymap.set("n", "<leader>t", ":terminal<CR>", opts)
 
 ----------------------------------------------------------------------
 -- Telescope (fuzzy finder)
