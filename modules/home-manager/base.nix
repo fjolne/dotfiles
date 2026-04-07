@@ -125,11 +125,12 @@
 
   programs.tmux = {
     enable = true;
-    mouse = true;
     extraConfig = ''
       set -g default-terminal "xterm-256color"
       set -ga terminal-overrides ",*256col*:Tc"
       set -g allow-passthrough on
+      set -g mouse on
+      set -g history-limit 20000
       set -g default-command "exec fish"
       setw -g mode-keys vi
 
