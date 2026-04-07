@@ -8,7 +8,6 @@ vim.g.mapleader = " "
 
 vim.o.clipboard = "unnamedplus"
 vim.o.number = true
-vim.o.colorcolumn = "80"
 vim.o.scrolloff = 999          -- Keep cursor centered
 vim.o.showmatch = true
 vim.o.splitbelow = true
@@ -20,7 +19,7 @@ vim.cmd.colorscheme("gruvbox")
 
 -- Invisible characters
 vim.o.list = true
-vim.opt.listchars = { tab = "› ", eol = "¬", trail = "⋅" }
+vim.opt.listchars = { tab = "› ", trail = "⋅" }
 vim.o.showbreak = "↪"
 
 -- Backup/undo
