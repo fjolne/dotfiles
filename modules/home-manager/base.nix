@@ -139,8 +139,10 @@
       bind -T copy-mode-vi V send-keys -X select-line
       bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
-      bind -n S-Left  previous-window
-      bind -n S-Right next-window
+      bind -n M-C-Left  previous-window
+      bind -n M-C-Right next-window
+      bind -n M-C-Up    switch-client -p
+      bind -n M-C-Down  switch-client -n
 
       bind -n M-S-Left  select-pane -L
       bind -n M-S-Right select-pane -R
