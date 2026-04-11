@@ -61,6 +61,9 @@ vim.keymap.set("v", "<leader>p", '"0p', opts)
 -- Clear search highlight
 vim.keymap.set("n", "<leader>/", ":nohlsearch<CR>", opts)
 
+-- Markdown rendering
+vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Markdown render toggle" })
+
 -- cd to current file's directory
 vim.keymap.set("n", "<leader>cd", ":cd %:h<CR>", opts)
 
@@ -118,6 +121,31 @@ if gitsigns_ok then
             vim.keymap.set("n", "<leader>hp", gs.preview_hunk, o)
             vim.keymap.set("n", "<leader>hb", function() gs.blame_line({ full = true }) end, o)
         end,
+    })
+end
+
+----------------------------------------------------------------------
+-- Treesitter
+----------------------------------------------------------------------
+local treesitter_ok, treesitter = pcall(require, "nvim-treesitter.configs")
+if treesitter_ok then
+    treesitter.setup({
+        highlight = {
+            enable = true,
+        },
+    })
+end
+
+----------------------------------------------------------------------
+-- Render Markdown
+----------------------------------------------------------------------
+local render_markdown_ok, render_markdown = pcall(require, "render-markdown")
+if render_markdown_ok then
+    render_markdown.setup({
+        enabled = false,
+        anti_conceal = {
+            enabled = false,
+        },
     })
 end
 
@@ -212,6 +240,18 @@ vim.api.nvim_create_autocmd("FileType", {
                     formatting = { command = { "nixpkgs-fmt" } },
                 },
             },
+        })
+    end,
+})
+
+-- Markdown (marksman)
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "markdown",
+    callback = function(ev)
+        vim.lsp.start({
+            name = "marksman",
+            cmd = { "marksman", "server" },
+            root_dir = get_root_dir(get_bufpath(ev), { ".marksman.toml", ".git" }),
         })
     end,
 })

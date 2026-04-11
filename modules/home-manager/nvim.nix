@@ -13,7 +13,15 @@ in
   xdg.dataFile."nvim/site/pack/nix/start/plenary-nvim".source = pkgs.vimPlugins.plenary-nvim;
   xdg.dataFile."nvim/site/pack/nix/start/telescope-nvim".source = pkgs.vimPlugins.telescope-nvim;
   xdg.dataFile."nvim/site/pack/nix/start/gitsigns-nvim".source = pkgs.vimPlugins.gitsigns-nvim;
+  xdg.dataFile."nvim/site/pack/nix/start/nvim-treesitter".source =
+    pkgs.vimPlugins.nvim-treesitter.withPlugins (parsers: [
+      parsers.markdown
+      parsers.markdown_inline
+    ]);
+  xdg.dataFile."nvim/site/pack/nix/start/render-markdown-nvim".source =
+    pkgs.vimPlugins.render-markdown-nvim;
   home.packages = with pkgs; [
+    marksman
     neovim-unwrapped
 
     # LSP servers
