@@ -1,8 +1,8 @@
-{ config, pkgs-unstable, ... }:
+{ config, pkgs, ... }:
 
 let
   dotfilesPath = "${config.home.homeDirectory}/dotfiles";
-  pkgs = pkgs-unstable;
+  # pkgs = pkgs-unstable;
 in
 {
   # Out-of-store symlinks for configs that change frequently
