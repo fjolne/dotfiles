@@ -43,6 +43,10 @@
     "$HOME/.npm-global/bin"
   ];
 
+  home.file.".npmrc".text = ''
+    prefix=${config.home.homeDirectory}/.npm-global
+  '';
+
   home.shellAliases = {
     "sctl" = "systemctl --user";
     "jctl" = "journalctl --user";
