@@ -56,6 +56,7 @@
     enable = true;
     interactiveShellInit = ''
       set fish_greeting
+      set -e VISUAL
       set -l runtime_dir "$XDG_RUNTIME_DIR"
       if test -z "$runtime_dir"
         set runtime_dir "/run/user/"(id -u)
@@ -125,6 +126,7 @@
     extraConfig = ''
       set -g default-terminal "tmux-256color"
       set -ga terminal-overrides ",*256col*:Tc"
+      set-environment -gu VISUAL
       set -g allow-passthrough on
       set -g mouse on
       set -g history-limit 20000
