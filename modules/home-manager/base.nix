@@ -217,8 +217,23 @@
 
   programs.ssh = {
     enable = true;
-    # controlMaster = "auto";
-    # controlPersist = "5m";
+    enableDefaultConfig = false;
+    matchBlocks."*" = {
+      addKeysToAgent = "no";
+      checkHostIP = true;
+      compression = false;
+      controlMaster = "no";
+      controlPath = "~/.ssh/master-%r@%n:%p";
+      controlPersist = "no";
+      forwardAgent = false;
+      forwardX11 = false;
+      forwardX11Trusted = false;
+      hashKnownHosts = false;
+      identitiesOnly = false;
+      serverAliveInterval = 60;
+      serverAliveCountMax = 30;
+      userKnownHostsFile = "~/.ssh/known_hosts";
+    };
   };
 
   systemd.user.startServices = "sd-switch";

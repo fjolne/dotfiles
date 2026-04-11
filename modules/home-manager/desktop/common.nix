@@ -3,11 +3,6 @@
 {
   imports = [ ../base.nix ./gnome.nix ./kitty.nix ];
 
-  programs.ssh.matchBlocks."*" = {
-    serverAliveInterval = 60;
-    serverAliveCountMax = 30;
-  };
-
   home.packages = with pkgs; [
     # desktop apps
     google-chrome
