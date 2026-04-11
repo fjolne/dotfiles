@@ -47,11 +47,10 @@
         let
           baseModules = [
           ];
-          utils = import ./lib/utils.nix;
         in
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit self utils username pkgs-unstable; };
+          extraSpecialArgs = { inherit self username pkgs-unstable; };
           modules = baseModules ++ extraModules;
         };
     in
@@ -101,22 +100,6 @@
           "fjolne@g2-nixos" = mkHomeConfig {
             username = "fjolne";
             extraModules = [ ./modules/home-manager/desktop/g2.nix ];
-          };
-          "ec2-user@devcontainer" = mkHomeConfig {
-            username = "ec2-user";
-            extraModules = [ ./modules/home-manager/server/devcontainer.nix ];
-          };
-          "fjolne@vps" = mkHomeConfig {
-            username = "fjolne";
-            extraModules = [ ./modules/home-manager/server/vps.nix ];
-          };
-          "ilaut@vps" = mkHomeConfig {
-            username = "ilaut";
-            extraModules = [ ./modules/home-manager/server/vps.nix ];
-          };
-          "ec2-user@vps" = mkHomeConfig {
-            username = "ec2-user";
-            extraModules = [ ./modules/home-manager/server/vps.ix ];
           };
           "ec2-user@nixos" = mkHomeConfig {
             username = "ec2-user";
