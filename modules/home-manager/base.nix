@@ -31,7 +31,6 @@
   ];
 
   home.sessionVariables = {
-    TERM = "xterm-256color";
     EDITOR = "nvim";
     SUDO_EDITOR = "nvim";
     PAGER = "less -FiSwX";
@@ -57,7 +56,6 @@
     enable = true;
     interactiveShellInit = ''
       set fish_greeting
-      set -gx TERM xterm-256color
       set -l runtime_dir "$XDG_RUNTIME_DIR"
       if test -z "$runtime_dir"
         set runtime_dir "/run/user/"(id -u)
@@ -125,7 +123,7 @@
   programs.tmux = {
     enable = true;
     extraConfig = ''
-      set -g default-terminal "xterm-256color"
+      set -g default-terminal "tmux-256color"
       set -ga terminal-overrides ",*256col*:Tc"
       set -g allow-passthrough on
       set -g mouse on
