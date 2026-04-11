@@ -74,6 +74,19 @@ vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
 
 vim.keymap.set("n", "<leader>t", ":terminal<CR>", opts)
 
+local function format_current_buffer()
+    local bufnr = vim.api.nvim_get_current_buf()
+
+    if #vim.lsp.get_clients({ bufnr = bufnr, method = "textDocument/formatting" }) == 0 then
+        vim.notify("No formatter configured for this buffer", vim.log.levels.WARN)
+        return
+    end
+
+    vim.lsp.buf.format({ async = true })
+end
+
+vim.keymap.set("n", "<leader>f", format_current_buffer, { noremap = true, silent = true, desc = "Format buffer" })
+
 ----------------------------------------------------------------------
 -- Telescope (fuzzy finder)
 ----------------------------------------------------------------------
@@ -166,7 +179,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, o)
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, o)
         vim.keymap.set("n", "gr", vim.lsp.buf.references, o)
-        vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, o)
         vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, o)
         vim.keymap.set("n", "]d", vim.diagnostic.goto_next, o)
         vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, o)
@@ -199,6 +211,11 @@ vim.api.nvim_create_autocmd("FileType", {
                     },
                 },
             },
+        })
+        vim.lsp.start({
+            name = "ruff",
+            cmd = { "ruff", "server" },
+            root_dir = get_root_dir(get_bufpath(ev), { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" }),
         })
     end,
 })
@@ -233,7 +250,7 @@ vim.api.nvim_create_autocmd("FileType", {
     callback = function(ev)
         vim.lsp.start({
             name = "nil",
-            cmd = { "nil" },
+            cmd = { "nil", "--stdio" },
             root_dir = get_root_dir(get_bufpath(ev), { "flake.nix", ".git" }),
             settings = {
                 ["nil"] = {

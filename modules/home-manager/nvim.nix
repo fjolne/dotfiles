@@ -29,6 +29,7 @@ in
     nil
     nixpkgs-fmt
     pyright
+    ruff
     typescript-language-server
     rust-analyzer
   ];
