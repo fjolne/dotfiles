@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
+{ config, pkgs-unstable, ... }:
 
 let
   dotfilesPath = "${config.home.homeDirectory}/dotfiles";
+  pkgs = pkgs-unstable;
 in
 {
   # Out-of-store symlinks for configs that change frequently
@@ -28,7 +29,6 @@ in
     nil
     nixpkgs-fmt
     pyright
-    rust-analyzer
     typescript-language-server
   ];
 }

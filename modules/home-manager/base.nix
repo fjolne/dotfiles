@@ -12,23 +12,24 @@
   };
   programs.home-manager.enable = true;
 
-  home.packages = with pkgs; [
+  home.packages = (with pkgs; [
     bottom
     delta
     fd
     jq
     just
     less
-    pkgs-unstable.nodejs_20
-    pinentry-curses
     ripgrep
     tree
     unzip
-    vim
-
     (pkgs.writeShellScriptBin "," ''nix run nixpkgs#$1 -- "''${@:2}"'')
     (pkgs.writeShellScriptBin ",," ''nix shell nixpkgs#$1'')
-  ];
+  ]) ++ (with pkgs-unstable; [
+    nodejs_24
+    typescript
+    uv
+    rustup
+  ]);
 
   home.sessionVariables = {
     EDITOR = "nvim";
