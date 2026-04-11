@@ -32,7 +32,6 @@
 
   home.sessionVariables = {
     TERM = "xterm-256color";
-    VISUAL = "code";
     EDITOR = "nvim";
     SUDO_EDITOR = "nvim";
     PAGER = "less -FiSwX";
