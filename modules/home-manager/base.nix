@@ -26,12 +26,9 @@
     (pkgs.writeShellScriptBin "," ''nix run nixpkgs#$1 -- "''${@:2}"'')
     (pkgs.writeShellScriptBin ",," ''nix shell nixpkgs#$1'')
   ]) ++ (with pkgs-unstable; [
+    # use https://github.com/fjolne/flake for per-project deps
     nodejs
-    # typescript
-    uv
-    (pkgs.writeShellScriptBin "python" ''uv run python "$@"'')
-    # clang
-    # rustup
+    python3 # cannot make an alias for python=`uv run` because it leads to inf recursion
   ]);
 
   home.sessionVariables = {
