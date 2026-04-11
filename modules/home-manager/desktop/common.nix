@@ -13,9 +13,6 @@
     # terminal apps
     wl-clipboard
     xclip
-    python312
-    asciinema
-    mosh
 
     # fonts
     nerd-fonts.iosevka

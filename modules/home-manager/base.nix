@@ -26,11 +26,12 @@
     (pkgs.writeShellScriptBin "," ''nix run nixpkgs#$1 -- "''${@:2}"'')
     (pkgs.writeShellScriptBin ",," ''nix shell nixpkgs#$1'')
   ]) ++ (with pkgs-unstable; [
-    nodejs_24
-    typescript
+    nodejs
+    # typescript
     uv
-    clang
-    rustup
+    (pkgs.writeShellScriptBin "python" ''uv run python "$@"'')
+    # clang
+    # rustup
   ]);
 
   home.sessionVariables = {
