@@ -28,6 +28,7 @@
     nodejs_24
     typescript
     uv
+    clang
     rustup
   ]);
 
