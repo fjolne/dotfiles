@@ -5,8 +5,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    flake-utils.url = "github:numtide/flake-utils";
-
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     home-manager.url = "github:nix-community/home-manager/release-25.11";
@@ -18,11 +16,28 @@
     { self
     , nixpkgs
     , nixpkgs-unstable
-    , flake-utils
     , nixos-hardware
     , home-manager
     , ...
-    }: flake-utils.lib.eachDefaultSystem (system:
+    }:
+    let
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      forAllSystems =
+        f:
+        nixpkgs.lib.foldl'
+          (
+            acc: system:
+            nixpkgs.lib.recursiveUpdate acc (
+              nixpkgs.lib.mapAttrs (_: value: { "${system}" = value; }) (f system)
+            )
+          )
+          { }
+          systems;
+    in
+    forAllSystems (system:
     let
       pkgs-params = {
         config.allowUnfree = true;
