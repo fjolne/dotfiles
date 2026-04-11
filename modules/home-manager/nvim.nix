@@ -31,6 +31,5 @@ in
     pyright
     ruff
     typescript-language-server
-    rust-analyzer
   ];
 }
