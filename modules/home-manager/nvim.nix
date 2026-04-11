@@ -30,5 +30,6 @@ in
     nixpkgs-fmt
     pyright
     typescript-language-server
+    rust-analyzer
   ];
 }
