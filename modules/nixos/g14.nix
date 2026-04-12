@@ -10,4 +10,5 @@
   };
 
   programs.steam.enable = true;
+  programs.dconf.enable = true;
 }
