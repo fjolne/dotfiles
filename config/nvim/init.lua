@@ -66,6 +66,7 @@ vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Ma
 
 -- cd to current file's directory
 vim.keymap.set("n", "<leader>cd", ":cd %:h<CR>", opts)
+vim.keymap.set("n", "<leader>c", "<cmd>cclose<CR>", { noremap = true, silent = true, desc = "Close quickfix" })
 
 -- Terminal mode escape
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], opts)
