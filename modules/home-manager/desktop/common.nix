@@ -1,7 +1,7 @@
 { self, pkgs, pkgs-unstable, lib, ... }:
 
 {
-  imports = [ ../base.nix ./gnome.nix ./kitty.nix ];
+  imports = [ ../base.nix ./gnome.nix ];
 
   home.packages = with pkgs; [
     # desktop apps

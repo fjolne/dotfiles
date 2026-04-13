@@ -3,6 +3,7 @@
 {
   imports = [
     ./nvim.nix
+    ./desktop/kitty.nix # used on servers to show images
   ];
 
   home = {
