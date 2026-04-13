@@ -61,6 +61,9 @@ vim.keymap.set("v", "<leader>p", '"0p', opts)
 -- Clear search highlight
 vim.keymap.set("n", "<leader>/", ":nohlsearch<CR>", opts)
 
+-- Save buffer
+vim.keymap.set({ "n", "i", "v" }, "<C-s>", "<Cmd>write<CR>", { noremap = true, silent = true, desc = "Save buffer" })
+
 -- Markdown rendering
 vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Markdown render toggle" })
 
