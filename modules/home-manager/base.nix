@@ -1,5 +1,11 @@
 { config, pkgs, pkgs-unstable, username, lib, ... }:
 
+let
+  extraBinPaths = [
+    "$HOME/.local/bin"
+    "$HOME/.npm-global/bin"
+  ];
+in
 {
   imports = [
     ./nvim.nix
@@ -39,10 +45,7 @@
     BROWSER = "google-chrome-stable";
   };
 
-  home.sessionPath = [
-    "$HOME/.local/bin"
-    "$HOME/.npm-global/bin"
-  ];
+  home.sessionPath = extraBinPaths;
 
   home.file.".npmrc".text = ''
     prefix=${config.home.homeDirectory}/.npm-global
@@ -61,6 +64,15 @@
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
+      set -l hm_extra_paths ${lib.concatStringsSep " " extraBinPaths}
+      set -l current_path
+      for path_entry in $PATH
+        if not contains -- $path_entry $hm_extra_paths
+          set current_path $current_path $path_entry
+        end
+      end
+      set -gx PATH $hm_extra_paths $current_path
+
       set fish_greeting
       set -e VISUAL
       set -l runtime_dir "$XDG_RUNTIME_DIR"
