@@ -6,8 +6,6 @@
 ----------------------------------------------------------------------
 vim.g.mapleader = " "
 
-vim.g.clipboard = "wl-copy"
-vim.o.clipboard = "unnamedplus"
 vim.o.number = true
 vim.o.scrolloff = 999          -- Keep cursor centered
 vim.o.showmatch = true
@@ -55,11 +53,11 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", opts)
 vim.keymap.set("n", "<C-h>", "<C-w>h", opts)
 vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
 
--- Paste from yank register instead of replaced text
-vim.keymap.set("n", "<leader>p", '"0p', opts)
-vim.keymap.set("v", "<leader>p", '"0p', opts)
-vim.keymap.set("n", "<leader>P", '"0P', opts)
-vim.keymap.set("v", "<leader>P", '"0P', opts)
+-- Explicit system clipboard shortcuts
+vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', opts)
+vim.keymap.set("n", "<leader>P", '"+P', opts)
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', opts)
+vim.keymap.set("n", "<leader>Y", '"+Y', opts)
 
 -- Clear search highlight
 vim.keymap.set("n", "<leader>/", ":nohlsearch<CR>", opts)
