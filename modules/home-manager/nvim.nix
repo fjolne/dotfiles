@@ -22,14 +22,21 @@ in
   xdg.dataFile."nvim/site/pack/nix/start/render-markdown-nvim".source =
     pkgs.vimPlugins.render-markdown-nvim;
   home.packages = with pkgs; [
-    marksman
     neovim-unwrapped
 
-    # LSP servers
+    # markdown
+    marksman
+    # nix
     nil
     nixpkgs-fmt
+    # python
     pyright
     ruff
+    # typescript
     typescript-language-server
+    # go
+    gopls
+    # rust
+    # use https://github.com/fjolne/flake
   ];
 }
