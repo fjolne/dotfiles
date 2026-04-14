@@ -11,7 +11,6 @@
     self.packages.x86_64-linux.code-cursor
 
     # terminal apps
-    wl-clipboard
     xclip
 
     # fonts
