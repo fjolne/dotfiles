@@ -30,7 +30,6 @@ in
     ripgrep
     tree
     unzip
-    wl-clipboard
     (pkgs.writeShellScriptBin "," ''nix run nixpkgs#$1 -- "''${@:2}"'')
     (pkgs.writeShellScriptBin ",," ''nix shell nixpkgs#$1'')
   ]) ++ (with pkgs-unstable; [
