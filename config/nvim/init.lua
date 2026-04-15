@@ -21,8 +21,9 @@ vim.o.list = true
 vim.opt.listchars = { tab = "› ", trail = "⋅" }
 vim.o.showbreak = "↪"
 
--- Backup/undo
-vim.o.backup = true
+-- Keep swapfiles and temporary write-time backups, but do not leave persistent *~ files.
+vim.o.swapfile = true
+vim.o.backup = false
 vim.o.undofile = true
 vim.o.writebackup = true
 
