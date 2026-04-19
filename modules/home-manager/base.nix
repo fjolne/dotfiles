@@ -144,6 +144,7 @@ in
     extraConfig = ''
       set -g default-terminal "tmux-256color"
       set -ga terminal-overrides ",*256col*:Tc"
+      set -sg escape-time 0
       set-environment -gu VISUAL
       set -g allow-passthrough on
       set -g mouse on
