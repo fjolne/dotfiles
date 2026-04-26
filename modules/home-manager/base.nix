@@ -148,6 +148,8 @@ in
       set-environment -gu VISUAL
       set -g allow-passthrough on
       set -g mouse on
+      set -g extended-keys on
+      set -g focus-events on
       set -g history-limit 20000
       set -g default-command "exec fish"
       setw -g mode-keys vi
