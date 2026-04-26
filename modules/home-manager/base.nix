@@ -149,6 +149,7 @@ in
       set -g allow-passthrough on
       set -g mouse on
       set -g extended-keys on
+      set -g extended-keys-format csi-u
       set -g focus-events on
       set -g history-limit 20000
       set -g default-command "exec fish"
