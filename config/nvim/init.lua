@@ -45,15 +45,7 @@ vim.o.shiftwidth = 4
 ----------------------------------------------------------------------
 local opts = { noremap = true, silent = true }
 
--- Visual j/k movement (respects wrapped lines)
-vim.keymap.set("n", "j", "gj", opts)
-vim.keymap.set("n", "k", "gk", opts)
-
--- Split navigation with Ctrl+hjkl
-vim.keymap.set("n", "<C-j>", "<C-w>j", opts)
-vim.keymap.set("n", "<C-k>", "<C-w>k", opts)
-vim.keymap.set("n", "<C-h>", "<C-w>h", opts)
-vim.keymap.set("n", "<C-l>", "<C-w>l", opts)
+pcall(vim.keymap.del, "n", "<C-l>")
 
 -- Explicit system clipboard shortcuts
 vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', opts)
@@ -76,10 +68,13 @@ vim.keymap.set("n", "<leader>c", "<cmd>cclose<CR>", { noremap = true, silent = t
 
 -- Terminal mode escape
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], opts)
-vim.keymap.set("t", "jj", [[<C-\><C-n>]], opts)
-vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
 
 vim.keymap.set("n", "<leader>t", ":terminal<CR>", opts)
+
+-- Tab navigation
+vim.keymap.set("n", "<M-S-Left>", "<cmd>tabprevious<CR>", { noremap = true, silent = true, desc = "Previous tab" })
+vim.keymap.set("n", "<M-S-Right>", "<cmd>tabnext<CR>", { noremap = true, silent = true, desc = "Next tab" })
+vim.keymap.set("n", "<M-S-w>", "<cmd>tabclose<CR>", { noremap = true, silent = true, desc = "Close tab" })
 
 local function format_current_buffer()
     local bufnr = vim.api.nvim_get_current_buf()
@@ -99,9 +94,16 @@ vim.keymap.set("n", "<leader>f", format_current_buffer, { noremap = true, silent
 ----------------------------------------------------------------------
 local telescope_ok, telescope = pcall(require, "telescope")
 if telescope_ok then
+    local actions = require("telescope.actions")
     telescope.setup({
         defaults = {
             file_ignore_patterns = { "node_modules", ".git/", "%.lock" },
+            initial_mode = "insert",
+            mappings = {
+                i = {
+                    ["<Esc>"] = actions.close,
+                },
+            },
         },
     })
     local builtin = require("telescope.builtin")
