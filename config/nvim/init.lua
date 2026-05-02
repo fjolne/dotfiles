@@ -143,6 +143,18 @@ vim.keymap.set({ "n", "i", "v" }, "<C-s>", "<Cmd>write<CR>", { noremap = true, s
 -- Toggle visual line wrapping
 vim.keymap.set("n", "<leader>w", "<cmd>set wrap!<CR>", { noremap = true, silent = true, desc = "Toggle line wrap" })
 
+local function toggle_line_centering()
+    if vim.o.scrolloff == 999 then
+        vim.o.scrolloff = 0
+        vim.notify("Line centering off")
+    else
+        vim.o.scrolloff = 999
+        vim.notify("Line centering on")
+    end
+end
+
+vim.keymap.set("n", "<leader>z", toggle_line_centering, { noremap = true, silent = true, desc = "Toggle line centering" })
+
 -- Markdown rendering
 vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Markdown render toggle" })
 
