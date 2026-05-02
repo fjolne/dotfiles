@@ -5,6 +5,7 @@
 -- Basic Options
 ----------------------------------------------------------------------
 vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 
 vim.o.number = true
 vim.o.scrolloff = 999          -- Keep cursor centered
@@ -110,6 +111,16 @@ if telescope_ok then
     vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
     vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help tags" })
     vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent files" })
+end
+
+----------------------------------------------------------------------
+-- Review
+----------------------------------------------------------------------
+local review_ok, review = pcall(require, "review")
+if review_ok then
+    review.setup({})
+    vim.keymap.set("n", "<leader>r", "<cmd>Review<CR>", { desc = "Review" })
+    vim.keymap.set("n", "<leader>R", "<cmd>Review commits<CR>", { desc = "Review commits" })
 end
 
 ----------------------------------------------------------------------
