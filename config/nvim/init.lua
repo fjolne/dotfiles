@@ -111,6 +111,7 @@ if telescope_ok then
     vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
     vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help tags" })
     vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent files" })
+    vim.keymap.set("n", "<leader>fc", builtin.commands, { desc = "Commands" })
 end
 
 ----------------------------------------------------------------------
