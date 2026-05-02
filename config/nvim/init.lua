@@ -15,7 +15,39 @@ vim.o.splitright = true
 vim.o.termguicolors = true
 vim.o.laststatus = 3           -- Global statusline
 vim.o.background = "dark"
-vim.cmd.colorscheme("catppuccin")
+
+local gruvbox_ok, gruvbox = pcall(require, "gruvbox")
+if gruvbox_ok then
+    gruvbox.setup({
+        terminal_colors = true,
+        undercurl = true,
+        underline = true,
+        bold = true,
+        italic = {
+            strings = true,
+            emphasis = true,
+            comments = true,
+            operators = false,
+            folds = true,
+        },
+        strikethrough = true,
+        invert_selection = false,
+        invert_signs = false,
+        invert_tabline = false,
+        inverse = true,
+        contrast = "",
+        palette_overrides = {},
+        overrides = {
+            DiffAdd = { bg = "#32361a" },
+            DiffChange = { bg = "#0f3638" },
+            DiffDelete = { bg = "#3c1f1e" },
+            DiffText = { bg = "#665c54", fg = "#fbf1c7" },
+        },
+        dim_inactive = false,
+        transparent_mode = false,
+    })
+end
+vim.cmd.colorscheme("gruvbox")
 
 -- Invisible characters
 vim.o.list = true
