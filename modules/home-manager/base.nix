@@ -1,6 +1,7 @@
 { config, pkgs, pkgs-unstable, username, lib, ... }:
 
 let
+  dotfilesPath = "${config.home.homeDirectory}/dotfiles";
   extraBinPaths = [
     "$HOME/.local/bin"
     "$HOME/.npm-global/bin"
@@ -21,6 +22,7 @@ in
 
   home.packages = (with pkgs; [
     vim
+    tmux
     bottom
     delta
     fd
@@ -50,6 +52,9 @@ in
   home.file.".npmrc".text = ''
     prefix=${config.home.homeDirectory}/.npm-global
   '';
+
+  xdg.configFile."tmux".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/config/tmux";
 
   home.shellAliases = {
     "sctl" = "systemctl --user";
@@ -136,56 +141,6 @@ in
 
     profileExtra = ''
       [[ -f ~/.nix-profile/etc/profile.d/nix.sh ]] && . ~/.nix-profile/etc/profile.d/nix.sh
-    '';
-  };
-
-  programs.tmux = {
-    enable = true;
-    extraConfig = ''
-      set -g default-terminal "tmux-256color"
-      set -ga terminal-overrides ",*256col*:Tc"
-      set -sg escape-time 0
-      set-environment -gu VISUAL
-      set -g allow-passthrough on
-      set -g mouse on
-      set -g extended-keys on
-      set -g extended-keys-format csi-u
-      set -g focus-events on
-      set -g history-limit 20000
-      set -g default-command "exec fish"
-      setw -g mode-keys vi
-
-      # Vi-style copy mode bindings
-      bind -T copy-mode-vi v send-keys -X begin-selection
-      bind -T copy-mode-vi V send-keys -X select-line
-      bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
-
-      bind -n M-C-Left  previous-window
-      bind -n M-C-Right next-window
-      bind -n M-C-Up    switch-client -p
-      bind -n M-C-Down  switch-client -n
-
-      bind -n M-S-Left  select-pane -L
-      bind -n M-S-Right select-pane -R
-      bind -n M-S-Up    select-pane -U
-      bind -n M-S-Down  select-pane -D
-
-      bind -n M-< swap-window -t -1 \; select-window -t -1
-      bind -n M-> swap-window -t +1 \; select-window -t +1
-
-      # Ctrl+Shift+PageUp/Down for page scrolling
-      bind -n C-S-PPage copy-mode -u
-      bind -T copy-mode C-S-PPage send-keys -X page-up
-      bind -T copy-mode C-S-NPage send-keys -X page-down
-      bind -T copy-mode-vi C-S-PPage send-keys -X page-up
-      bind -T copy-mode-vi C-S-NPage send-keys -X page-down
-
-      # Ctrl+Shift+Arrow for line scrolling
-      bind -n C-S-Up copy-mode \; send-keys -X scroll-up
-      bind -T copy-mode C-S-Up send-keys -X scroll-up
-      bind -T copy-mode C-S-Down send-keys -X scroll-down
-      bind -T copy-mode-vi C-S-Up send-keys -X scroll-up
-      bind -T copy-mode-vi C-S-Down send-keys -X scroll-down
     '';
   };
 
