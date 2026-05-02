@@ -121,8 +121,44 @@ local function copy_current_file_path(modifier)
     vim.notify("Copied " .. path)
 end
 
+local function copy_current_file_location(modifier)
+    local path = vim.api.nvim_buf_get_name(0)
+    if path == "" then
+        vim.notify("No file path for current buffer", vim.log.levels.WARN)
+        return
+    end
+
+    local location = vim.fn.fnamemodify(path, modifier) .. ":" .. vim.api.nvim_win_get_cursor(0)[1]
+    vim.fn.setreg('"', location)
+    pcall(vim.fn.setreg, "+", location)
+    vim.notify("Copied " .. location)
+end
+
+local function copy_current_file_range(modifier)
+    local path = vim.api.nvim_buf_get_name(0)
+    if path == "" then
+        vim.notify("No file path for current buffer", vim.log.levels.WARN)
+        return
+    end
+
+    local start_line = vim.fn.line("v")
+    local end_line = vim.fn.line(".")
+    if start_line > end_line then
+        start_line, end_line = end_line, start_line
+    end
+
+    local location = vim.fn.fnamemodify(path, modifier) .. ":" .. start_line .. "-" .. end_line
+    vim.fn.setreg('"', location)
+    pcall(vim.fn.setreg, "+", location)
+    vim.notify("Copied " .. location)
+end
+
 vim.keymap.set("n", "<leader>y", function() copy_current_file_path(":.") end, { noremap = true, silent = true, desc = "Copy relative file path" })
 vim.keymap.set("n", "<leader>Y", function() copy_current_file_path(":p") end, { noremap = true, silent = true, desc = "Copy absolute file path" })
+vim.keymap.set("n", "<leader>l", function() copy_current_file_location(":.") end, { noremap = true, silent = true, desc = "Copy relative file location" })
+vim.keymap.set("v", "<leader>l", function() copy_current_file_range(":.") end, { noremap = true, silent = true, desc = "Copy relative file range" })
+vim.keymap.set("n", "<leader>L", function() copy_current_file_location(":p") end, { noremap = true, silent = true, desc = "Copy absolute file location" })
+vim.keymap.set("v", "<leader>L", function() copy_current_file_range(":p") end, { noremap = true, silent = true, desc = "Copy absolute file range" })
 
 -- Mirror yanks to the system clipboard while preserving normal registers.
 vim.api.nvim_create_autocmd("TextYankPost", {
