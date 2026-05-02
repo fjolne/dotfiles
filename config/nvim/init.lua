@@ -154,11 +154,19 @@ vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], opts)
 
 vim.keymap.set("n", "<leader>t", ":terminal<CR>", opts)
 
+local function delete_buffer_or_quit()
+    if #vim.fn.getbufinfo({ buflisted = 1 }) <= 1 then
+        vim.cmd("quit")
+    else
+        vim.cmd("bdelete")
+    end
+end
+
 -- Tab navigation
 vim.keymap.set("n", "<C-t>", "<cmd>tabnew<CR>", { noremap = true, silent = true, desc = "New tab" })
 vim.keymap.set("n", "<M-Left>", "<cmd>tabprevious<CR>", { noremap = true, silent = true, desc = "Previous tab" })
 vim.keymap.set("n", "<M-Right>", "<cmd>tabnext<CR>", { noremap = true, silent = true, desc = "Next tab" })
-vim.keymap.set("n", "<M-w>", "<cmd>tabclose<CR>", { noremap = true, silent = true, desc = "Close tab" })
+vim.keymap.set("n", "<M-w>", delete_buffer_or_quit, { noremap = true, silent = true, desc = "Delete buffer or quit" })
 
 -- Buffer navigation
 vim.keymap.set("n", "<S-Left>", "<cmd>bprevious<CR>", { noremap = true, silent = true, desc = "Previous buffer" })
