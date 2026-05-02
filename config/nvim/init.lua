@@ -54,7 +54,7 @@ vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', opts)
 vim.keymap.set("n", "<leader>Y", '"+Y', opts)
 
 -- Clear search highlight
-vim.keymap.set("n", "<leader>/", ":nohlsearch<CR>", opts)
+vim.keymap.set("n", "<C-c>", "<cmd>nohlsearch | cclose<CR>", { noremap = true, silent = true, desc = "Clear search and close quickfix" })
 
 -- Save buffer
 vim.keymap.set({ "n", "i", "v" }, "<C-s>", "<Cmd>write<CR>", { noremap = true, silent = true, desc = "Save buffer" })
@@ -64,7 +64,6 @@ vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Ma
 
 -- cd to current file's directory
 vim.keymap.set("n", "<leader>cd", ":cd %:h<CR>", opts)
-vim.keymap.set("n", "<leader>c", "<cmd>cclose<CR>", { noremap = true, silent = true, desc = "Close quickfix" })
 
 -- Terminal mode escape
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], opts)
@@ -75,6 +74,10 @@ vim.keymap.set("n", "<leader>t", ":terminal<CR>", opts)
 vim.keymap.set("n", "<M-Left>", "<cmd>tabprevious<CR>", { noremap = true, silent = true, desc = "Previous tab" })
 vim.keymap.set("n", "<M-Right>", "<cmd>tabnext<CR>", { noremap = true, silent = true, desc = "Next tab" })
 vim.keymap.set("n", "<M-w>", "<cmd>tabclose<CR>", { noremap = true, silent = true, desc = "Close tab" })
+
+-- Window navigation
+vim.keymap.set("n", "<M-Up>", "<C-w>k", { noremap = true, silent = true, desc = "Window up" })
+vim.keymap.set("n", "<M-Down>", "<C-w>j", { noremap = true, silent = true, desc = "Window down" })
 
 local function format_current_buffer()
     local bufnr = vim.api.nvim_get_current_buf()
