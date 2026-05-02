@@ -225,6 +225,9 @@ if codediff_ok then
             view = {
                 next_hunk = false,
                 prev_hunk = false,
+                stage_hunk = false,
+                unstage_hunk = false,
+                discard_hunk = false,
             },
         },
     })
