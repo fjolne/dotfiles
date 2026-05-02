@@ -101,6 +101,10 @@ vim.keymap.set("n", "<M-Left>", "<cmd>tabprevious<CR>", { noremap = true, silent
 vim.keymap.set("n", "<M-Right>", "<cmd>tabnext<CR>", { noremap = true, silent = true, desc = "Next tab" })
 vim.keymap.set("n", "<M-w>", "<cmd>tabclose<CR>", { noremap = true, silent = true, desc = "Close tab" })
 
+-- Buffer navigation
+vim.keymap.set("n", "<S-Left>", "<cmd>bprevious<CR>", { noremap = true, silent = true, desc = "Previous buffer" })
+vim.keymap.set("n", "<S-Right>", "<cmd>bnext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
+
 -- Window navigation
 vim.keymap.set("n", "<M-Up>", "<C-w>k", { noremap = true, silent = true, desc = "Window up" })
 vim.keymap.set("n", "<M-Down>", "<C-w>j", { noremap = true, silent = true, desc = "Window down" })
