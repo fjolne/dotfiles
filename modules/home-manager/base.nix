@@ -27,21 +27,16 @@ let
         ;;
     esac
 
-    if [ -n "''${WAYLAND_DISPLAY:-}" ]; then
-      if [ "$mode" = contents ]; then
-        ${pkgs.coreutils}/bin/cat -- "$path" | ${pkgs.wl-clipboard}/bin/wl-copy
-      else
-        printf '%s' "$path" | ${pkgs.wl-clipboard}/bin/wl-copy
-      fi
-    elif [ -n "''${DISPLAY:-}" ]; then
-      if [ "$mode" = contents ]; then
-        ${pkgs.coreutils}/bin/cat -- "$path" | ${pkgs.xclip}/bin/xclip -selection clipboard
-      else
-        printf '%s' "$path" | ${pkgs.xclip}/bin/xclip -selection clipboard
-      fi
+    if [ "$mode" = contents ]; then
+      encoded="$(${pkgs.coreutils}/bin/base64 --wrap=0 -- "$path")"
     else
-      printf 'no graphical clipboard available\n' >&2
-      exit 1
+      encoded="$(printf '%s' "$path" | ${pkgs.coreutils}/bin/base64 --wrap=0)"
+    fi
+
+    if [ -n "''${TMUX:-}" ]; then
+      printf '\033Ptmux;\033\033]52;c;%s\007\033\\' "$encoded" > /dev/tty
+    else
+      printf '\033]52;c;%s\007' "$encoded" > /dev/tty
     fi
   '';
 in
