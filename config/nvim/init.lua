@@ -120,11 +120,31 @@ if telescope_ok then
 end
 
 ----------------------------------------------------------------------
+-- CodeDiff
+----------------------------------------------------------------------
+local codediff_ok, codediff = pcall(require, "codediff")
+if codediff_ok then
+    codediff.setup({
+        keymaps = {
+            view = {
+                next_hunk = "<S-Down>",
+                prev_hunk = "<S-Up>",
+            },
+        },
+    })
+end
+
+----------------------------------------------------------------------
 -- Review
 ----------------------------------------------------------------------
 local review_ok, review = pcall(require, "review")
 if review_ok then
-    review.setup({})
+    review.setup({
+        keymaps = {
+            next_file = "<S-Right>",
+            prev_file = "<S-Left>",
+        },
+    })
     vim.keymap.set("n", "<leader>r", "<cmd>Review<CR>", { desc = "Review" })
     vim.keymap.set("n", "<leader>R", "<cmd>Review commits<CR>", { desc = "Review commits" })
 end
@@ -147,6 +167,16 @@ if gitsigns_ok then
 
             vim.keymap.set("n", "[c", function()
                 if vim.wo.diff then return "[c" end
+                vim.schedule(function() gs.nav_hunk("prev") end)
+                return "<Ignore>"
+            end, { expr = true, buffer = bufnr, desc = "Previous hunk" })
+
+            vim.keymap.set("n", "<S-Down>", function()
+                vim.schedule(function() gs.nav_hunk("next") end)
+                return "<Ignore>"
+            end, { expr = true, buffer = bufnr, desc = "Next hunk" })
+
+            vim.keymap.set("n", "<S-Up>", function()
                 vim.schedule(function() gs.nav_hunk("prev") end)
                 return "<Ignore>"
             end, { expr = true, buffer = bufnr, desc = "Previous hunk" })
