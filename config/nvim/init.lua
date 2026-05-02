@@ -84,6 +84,9 @@ vim.keymap.set("n", "<C-c>", "<cmd>nohlsearch | cclose<CR>", { noremap = true, s
 -- Save buffer
 vim.keymap.set({ "n", "i", "v" }, "<C-s>", "<Cmd>write<CR>", { noremap = true, silent = true, desc = "Save buffer" })
 
+-- Toggle visual line wrapping
+vim.keymap.set("n", "<leader>w", "<cmd>set wrap!<CR>", { noremap = true, silent = true, desc = "Toggle line wrap" })
+
 -- Markdown rendering
 vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Markdown render toggle" })
 
@@ -326,6 +329,26 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+-- JSON formatting (jq)
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "json", "jsonl" },
+    callback = function(ev)
+        vim.wo.foldmethod = "syntax"
+        vim.wo.foldlevel = 99
+
+        vim.keymap.set("n", "<leader>f", function()
+            if vim.fn.executable("jq") == 0 then
+                vim.notify("jq not found", vim.log.levels.WARN)
+                return
+            end
+
+            local view = vim.fn.winsaveview()
+            vim.cmd("%!jq .")
+            vim.fn.winrestview(view)
+        end, { noremap = true, silent = true, buffer = ev.buf, desc = "Format JSON with jq" })
+    end,
+})
+
 -- Rust (rust-analyzer)
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "rust",
@@ -380,14 +403,5 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         local pos = vim.api.nvim_win_get_cursor(0)
         vim.cmd([[%s/\s\+$//e]])
         vim.api.nvim_win_set_cursor(0, pos)
-    end,
-})
-
--- Disable folding
-vim.api.nvim_create_autocmd("BufWinEnter", {
-    group = augroup,
-    pattern = "*",
-    callback = function()
-        vim.o.foldlevel = 999999
     end,
 })
