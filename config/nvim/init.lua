@@ -343,7 +343,11 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = { "json", "jsonl" },
     callback = function(ev)
         vim.wo.foldmethod = "syntax"
-        vim.wo.foldlevel = 99
+        vim.schedule(function()
+            if vim.api.nvim_buf_is_valid(ev.buf) and vim.api.nvim_get_current_buf() == ev.buf then
+                vim.cmd("normal! zR")
+            end
+        end)
 
         vim.keymap.set("n", "<leader>f", function()
             if vim.fn.executable("jq") == 0 then
