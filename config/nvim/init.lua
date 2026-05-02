@@ -15,7 +15,7 @@ vim.o.splitright = true
 vim.o.termguicolors = true
 vim.o.laststatus = 3           -- Global statusline
 vim.o.background = "dark"
-vim.cmd.colorscheme("gruvbox")
+vim.cmd.colorscheme("catppuccin")
 
 -- Invisible characters
 vim.o.list = true
