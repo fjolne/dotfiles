@@ -42,7 +42,7 @@ in
 
   home.sessionVariables = {
     EDITOR = "nvim";
-    SUDO_EDITOR = "nvim";
+    SUDO_EDITOR = "vim";
     PAGER = "less -FiSwX";
     BROWSER = "google-chrome-stable";
   };
