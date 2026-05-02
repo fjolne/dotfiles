@@ -47,11 +47,20 @@ local opts = { noremap = true, silent = true }
 
 pcall(vim.keymap.del, "n", "<C-l>")
 
--- Explicit system clipboard shortcuts
+-- Explicit system clipboard paste shortcuts
 vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', opts)
 vim.keymap.set("n", "<leader>P", '"+P', opts)
-vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', opts)
-vim.keymap.set("n", "<leader>Y", '"+Y', opts)
+vim.keymap.set("v", "<C-p>", '"0p', opts)
+
+-- Mirror yanks to the system clipboard while preserving normal registers.
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+        local event = vim.v.event
+        if event.operator == "y" and event.regname ~= "+" then
+            pcall(vim.fn.setreg, "+", event.regcontents, event.regtype)
+        end
+    end,
+})
 
 -- Clear search highlight
 vim.keymap.set("n", "<C-c>", "<cmd>nohlsearch | cclose<CR>", { noremap = true, silent = true, desc = "Clear search and close quickfix" })
