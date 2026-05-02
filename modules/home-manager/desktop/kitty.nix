@@ -28,7 +28,7 @@
       "ctrl+shift+plus" = "no_op";
       "ctrl+shift+alt+minus" = "change_font_size all -1.0";
       "ctrl+shift+alt+plus" = "change_font_size all +1.0";
-      "shift+enter" = "no_op";
+      "shift+enter" = "send_text all \\x1b[13;2u";
     };
     themeFile = "gruvbox-dark";
     font = {
