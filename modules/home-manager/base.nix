@@ -43,7 +43,7 @@ in
   home.sessionVariables = {
     EDITOR = "nvim";
     SUDO_EDITOR = "vim";
-    PAGER = "less -FiSwX";
+    PAGER = "less -iSw";
     BROWSER = "google-chrome-stable";
   };
 
@@ -223,9 +223,9 @@ in
   programs.lf = {
     enable = true;
     keybindings = {
-      e = "$vim $f";
-      E = "$code $f";
-      I = "$bat -p $f";
+      I = "$bat -p --paging=always $f";
+      j = "$jq . $f | $PAGER";
+      J = "$jq . $f | bat -p --paging=always -l json";
     };
     previewer.source = pkgs.writeShellScript "pv.sh" ''bat -pp --color always "$@"'';
   };
