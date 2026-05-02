@@ -72,9 +72,9 @@ vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], opts)
 vim.keymap.set("n", "<leader>t", ":terminal<CR>", opts)
 
 -- Tab navigation
-vim.keymap.set("n", "<M-S-Left>", "<cmd>tabprevious<CR>", { noremap = true, silent = true, desc = "Previous tab" })
-vim.keymap.set("n", "<M-S-Right>", "<cmd>tabnext<CR>", { noremap = true, silent = true, desc = "Next tab" })
-vim.keymap.set("n", "<M-S-w>", "<cmd>tabclose<CR>", { noremap = true, silent = true, desc = "Close tab" })
+vim.keymap.set("n", "<M-Left>", "<cmd>tabprevious<CR>", { noremap = true, silent = true, desc = "Previous tab" })
+vim.keymap.set("n", "<M-Right>", "<cmd>tabnext<CR>", { noremap = true, silent = true, desc = "Next tab" })
+vim.keymap.set("n", "<M-w>", "<cmd>tabclose<CR>", { noremap = true, silent = true, desc = "Close tab" })
 
 local function format_current_buffer()
     local bufnr = vim.api.nvim_get_current_buf()
