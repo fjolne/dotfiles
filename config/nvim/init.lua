@@ -135,7 +135,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- Clear search highlight
-vim.keymap.set("n", "<C-c>", "<cmd>nohlsearch | cclose<CR>", { noremap = true, silent = true, desc = "Clear search and close quickfix" })
+vim.keymap.set("n", "<C-c>", "<cmd>nohlsearch | cclose | lclose<CR>", { noremap = true, silent = true, desc = "Clear search and close lists" })
 
 -- Save buffer
 vim.keymap.set({ "n", "i", "v" }, "<C-s>", "<Cmd>write<CR>", { noremap = true, silent = true, desc = "Save buffer" })
