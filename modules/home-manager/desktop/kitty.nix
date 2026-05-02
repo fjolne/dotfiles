@@ -22,6 +22,8 @@
       "kitty_mod+e" = "neighboring_window down";
       "kitty_mod+alt+left" = "neighboring_window left";
       "kitty_mod+alt+right" = "neighboring_window right";
+      "ctrl+tab" = "no_op";
+      "ctrl+shift+tab" = "no_op";
       "ctrl+shift+minus" = "no_op";
       "ctrl+shift+plus" = "no_op";
       "ctrl+shift+alt+minus" = "change_font_size all -1.0";

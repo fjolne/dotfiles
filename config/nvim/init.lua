@@ -52,6 +52,22 @@ vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', opts)
 vim.keymap.set("n", "<leader>P", '"+P', opts)
 vim.keymap.set("v", "<C-p>", '"0p', opts)
 
+local function copy_current_file_path(modifier)
+    local path = vim.api.nvim_buf_get_name(0)
+    if path == "" then
+        vim.notify("No file path for current buffer", vim.log.levels.WARN)
+        return
+    end
+
+    path = vim.fn.fnamemodify(path, modifier)
+    vim.fn.setreg('"', path)
+    pcall(vim.fn.setreg, "+", path)
+    vim.notify("Copied " .. path)
+end
+
+vim.keymap.set("n", "<leader>y", function() copy_current_file_path(":.") end, { noremap = true, silent = true, desc = "Copy relative file path" })
+vim.keymap.set("n", "<leader>Y", function() copy_current_file_path(":p") end, { noremap = true, silent = true, desc = "Copy absolute file path" })
+
 -- Mirror yanks to the system clipboard while preserving normal registers.
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
@@ -80,6 +96,7 @@ vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], opts)
 vim.keymap.set("n", "<leader>t", ":terminal<CR>", opts)
 
 -- Tab navigation
+vim.keymap.set("n", "<C-t>", "<cmd>tabnew<CR>", { noremap = true, silent = true, desc = "New tab" })
 vim.keymap.set("n", "<M-Left>", "<cmd>tabprevious<CR>", { noremap = true, silent = true, desc = "Previous tab" })
 vim.keymap.set("n", "<M-Right>", "<cmd>tabnext<CR>", { noremap = true, silent = true, desc = "Next tab" })
 vim.keymap.set("n", "<M-w>", "<cmd>tabclose<CR>", { noremap = true, silent = true, desc = "Close tab" })
@@ -233,7 +250,15 @@ end
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
         local bufnr = args.buf
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
         local o = { noremap = true, silent = true, buffer = bufnr }
+
+        if client and client:supports_method("textDocument/completion", bufnr) then
+            vim.lsp.completion.enable(true, client.id, bufnr)
+            vim.keymap.set("i", "<C-Space>", function()
+                vim.lsp.completion.get()
+            end, { noremap = true, silent = true, buffer = bufnr, desc = "LSP completion" })
+        end
 
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, o)
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, o)
