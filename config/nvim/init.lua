@@ -56,6 +56,21 @@ local opts = { noremap = true, silent = true }
 
 pcall(vim.keymap.del, "n", "<C-l>")
 
+local function navigate_hunk(direction, diff_key)
+    if vim.wo.diff then
+        vim.cmd("normal! " .. diff_key)
+        return
+    end
+
+    local ok, gs = pcall(require, "gitsigns")
+    if ok then
+        pcall(gs.nav_hunk, direction)
+    end
+end
+
+vim.keymap.set("n", "<S-Down>", function() navigate_hunk("next", "]c") end, { desc = "Next hunk" })
+vim.keymap.set("n", "<S-Up>", function() navigate_hunk("prev", "[c") end, { desc = "Previous hunk" })
+
 -- Explicit system clipboard paste shortcuts
 vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', opts)
 vim.keymap.set("n", "<leader>P", '"+P', opts)
@@ -168,8 +183,8 @@ if codediff_ok then
     codediff.setup({
         keymaps = {
             view = {
-                next_hunk = "<S-Down>",
-                prev_hunk = "<S-Up>",
+                next_hunk = false,
+                prev_hunk = false,
             },
         },
     })
@@ -200,27 +215,8 @@ if gitsigns_ok then
             local gs = require("gitsigns")
             local o = { noremap = true, silent = true, buffer = bufnr }
 
-            vim.keymap.set("n", "]c", function()
-                if vim.wo.diff then return "]c" end
-                vim.schedule(function() gs.nav_hunk("next") end)
-                return "<Ignore>"
-            end, { expr = true, buffer = bufnr, desc = "Next hunk" })
-
-            vim.keymap.set("n", "[c", function()
-                if vim.wo.diff then return "[c" end
-                vim.schedule(function() gs.nav_hunk("prev") end)
-                return "<Ignore>"
-            end, { expr = true, buffer = bufnr, desc = "Previous hunk" })
-
-            vim.keymap.set("n", "<S-Down>", function()
-                vim.schedule(function() gs.nav_hunk("next") end)
-                return "<Ignore>"
-            end, { expr = true, buffer = bufnr, desc = "Next hunk" })
-
-            vim.keymap.set("n", "<S-Up>", function()
-                vim.schedule(function() gs.nav_hunk("prev") end)
-                return "<Ignore>"
-            end, { expr = true, buffer = bufnr, desc = "Previous hunk" })
+            vim.keymap.set("n", "]c", function() navigate_hunk("next", "]c") end, { buffer = bufnr, desc = "Next hunk" })
+            vim.keymap.set("n", "[c", function() navigate_hunk("prev", "[c") end, { buffer = bufnr, desc = "Previous hunk" })
 
             vim.keymap.set("n", "<leader>hs", gs.stage_hunk, o)
             vim.keymap.set("n", "<leader>hr", gs.reset_hunk, o)
