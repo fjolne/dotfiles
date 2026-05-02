@@ -61,9 +61,17 @@
 
   # === graphics ===
   boot.kernelModules = [ "video" ];
+  boot.extraModprobeConfig = ''
+    options btusb enable_autosuspend=0
+  '';
   # Keep amdgpu disabled for boot stability, but avoid nomodeset so
   # nvidia-drm KMS can run GNOME Wayland smoothly.
-  boot.kernelParams = [ "acpi_backlight=video" "amdgpu.modeset=0" "module_blacklist=amdgpu" "modprobe.blacklist=amdgpu" ];
+  boot.kernelParams = [
+    "acpi_backlight=video"
+    "amdgpu.modeset=0"
+    "module_blacklist=amdgpu"
+    "modprobe.blacklist=amdgpu"
+  ];
   hardware.graphics.enable = true;
   # nvidia
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -88,6 +96,11 @@
   };
 
   services.printing.enable = true;
+
+  services.udev.extraRules = ''
+    # Keep USB Bluetooth adapters awake so Bluetooth mice do not pause after idle.
+    ACTION=="add|change", SUBSYSTEM=="usb", ATTR{bDeviceClass}=="e0", TEST=="power/control", ATTR{power/control}="on"
+  '';
 
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
