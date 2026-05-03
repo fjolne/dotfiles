@@ -8,7 +8,6 @@
     google-chrome
     pkgs-unstable.telegram-desktop
     gnome-tweaks
-    self.packages.x86_64-linux.code-cursor
 
     # terminal apps
     wl-clipboard
