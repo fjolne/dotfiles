@@ -1,0 +1,30 @@
+model = "gpt-5.5"
+model_reasoning_effort = "high"
+service_tier = "fast"
+web_search = "disabled"
+suppress_unstable_features_warning = true
+
+[features]
+default_mode_request_user_input = true
+terminal_resize_reflow = true
+apps = false
+
+[notice]
+hide_rate_limit_model_nudge = true
+fast_default_opt_out = true
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
+
+[mcp_servers.openaiDeveloperDocs.tools.search_openai_docs]
+approval_mode = "approve"
+
+[mcp_servers.openaiDeveloperDocs.tools.fetch_openai_doc]
+approval_mode = "approve"
+
+[tui]
+terminal_title = ["thread-title"]
+status_line = ["model-with-reasoning", "current-dir", "git-branch", "context-remaining", "five-hour-limit"]
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4

@@ -86,6 +86,9 @@ in
     prefix=${config.home.homeDirectory}/.npm-global
   '';
 
+  home.file.".codex/config.toml".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/config/codex/config.toml";
+
   xdg.configFile."tmux".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/config/tmux";
 
