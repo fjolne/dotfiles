@@ -15,6 +15,8 @@ vim.o.splitright = true
 vim.o.termguicolors = true
 vim.o.laststatus = 3           -- Global statusline
 vim.o.background = "dark"
+vim.o.title = true
+vim.o.titlestring = "nvim"
 
 local gruvbox_ok, gruvbox = pcall(require, "gruvbox")
 if gruvbox_ok then
