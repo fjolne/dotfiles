@@ -312,6 +312,9 @@ if gitsigns_ok then
             vim.keymap.set("n", "[c", function() navigate_hunk("prev", "[c") end, { buffer = bufnr, desc = "Previous hunk" })
 
             vim.keymap.set("n", "<leader>hs", gs.stage_hunk, o)
+            vim.keymap.set("v", "<leader>hs", function()
+                gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+            end, o)
             vim.keymap.set("n", "<leader>hr", gs.reset_hunk, o)
             vim.keymap.set("v", "<leader>hr", function()
                 gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
