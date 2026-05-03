@@ -226,6 +226,12 @@ vim.keymap.set("n", "<S-Right>", "<cmd>bnext<CR>", { noremap = true, silent = tr
 vim.keymap.set("n", "<M-Up>", "<C-w>k", { noremap = true, silent = true, desc = "Window up" })
 vim.keymap.set("n", "<M-Down>", "<C-w>j", { noremap = true, silent = true, desc = "Window down" })
 
+-- File naviation
+vim.keymap.set("n", "<leader>e", vim.cmd.Explore)
+vim.keymap.set("n", "<leader>E", function()
+  vim.cmd("Explore " .. vim.fn.expand("%:p:h"))
+end)
+
 local function format_current_buffer()
     local bufnr = vim.api.nvim_get_current_buf()
 
