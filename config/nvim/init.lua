@@ -232,19 +232,6 @@ vim.keymap.set("n", "<leader>E", function()
   vim.cmd("Explore " .. vim.fn.expand("%:p:h"))
 end)
 
-local function format_current_buffer()
-    local bufnr = vim.api.nvim_get_current_buf()
-
-    if #vim.lsp.get_clients({ bufnr = bufnr, method = "textDocument/formatting" }) == 0 then
-        vim.notify("No formatter configured for this buffer", vim.log.levels.WARN)
-        return
-    end
-
-    vim.lsp.buf.format({ async = true })
-end
-
-vim.keymap.set("n", "<leader>f", format_current_buffer, { noremap = true, silent = true, desc = "Format buffer" })
-
 ----------------------------------------------------------------------
 -- Telescope (fuzzy finder)
 ----------------------------------------------------------------------
@@ -386,6 +373,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "]d", vim.diagnostic.goto_next, o)
         vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, o)
         vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, o)
+        vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, o)
     end,
 })
 
