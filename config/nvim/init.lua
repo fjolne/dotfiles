@@ -227,10 +227,7 @@ vim.keymap.set("n", "<M-Up>", "<C-w>k", { noremap = true, silent = true, desc = 
 vim.keymap.set("n", "<M-Down>", "<C-w>j", { noremap = true, silent = true, desc = "Window down" })
 
 -- File naviation
-vim.keymap.set("n", "<leader>e", vim.cmd.Explore)
-vim.keymap.set("n", "<leader>E", function()
-  vim.cmd("Explore " .. vim.fn.expand("%:p:h"))
-end)
+vim.keymap.set("n", "<C-e>", vim.cmd.Explore)
 
 ----------------------------------------------------------------------
 -- Telescope (fuzzy finder)
