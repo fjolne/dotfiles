@@ -24,7 +24,7 @@ approval_mode = "approve"
 
 [tui]
 terminal_title = ["thread-title"]
-status_line = ["model-with-reasoning", "current-dir", "git-branch", "context-remaining", "five-hour-limit"]
+status_line = ["model-with-reasoning", "current-dir", "git-branch", "context-remaining", "five-hour-limit", "weekly-limit"]
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
