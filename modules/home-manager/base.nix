@@ -84,6 +84,7 @@ in
 
   home.file.".npmrc".text = ''
     prefix=${config.home.homeDirectory}/.npm-global
+    min-release-age=1
   '';
 
   home.file.".codex/config.toml".source =
