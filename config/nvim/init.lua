@@ -333,6 +333,9 @@ if gitsigns_ok then
                 gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
             end, o)
             vim.keymap.set("n", "<leader>hu", gs.undo_stage_hunk, o)
+            vim.keymap.set("n", "<leader>hS", gs.stage_buffer, o)
+            vim.keymap.set("n", "<leader>hU", gs.reset_buffer_index, o)
+            vim.keymap.set("n", "<leader>hR", gs.reset_buffer, o)
             vim.keymap.set("n", "<leader>hp", gs.preview_hunk, o)
             vim.keymap.set("n", "<leader>hb", function() gs.blame_line({ full = true }) end, o)
         end,
