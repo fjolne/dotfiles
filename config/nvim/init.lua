@@ -263,6 +263,10 @@ if fff_ok then
     vim.keymap.set("n", "<C-f>", function()
         fff.live_grep({ grep = { modes = { "fuzzy", "plain" } } })
     end, { desc = "Live fffuzy grep" })
+    vim.keymap.set("n", "<leader>fr", function()
+        fff.scan_files()
+        fff.refresh_git_status()
+    end, { desc = "Refresh FFF files and git status" })
     vim.keymap.set("x", "<C-f>", function()
         local query = get_visual_selection()
         if query:match("%S") then
