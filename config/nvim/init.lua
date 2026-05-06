@@ -227,6 +227,9 @@ vim.keymap.set("n", "<M-Up>", "<C-w>k", { noremap = true, silent = true, desc = 
 vim.keymap.set("n", "<M-Down>", "<C-w>j", { noremap = true, silent = true, desc = "Window down" })
 
 -- File naviation
+vim.g.netrw_liststyle = 1
+vim.g.netrw_sizestyle = "H"
+vim.g.netrw_list_hide = [[\%(\d\+/\)\=\.\.\=/\s]]
 vim.keymap.set("n", "<C-e>", vim.cmd.Explore)
 
 ----------------------------------------------------------------------
