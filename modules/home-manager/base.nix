@@ -71,6 +71,7 @@ in
     # use https://github.com/fjolne/flake for per-project deps
     nodejs
     python3 # cannot make an alias for python=`uv run` because it leads to inf recursion
+    tabiew
   ]);
 
   home.sessionVariables = {
