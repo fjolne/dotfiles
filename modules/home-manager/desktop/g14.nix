@@ -1,7 +1,7 @@
 { username, lib, pkgs, pkgs-unstable, ... }:
 
 {
-  imports = [ ./common.nix ./ghostty.nix ];
+  imports = [ ./common.nix ];
 
   programs.ssh.enable = lib.mkForce false;
   systemd.user.tmpfiles.rules = [
