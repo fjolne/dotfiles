@@ -5,7 +5,12 @@ let
 in
 
 {
-  home.packages = [ pkgs-unstable.kitty ];
+  home.packages = [
+    pkgs-unstable.kitty
+    (pkgs-unstable.writeShellScriptBin "icat" ''
+      exec ${pkgs-unstable.kitty}/bin/kitty icat "$@"
+    '')
+  ];
 
   xdg.configFile."kitty".source =
     config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/config/kitty";
