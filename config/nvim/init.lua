@@ -90,6 +90,12 @@ local opts = { noremap = true, silent = true }
 
 pcall(vim.keymap.del, "n", "<C-l>")
 
+local function copy_text(text)
+    vim.fn.setreg('"', text)
+    pcall(vim.fn.setreg, "+", text)
+    vim.notify("Copied " .. text)
+end
+
 local function navigate_hunk(direction, diff_key)
     if vim.wo.diff then
         vim.cmd("normal! " .. diff_key)
@@ -118,9 +124,7 @@ local function copy_current_file_path(modifier)
     end
 
     path = vim.fn.fnamemodify(path, modifier)
-    vim.fn.setreg('"', path)
-    pcall(vim.fn.setreg, "+", path)
-    vim.notify("Copied " .. path)
+    copy_text(path)
 end
 
 local function copy_current_file_location(modifier)
@@ -131,9 +135,7 @@ local function copy_current_file_location(modifier)
     end
 
     local location = vim.fn.fnamemodify(path, modifier) .. ":" .. vim.api.nvim_win_get_cursor(0)[1]
-    vim.fn.setreg('"', location)
-    pcall(vim.fn.setreg, "+", location)
-    vim.notify("Copied " .. location)
+    copy_text(location)
 end
 
 local function copy_current_file_range(modifier)
@@ -150,9 +152,7 @@ local function copy_current_file_range(modifier)
     end
 
     local location = vim.fn.fnamemodify(path, modifier) .. ":" .. start_line .. "-" .. end_line
-    vim.fn.setreg('"', location)
-    pcall(vim.fn.setreg, "+", location)
-    vim.notify("Copied " .. location)
+    copy_text(location)
 end
 
 vim.keymap.set("n", "<leader>y", function() copy_current_file_path(":.") end, { noremap = true, silent = true, desc = "Copy relative file path" })
@@ -231,6 +231,35 @@ vim.g.netrw_liststyle = 1
 vim.g.netrw_sizestyle = "H"
 vim.g.netrw_list_hide = [[\%(\d\+/\)\=\.\.\=/\s]]
 vim.keymap.set("n", "<C-e>", vim.cmd.Explore)
+
+local function copy_netrw_path(modifier)
+    local curdir = vim.b.netrw_curdir
+    if not curdir or curdir == "" then
+        vim.notify("No netrw directory for current buffer", vim.log.levels.WARN)
+        return
+    end
+
+    local name = vim.fn["netrw#Call"]("NetrwGetWord")
+    if name == "" or name == "./" then
+        vim.notify("No netrw file under cursor", vim.log.levels.WARN)
+        return
+    end
+
+    local path = vim.fn["netrw#Call"]("ComposePath", curdir, name)
+    copy_text(vim.fn.fnamemodify(path, modifier))
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "netrw",
+    callback = function(event)
+        vim.keymap.set("n", "<M-y>", function()
+            copy_netrw_path(":.")
+        end, { buffer = event.buf, noremap = true, silent = true, desc = "Copy netrw relative path" })
+        vim.keymap.set("n", "<M-Y>", function()
+            copy_netrw_path(":p")
+        end, { buffer = event.buf, noremap = true, silent = true, desc = "Copy netrw absolute path" })
+    end,
+})
 
 ----------------------------------------------------------------------
 -- FFF (fuzzy finder)
