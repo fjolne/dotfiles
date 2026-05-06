@@ -230,29 +230,45 @@ vim.keymap.set("n", "<M-Down>", "<C-w>j", { noremap = true, silent = true, desc 
 vim.keymap.set("n", "<C-e>", vim.cmd.Explore)
 
 ----------------------------------------------------------------------
--- Telescope (fuzzy finder)
+-- FFF (fuzzy finder)
 ----------------------------------------------------------------------
-local telescope_ok, telescope = pcall(require, "telescope")
-if telescope_ok then
-    local actions = require("telescope.actions")
-    telescope.setup({
-        defaults = {
-            file_ignore_patterns = { "node_modules", ".git/", "%.lock" },
-            initial_mode = "insert",
-            mappings = {
-                i = {
-                    ["<Esc>"] = actions.close,
-                },
-            },
+local fff_ok, fff = pcall(require, "fff")
+if fff_ok then
+    local function get_visual_selection()
+        local lines = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = vim.fn.mode() })
+        return table.concat(lines, "\n")
+    end
+
+    local function exit_visual_mode()
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "nx", false)
+    end
+
+    fff.setup({
+        lazy_sync = true,
+        prompt_vim_mode = false,
+        keymaps = {
+            preview_scroll_up = "<PageUp>",
+            preview_scroll_down = "<PageDown>",
+        },
+        debug = {
+            enabled = true,
+            show_scores = true,
         },
     })
-    local builtin = require("telescope.builtin")
-    vim.keymap.set("n", "<C-p>", function() builtin.find_files({ hidden = true }) end, { desc = "Find files" })
-    vim.keymap.set("n", "<leader>ff", builtin.live_grep, { desc = "Live grep" })
-    vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
-    vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help tags" })
-    vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent files" })
-    vim.keymap.set("n", "<leader>fc", builtin.commands, { desc = "Commands" })
+
+    vim.keymap.set("n", "<C-p>", function() fff.find_files() end, { desc = "FFFind files" })
+    vim.keymap.set("n", "<C-f>", function()
+        fff.live_grep({ grep = { modes = { "fuzzy", "plain" } } })
+    end, { desc = "Live fffuzy grep" })
+    vim.keymap.set("x", "<C-f>", function()
+        local query = get_visual_selection()
+        if query:match("%S") then
+            exit_visual_mode()
+            vim.schedule(function()
+                fff.live_grep({ query = query })
+            end)
+        end
+    end, { desc = "Search selection" })
 end
 
 ----------------------------------------------------------------------

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 let
   dotfilesPath = "${config.home.homeDirectory}/dotfiles";
@@ -38,7 +38,6 @@ let
       pkgs.vimPlugins.nui-nvim
     ];
   };
-  # pkgs = pkgs-unstable;
 in
 {
   # Out-of-store symlinks for configs that change frequently
@@ -47,8 +46,7 @@ in
 
   # Neovim plugins from nix (symlinked to packpath)
   xdg.dataFile."nvim/site/pack/nix/start/gruvbox-nvim".source = pkgs.vimPlugins.gruvbox-nvim;
-  xdg.dataFile."nvim/site/pack/nix/start/plenary-nvim".source = pkgs.vimPlugins.plenary-nvim;
-  xdg.dataFile."nvim/site/pack/nix/start/telescope-nvim".source = pkgs.vimPlugins.telescope-nvim;
+  xdg.dataFile."nvim/site/pack/nix/start/fff-nvim".source = pkgs-unstable.vimPlugins.fff-nvim;
   xdg.dataFile."nvim/site/pack/nix/start/gitsigns-nvim".source = pkgs.vimPlugins.gitsigns-nvim;
   xdg.dataFile."nvim/site/pack/nix/start/nvim-treesitter".source =
     pkgs.vimPlugins.nvim-treesitter.withPlugins (parsers: [
