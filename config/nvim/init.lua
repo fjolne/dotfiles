@@ -172,8 +172,23 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
+local qf_item_match
+
+local function clear_qf_item_match()
+    if qf_item_match and vim.api.nvim_win_is_valid(qf_item_match.win) then
+        pcall(vim.fn.matchdelete, qf_item_match.id, qf_item_match.win)
+    end
+
+    qf_item_match = nil
+end
+
 -- Clear search highlight
-vim.keymap.set("n", "<C-c>", "<cmd>nohlsearch | cclose | lclose<CR>", { noremap = true, silent = true, desc = "Clear search and close lists" })
+vim.keymap.set("n", "<C-c>", function()
+    clear_qf_item_match()
+    vim.cmd("nohlsearch")
+    vim.cmd("cclose")
+    vim.cmd("lclose")
+end, { noremap = true, silent = true, desc = "Clear search and close lists" })
 
 local function select_qf_item_keep_focus()
     local list_win = vim.api.nvim_get_current_win()
@@ -187,6 +202,15 @@ local function select_qf_item_keep_focus()
     local ok, err = pcall(vim.cmd, command .. " " .. line)
     if not ok then
         vim.notify(err, vim.log.levels.WARN)
+    else
+        local target_win = vim.api.nvim_get_current_win()
+        clear_qf_item_match()
+        qf_item_match = {
+            win = target_win,
+            id = vim.api.nvim_win_call(target_win, function()
+                return vim.fn.matchaddpos("Search", { { vim.api.nvim_win_get_cursor(0)[1] } }, 10)
+            end),
+        }
     end
 
     if vim.api.nvim_win_is_valid(list_win) then
