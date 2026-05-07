@@ -394,8 +394,13 @@ if review_ok then
         },
     })
 
-    local review_buffer_options = {}
+    local review_hooks_ok, review_hooks = pcall(require, "review.hooks")
+    local review_buffer_options = review_hooks_ok and (review_hooks._restore_buffer_options or {}) or {}
     local review_augroup = vim.api.nvim_create_augroup("review_buffer_options", { clear = true })
+
+    if review_hooks_ok then
+        review_hooks._restore_buffer_options = review_buffer_options
+    end
 
     local function remember_review_buffer_options(tabpage)
         local ok, lifecycle = pcall(require, "codediff.ui.lifecycle")
@@ -417,6 +422,20 @@ if review_ok then
         end
     end
 
+    if review_hooks_ok then
+        review_hooks._remember_buffer_options = remember_review_buffer_options
+        if not review_hooks._restore_buffer_options_wrapped then
+            local on_session_created = review_hooks.on_session_created
+
+            review_hooks.on_session_created = function(tabpage)
+                review_hooks._remember_buffer_options(tabpage)
+                return on_session_created(tabpage)
+            end
+
+            review_hooks._restore_buffer_options_wrapped = true
+        end
+    end
+
     local function restore_review_buffer_options()
         for bufnr, options in pairs(review_buffer_options) do
             if vim.api.nvim_buf_is_valid(bufnr) then
@@ -426,28 +445,6 @@ if review_ok then
         end
         review_buffer_options = {}
     end
-
-    local function defer_remember_review_buffer_options(tabpage)
-        vim.defer_fn(function()
-            remember_review_buffer_options(tabpage)
-        end, 50)
-    end
-
-    vim.api.nvim_create_autocmd("User", {
-        group = review_augroup,
-        pattern = "CodeDiffOpen",
-        callback = function(args)
-            defer_remember_review_buffer_options(args.data and args.data.tabpage)
-        end,
-    })
-
-    vim.api.nvim_create_autocmd("User", {
-        group = review_augroup,
-        pattern = "CodeDiffFileSelect",
-        callback = function(args)
-            defer_remember_review_buffer_options(args.data and args.data.tabpage)
-        end,
-    })
 
     vim.api.nvim_create_autocmd("User", {
         group = review_augroup,
