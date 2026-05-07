@@ -393,6 +393,68 @@ if review_ok then
             prev_file = "<S-Left>",
         },
     })
+
+    local review_buffer_options = {}
+    local review_augroup = vim.api.nvim_create_augroup("review_buffer_options", { clear = true })
+
+    local function remember_review_buffer_options(tabpage)
+        local ok, lifecycle = pcall(require, "codediff.ui.lifecycle")
+        if not ok then
+            return
+        end
+
+        local orig_buf, mod_buf = lifecycle.get_buffers(tabpage or vim.api.nvim_get_current_tabpage())
+        for _, bufnr in ipairs({ orig_buf, mod_buf }) do
+            if bufnr and vim.api.nvim_buf_is_valid(bufnr) then
+                local name = vim.api.nvim_buf_get_name(bufnr)
+                if name ~= "" and vim.bo[bufnr].buftype == "" and not review_buffer_options[bufnr] then
+                    review_buffer_options[bufnr] = {
+                        readonly = vim.bo[bufnr].readonly,
+                        modifiable = vim.bo[bufnr].modifiable,
+                    }
+                end
+            end
+        end
+    end
+
+    local function restore_review_buffer_options()
+        for bufnr, options in pairs(review_buffer_options) do
+            if vim.api.nvim_buf_is_valid(bufnr) then
+                vim.bo[bufnr].readonly = options.readonly
+                vim.bo[bufnr].modifiable = options.modifiable
+            end
+        end
+        review_buffer_options = {}
+    end
+
+    local function defer_remember_review_buffer_options(tabpage)
+        vim.defer_fn(function()
+            remember_review_buffer_options(tabpage)
+        end, 50)
+    end
+
+    vim.api.nvim_create_autocmd("User", {
+        group = review_augroup,
+        pattern = "CodeDiffOpen",
+        callback = function(args)
+            defer_remember_review_buffer_options(args.data and args.data.tabpage)
+        end,
+    })
+
+    vim.api.nvim_create_autocmd("User", {
+        group = review_augroup,
+        pattern = "CodeDiffFileSelect",
+        callback = function(args)
+            defer_remember_review_buffer_options(args.data and args.data.tabpage)
+        end,
+    })
+
+    vim.api.nvim_create_autocmd("User", {
+        group = review_augroup,
+        pattern = "CodeDiffClose",
+        callback = restore_review_buffer_options,
+    })
+
     vim.keymap.set("n", "<leader>r", "<cmd>Review<CR>", { desc = "Review" })
     vim.keymap.set("n", "<leader>R", "<cmd>Review commits<CR>", { desc = "Review commits" })
 end
