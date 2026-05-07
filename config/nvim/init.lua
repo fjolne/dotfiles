@@ -429,13 +429,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
-local function get_root_dir(bufpath, markers)
-    local root_files = vim.fs.find(markers, { path = bufpath, upward = true })
-    return root_files[1] and vim.fn.fnamemodify(vim.fs.dirname(root_files[1]), ":p") or vim.fn.getcwd()
-end
-
-local function get_bufpath(ev)
-    return ev.match ~= "" and vim.fn.fnamemodify(ev.match, ":p:h") or vim.fn.getcwd()
+local function get_root_dir(bufnr, markers)
+    return vim.fs.root(bufnr, markers) or vim.fn.getcwd()
 end
 
 -- Python (pyright)
@@ -445,7 +440,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.lsp.start({
             name = "pyright",
             cmd = { "pyright-langserver", "--stdio" },
-            root_dir = get_root_dir(get_bufpath(ev), { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" }),
+            root_dir = get_root_dir(ev.buf, { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" }),
             settings = {
                 python = {
                     analysis = {
@@ -458,7 +453,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.lsp.start({
             name = "ruff",
             cmd = { "ruff", "server" },
-            root_dir = get_root_dir(get_bufpath(ev), { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" }),
+            root_dir = get_root_dir(ev.buf, { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" }),
         })
     end,
 })
@@ -470,7 +465,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.lsp.start({
             name = "tsserver",
             cmd = { "typescript-language-server", "--stdio" },
-            root_dir = get_root_dir(get_bufpath(ev), { "tsconfig.json", "jsconfig.json", "package.json", ".git" }),
+            root_dir = get_root_dir(ev.buf, { "tsconfig.json", "jsconfig.json", "package.json", ".git" }),
         })
     end,
 })
@@ -506,7 +501,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.lsp.start({
             name = "rust-analyzer",
             cmd = { "rust-analyzer" },
-            root_dir = get_root_dir(get_bufpath(ev), { "Cargo.toml", ".git" }),
+            root_dir = get_root_dir(ev.buf, { "Cargo.toml", ".git" }),
         })
     end,
 })
@@ -518,7 +513,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.lsp.start({
             name = "nil",
             cmd = { "nil", "--stdio" },
-            root_dir = get_root_dir(get_bufpath(ev), { "flake.nix", ".git" }),
+            root_dir = get_root_dir(ev.buf, { "flake.nix", ".git" }),
             settings = {
                 ["nil"] = {
                     formatting = { command = { "nixpkgs-fmt" } },
@@ -535,7 +530,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.lsp.start({
             name = "marksman",
             cmd = { "marksman", "server" },
-            root_dir = get_root_dir(get_bufpath(ev), { ".marksman.toml", ".git" }),
+            root_dir = get_root_dir(ev.buf, { ".marksman.toml", ".git" }),
         })
     end,
 })
