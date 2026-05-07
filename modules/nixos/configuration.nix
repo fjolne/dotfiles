@@ -5,11 +5,15 @@
     ./nix-ld.nix
   ];
 
-  # `nix run dot-stable#hello` will use nixpkgs from this flake.
+  # nixpkgs and <nixpkgs> resolve to dot-stable on NixOS by default.
   nix.registry.dot-stable.flake = self.inputs.nixpkgs;
   nix.registry.dot-unstable.flake = self.inputs.nixpkgs-unstable;
-  # <nixpkgs> will resolve to this flake's stable nixpkgs input.
-  nix.nixPath = [ "nixpkgs=flake:dot-stable" ];
+  nix.registry.unstable.to = {
+    type = "github";
+    owner = "NixOS";
+    repo = "nixpkgs";
+    ref = "nixpkgs-unstable";
+  };
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.substituters = [
     # "https://cuda-maintainers.cachix.org"

@@ -35,8 +35,8 @@ in
     unzip
     (pkgs.writeShellScriptBin "," ''nix run dot-unstable#$1 -- "''${@:2}"'')
     (pkgs.writeShellScriptBin ",," ''nix shell dot-unstable#$1'')
-    (pkgs.writeShellScriptBin ",u" ''nix run nixpkgs#$1 -- "''${@:2}"'')
-    (pkgs.writeShellScriptBin ",,u" ''nix shell nixpkgs#$1'')
+    (pkgs.writeShellScriptBin ",u" ''nix run unstable#$1 -- "''${@:2}"'')
+    (pkgs.writeShellScriptBin ",,u" ''nix shell unstable#$1'')
   ]) ++ (with pkgs-unstable; [
     # use https://github.com/fjolne/flake for per-project deps
     nodejs
