@@ -175,6 +175,39 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- Clear search highlight
 vim.keymap.set("n", "<C-c>", "<cmd>nohlsearch | cclose | lclose<CR>", { noremap = true, silent = true, desc = "Clear search and close lists" })
 
+local function select_qf_item_keep_focus()
+    local list_win = vim.api.nvim_get_current_win()
+    local list_info = vim.fn.getwininfo(list_win)[1]
+    if not list_info or list_info.quickfix ~= 1 then
+        return
+    end
+
+    local command = list_info.loclist == 1 and "ll" or "cc"
+    local line = vim.api.nvim_win_get_cursor(list_win)[1]
+    local ok, err = pcall(vim.cmd, command .. " " .. line)
+    if not ok then
+        vim.notify(err, vim.log.levels.WARN)
+    end
+
+    if vim.api.nvim_win_is_valid(list_win) then
+        vim.api.nvim_set_current_win(list_win)
+        local next_line = math.min(line + 1, vim.api.nvim_buf_line_count(0))
+        vim.api.nvim_win_set_cursor(list_win, { next_line, 0 })
+    end
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "qf",
+    callback = function(event)
+        vim.keymap.set("n", "<S-CR>", select_qf_item_keep_focus, {
+            buffer = event.buf,
+            noremap = true,
+            silent = true,
+            desc = "Select item and keep list focus",
+        })
+    end,
+})
+
 -- Save buffer
 vim.keymap.set({ "n", "i", "v" }, "<C-s>", "<Cmd>write<CR>", { noremap = true, silent = true, desc = "Save buffer" })
 
