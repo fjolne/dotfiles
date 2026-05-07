@@ -118,15 +118,15 @@
           };
           "ec2-user@nixos" = mkHomeConfig {
             username = "ec2-user";
-            extraModules = [ ./modules/home-manager/server/nixos.nix ];
+            extraModules = [ ./modules/home-manager/base.nix ];
           };
           "fjolne@nixos" = mkHomeConfig {
             username = "fjolne";
-            extraModules = [ ./modules/home-manager/server/nixos.nix ];
+            extraModules = [ ./modules/home-manager/base.nix ];
           };
           "piglet@nixos" = mkHomeConfig {
             username = "piglet";
-            extraModules = [ ./modules/home-manager/server/nixos.nix ];
+            extraModules = [ ./modules/home-manager/base.nix ];
           };
         };
       };

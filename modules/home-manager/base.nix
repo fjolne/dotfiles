@@ -43,7 +43,7 @@ in
 {
   imports = [
     ./nvim.nix
-    ./desktop/kitty.nix # used on servers to show images
+    ./kitty.nix # used on servers to show images
   ];
 
   home = {
