@@ -5,10 +5,11 @@
     ./nix-ld.nix
   ];
 
-  # `nix run nixpkgs#hello` will use nixpkgs from this flake
-  nix.registry.nixpkgs.flake = self.inputs.nixpkgs;
-  # <nixpkgs> will resolve to this flake
-  nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
+  # `nix run dot-stable#hello` will use nixpkgs from this flake.
+  nix.registry.dot-stable.flake = self.inputs.nixpkgs;
+  nix.registry.dot-unstable.flake = self.inputs.nixpkgs-unstable;
+  # <nixpkgs> will resolve to this flake's stable nixpkgs input.
+  nix.nixPath = [ "nixpkgs=flake:dot-stable" ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.substituters = [
     # "https://cuda-maintainers.cachix.org"
