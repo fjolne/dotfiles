@@ -102,10 +102,31 @@
 
   services.printing.enable = true;
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings.General = {
+      ControllerMode = "dual";
+    };
+  };
+
   services.udev.extraRules = ''
     # Keep USB Bluetooth adapters awake so Bluetooth mice do not pause after idle.
-    ACTION=="add|change", SUBSYSTEM=="usb", ATTR{bDeviceClass}=="e0", TEST=="power/control", ATTR{power/control}="on"
+    ACTION=="add|change", SUBSYSTEM=="usb", DRIVER=="btusb", TAG+="systemd", ENV{SYSTEMD_WANTS}+="bluetooth-keep-usb-awake.service"
   '';
+
+  systemd.services.bluetooth-keep-usb-awake = {
+    description = "Keep USB Bluetooth controllers awake";
+    wantedBy = [ "bluetooth.target" ];
+    after = [ "bluetooth.service" ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      for control in /sys/bus/usb/drivers/btusb/*:*/../power/control /sys/class/bluetooth/hci*/device/power/control; do
+        [ -e "$control" ] || continue
+        echo on > "$control" || true
+      done
+    '';
+  };
 
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -166,13 +187,6 @@
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "fjolne" ];
   services.flatpak.enable = true;
-
-  hardware.bluetooth.settings = {
-    General = {
-      ControllerMode = "bredr";
-      "ControllerMode " = "dual";
-    };
-  };
 
   nix.gc = {
     automatic = true;
