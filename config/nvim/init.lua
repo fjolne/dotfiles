@@ -302,7 +302,26 @@ vim.keymap.set("n", "<M-Down>", "<C-w>j", { noremap = true, silent = true, desc 
 vim.g.netrw_liststyle = 1
 vim.g.netrw_sizestyle = "H"
 vim.g.netrw_list_hide = [[\%(\d\+/\)\=\.\.\=/\s]]
-vim.keymap.set("n", "<C-e>", vim.cmd.Explore)
+
+local function explore_current_file()
+    local path = vim.api.nvim_buf_get_name(0)
+    if path == "" or vim.bo.buftype ~= "" then
+        vim.cmd.Explore()
+        return
+    end
+
+    local dir = vim.fn.fnamemodify(path, ":p:h")
+    local name = vim.fn.fnamemodify(path, ":t")
+    vim.cmd("Explore " .. vim.fn.fnameescape(dir))
+
+    vim.schedule(function()
+        if vim.bo.filetype == "netrw" then
+            vim.fn.search("\\V" .. vim.fn.escape(name, "\\") .. "\\m", "cw")
+        end
+    end)
+end
+
+vim.keymap.set("n", "<C-e>", explore_current_file, { desc = "Explore current file" })
 
 local function copy_netrw_path(modifier)
     local curdir = vim.b.netrw_curdir
