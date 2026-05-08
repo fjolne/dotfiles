@@ -306,6 +306,7 @@ vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Ma
 
 -- cd to current file's directory
 vim.keymap.set("n", "<leader>cd", ":cd %:h<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>cr", "<cmd>source $MYVIMRC<CR>", { noremap = true, silent = true })
 
 -- Terminal mode escape
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
