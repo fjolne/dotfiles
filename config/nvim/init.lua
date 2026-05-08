@@ -84,17 +84,42 @@ vim.filetype.add({
 })
 
 ----------------------------------------------------------------------
--- Key Mappings
+-- Shared Helpers
 ----------------------------------------------------------------------
-local opts = { noremap = true, silent = true }
+local function user_augroup(name)
+    return vim.api.nvim_create_augroup("UserConfig" .. name, { clear = true })
+end
 
-pcall(vim.keymap.del, "n", "<C-l>")
+local augroups = {
+    yank = user_augroup("Yank"),
+    write = user_augroup("Write"),
+    qf = user_augroup("Quickfix"),
+    netrw = user_augroup("Netrw"),
+    lsp_attach = user_augroup("LspAttach"),
+    json = user_augroup("Json"),
+    trim = user_augroup("TrimWhitespace"),
+}
 
 local function copy_text(text)
     vim.fn.setreg('"', text)
     pcall(vim.fn.setreg, "+", text)
     vim.notify("Copied " .. text)
 end
+
+local function current_file_path_or_warn()
+    local path = vim.api.nvim_buf_get_name(0)
+    if path == "" then
+        vim.notify("No file path for current buffer", vim.log.levels.WARN)
+        return nil
+    end
+
+    return path
+end
+
+----------------------------------------------------------------------
+-- Key Mappings
+----------------------------------------------------------------------
+pcall(vim.keymap.del, "n", "<C-l>")
 
 local function navigate_hunk(direction, diff_key)
     if vim.wo.diff then
@@ -112,14 +137,13 @@ vim.keymap.set("n", "<S-Down>", function() navigate_hunk("next", "]c") end, { de
 vim.keymap.set("n", "<S-Up>", function() navigate_hunk("prev", "[c") end, { desc = "Previous hunk" })
 
 -- Explicit system clipboard paste shortcuts
-vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', opts)
-vim.keymap.set("n", "<leader>P", '"+P', opts)
-vim.keymap.set("v", "<C-p>", '"0p', opts)
+vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>P", '"+P', { noremap = true, silent = true })
+vim.keymap.set("v", "<C-p>", '"0p', { noremap = true, silent = true })
 
 local function copy_current_file_path(modifier)
-    local path = vim.api.nvim_buf_get_name(0)
-    if path == "" then
-        vim.notify("No file path for current buffer", vim.log.levels.WARN)
+    local path = current_file_path_or_warn()
+    if not path then
         return
     end
 
@@ -128,9 +152,8 @@ local function copy_current_file_path(modifier)
 end
 
 local function copy_current_file_location(modifier)
-    local path = vim.api.nvim_buf_get_name(0)
-    if path == "" then
-        vim.notify("No file path for current buffer", vim.log.levels.WARN)
+    local path = current_file_path_or_warn()
+    if not path then
         return
     end
 
@@ -139,9 +162,8 @@ local function copy_current_file_location(modifier)
 end
 
 local function copy_current_file_range(modifier)
-    local path = vim.api.nvim_buf_get_name(0)
-    if path == "" then
-        vim.notify("No file path for current buffer", vim.log.levels.WARN)
+    local path = current_file_path_or_warn()
+    if not path then
         return
     end
 
@@ -164,6 +186,7 @@ vim.keymap.set("v", "<leader>L", function() copy_current_file_range(":p") end, {
 
 -- Mirror yanks to the system clipboard while preserving normal registers.
 vim.api.nvim_create_autocmd("TextYankPost", {
+    group = augroups.yank,
     callback = function()
         local event = vim.v.event
         if event.operator == "y" and event.regname ~= "+" then
@@ -174,6 +197,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- Create missing parent directories before writing a file.
 vim.api.nvim_create_autocmd("BufWritePre", {
+    group = augroups.write,
     callback = function(event)
         local filename = event.match
         if filename == "" or vim.bo[event.buf].buftype ~= "" then
@@ -184,6 +208,17 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         if parent ~= "" and vim.fn.isdirectory(parent) == 0 then
             vim.fn.mkdir(parent, "p")
         end
+    end,
+})
+
+-- Strip trailing whitespace on save.
+vim.api.nvim_create_autocmd("BufWritePre", {
+    group = augroups.trim,
+    pattern = "*",
+    callback = function()
+        local pos = vim.api.nvim_win_get_cursor(0)
+        vim.cmd([[%s/\s\+$//e]])
+        vim.api.nvim_win_set_cursor(0, pos)
     end,
 })
 
@@ -236,6 +271,7 @@ local function select_qf_item_keep_focus()
 end
 
 vim.api.nvim_create_autocmd("FileType", {
+    group = augroups.qf,
     pattern = "qf",
     callback = function(event)
         vim.keymap.set("n", "<S-CR>", select_qf_item_keep_focus, {
@@ -269,12 +305,12 @@ vim.keymap.set("n", "<leader>z", toggle_line_centering, { noremap = true, silent
 vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Markdown render toggle" })
 
 -- cd to current file's directory
-vim.keymap.set("n", "<leader>cd", ":cd %:h<CR>", opts)
+vim.keymap.set("n", "<leader>cd", ":cd %:h<CR>", { noremap = true, silent = true })
 
 -- Terminal mode escape
-vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], opts)
+vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
 
-vim.keymap.set("n", "<leader>t", ":terminal<CR>", opts)
+vim.keymap.set("n", "<leader>t", ":terminal<CR>", { noremap = true, silent = true })
 
 local function delete_buffer_or_quit()
     if #vim.fn.getbufinfo({ buflisted = 1 }) <= 1 then
@@ -341,6 +377,7 @@ local function copy_netrw_path(modifier)
 end
 
 vim.api.nvim_create_autocmd("FileType", {
+    group = augroups.netrw,
     pattern = "netrw",
     callback = function(event)
         vim.keymap.set("n", "<M-y>", function()
@@ -430,7 +467,7 @@ if review_ok then
 
     local review_hooks_ok, review_hooks = pcall(require, "review.hooks")
     local review_buffer_options = review_hooks_ok and (review_hooks._restore_buffer_options or {}) or {}
-    local review_augroup = vim.api.nvim_create_augroup("review_buffer_options", { clear = true })
+    local review_augroup = user_augroup("ReviewBufferOptions")
 
     if review_hooks_ok then
         review_hooks._restore_buffer_options = review_buffer_options
@@ -551,6 +588,7 @@ end
 -- LSP
 ----------------------------------------------------------------------
 vim.api.nvim_create_autocmd("LspAttach", {
+    group = augroups.lsp_attach,
     callback = function(args)
         local bufnr = args.buf
         local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -578,18 +616,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
-local function get_root_dir(bufnr, markers)
-    return vim.fs.root(bufnr, markers) or vim.fn.getcwd()
+local function root_dir_with_cwd_fallback(markers)
+    return function(bufnr, on_dir)
+        on_dir(vim.fs.root(bufnr, markers) or vim.fn.getcwd())
+    end
 end
 
--- Python (pyright)
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "python",
-    callback = function(ev)
-        vim.lsp.start({
-            name = "pyright",
+local lsp_servers = {
+    {
+        name = "pyright",
+        config = {
             cmd = { "pyright-langserver", "--stdio" },
-            root_dir = get_root_dir(ev.buf, { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" }),
+            filetypes = { "python" },
+            root_dir = root_dir_with_cwd_fallback({ "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" }),
             settings = {
                 python = {
                     analysis = {
@@ -598,29 +637,66 @@ vim.api.nvim_create_autocmd("FileType", {
                     },
                 },
             },
-        })
-        vim.lsp.start({
-            name = "ruff",
+        },
+    },
+    {
+        name = "ruff",
+        config = {
             cmd = { "ruff", "server" },
-            root_dir = get_root_dir(ev.buf, { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" }),
-        })
-    end,
-})
-
--- TypeScript/JavaScript (typescript-language-server)
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-    callback = function(ev)
-        vim.lsp.start({
-            name = "tsserver",
+            filetypes = { "python" },
+            root_dir = root_dir_with_cwd_fallback({ "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" }),
+        },
+    },
+    {
+        name = "tsserver",
+        config = {
             cmd = { "typescript-language-server", "--stdio" },
-            root_dir = get_root_dir(ev.buf, { "tsconfig.json", "jsconfig.json", "package.json", ".git" }),
-        })
-    end,
-})
+            filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+            root_dir = root_dir_with_cwd_fallback({ "tsconfig.json", "jsconfig.json", "package.json", ".git" }),
+        },
+    },
+    {
+        name = "rust-analyzer",
+        config = {
+            cmd = { "rust-analyzer" },
+            filetypes = { "rust" },
+            root_dir = root_dir_with_cwd_fallback({ "Cargo.toml", ".git" }),
+        },
+    },
+    {
+        name = "nil",
+        config = {
+            cmd = { "nil", "--stdio" },
+            filetypes = { "nix" },
+            root_dir = root_dir_with_cwd_fallback({ "flake.nix", ".git" }),
+            settings = {
+                ["nil"] = {
+                    formatting = { command = { "nixpkgs-fmt" } },
+                },
+            },
+        },
+    },
+    {
+        name = "marksman",
+        config = {
+            cmd = { "marksman", "server" },
+            filetypes = { "markdown" },
+            root_dir = root_dir_with_cwd_fallback({ ".marksman.toml", ".git" }),
+        },
+    },
+}
+
+local enabled_lsp_servers = {}
+for _, server in ipairs(lsp_servers) do
+    vim.lsp.config(server.name, server.config)
+    table.insert(enabled_lsp_servers, server.name)
+end
+
+vim.lsp.enable(enabled_lsp_servers)
 
 -- JSON formatting (jq)
 vim.api.nvim_create_autocmd("FileType", {
+    group = augroups.json,
     pattern = { "json", "jsonl" },
     callback = function(ev)
         vim.wo.foldmethod = "syntax"
@@ -640,62 +716,5 @@ vim.api.nvim_create_autocmd("FileType", {
             vim.cmd("%!jq .")
             vim.fn.winrestview(view)
         end, { noremap = true, silent = true, buffer = ev.buf, desc = "Format JSON with jq" })
-    end,
-})
-
--- Rust (rust-analyzer)
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "rust",
-    callback = function(ev)
-        vim.lsp.start({
-            name = "rust-analyzer",
-            cmd = { "rust-analyzer" },
-            root_dir = get_root_dir(ev.buf, { "Cargo.toml", ".git" }),
-        })
-    end,
-})
-
--- Nix (nil)
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "nix",
-    callback = function(ev)
-        vim.lsp.start({
-            name = "nil",
-            cmd = { "nil", "--stdio" },
-            root_dir = get_root_dir(ev.buf, { "flake.nix", ".git" }),
-            settings = {
-                ["nil"] = {
-                    formatting = { command = { "nixpkgs-fmt" } },
-                },
-            },
-        })
-    end,
-})
-
--- Markdown (marksman)
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "markdown",
-    callback = function(ev)
-        vim.lsp.start({
-            name = "marksman",
-            cmd = { "marksman", "server" },
-            root_dir = get_root_dir(ev.buf, { ".marksman.toml", ".git" }),
-        })
-    end,
-})
-
-----------------------------------------------------------------------
--- Autocommands
-----------------------------------------------------------------------
-local augroup = vim.api.nvim_create_augroup("UserConfig", { clear = true })
-
--- Strip trailing whitespace on save
-vim.api.nvim_create_autocmd("BufWritePre", {
-    group = augroup,
-    pattern = "*",
-    callback = function()
-        local pos = vim.api.nvim_win_get_cursor(0)
-        vim.cmd([[%s/\s\+$//e]])
-        vim.api.nvim_win_set_cursor(0, pos)
     end,
 })
