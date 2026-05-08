@@ -66,9 +66,6 @@
 
   # === graphics ===
   boot.kernelModules = [ "video" ];
-  boot.extraModprobeConfig = ''
-    options btusb enable_autosuspend=0
-  '';
   # Keep amdgpu disabled for boot stability, but avoid nomodeset so
   # nvidia-drm KMS can run GNOME Wayland smoothly.
   boot.kernelParams = [
@@ -105,27 +102,17 @@
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
-    settings.General = {
-      ControllerMode = "dual";
+    settings = {
+      General = {
+        ControllerMode = "dual";
+        FastConnectable = true;
+      };
+      Policy = {
+        ReconnectUUIDs = "00001812-0000-1000-8000-00805f9b34fb,00001124-0000-1000-8000-00805f9b34fb,00001112-0000-1000-8000-00805f9b34fb,0000111f-0000-1000-8000-00805f9b34fb,0000110a-0000-1000-8000-00805f9b34fb,0000110b-0000-1000-8000-00805f9b34fb";
+        ReconnectAttempts = 30;
+        ReconnectIntervals = "1,1,1,1,2,2,2,3,3,5";
+      };
     };
-  };
-
-  services.udev.extraRules = ''
-    # Keep USB Bluetooth adapters awake so Bluetooth mice do not pause after idle.
-    ACTION=="add|change", SUBSYSTEM=="usb", DRIVER=="btusb", TAG+="systemd", ENV{SYSTEMD_WANTS}+="bluetooth-keep-usb-awake.service"
-  '';
-
-  systemd.services.bluetooth-keep-usb-awake = {
-    description = "Keep USB Bluetooth controllers awake";
-    wantedBy = [ "bluetooth.target" ];
-    after = [ "bluetooth.service" ];
-    serviceConfig.Type = "oneshot";
-    script = ''
-      for control in /sys/bus/usb/drivers/btusb/*:*/../power/control /sys/class/bluetooth/hci*/device/power/control; do
-        [ -e "$control" ] || continue
-        echo on > "$control" || true
-      done
-    '';
   };
 
   services.pulseaudio.enable = false;
