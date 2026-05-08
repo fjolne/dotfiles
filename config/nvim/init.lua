@@ -172,6 +172,21 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
+-- Create missing parent directories before writing a file.
+vim.api.nvim_create_autocmd("BufWritePre", {
+    callback = function(event)
+        local filename = event.match
+        if filename == "" or vim.bo[event.buf].buftype ~= "" then
+            return
+        end
+
+        local parent = vim.fn.fnamemodify(filename, ":p:h")
+        if parent ~= "" and vim.fn.isdirectory(parent) == 0 then
+            vim.fn.mkdir(parent, "p")
+        end
+    end,
+})
+
 local qf_item_match
 
 local function clear_qf_item_match()
