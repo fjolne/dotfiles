@@ -477,6 +477,7 @@ end
 local gitsigns_ok, gitsigns = pcall(require, "gitsigns")
 if gitsigns_ok then
     gitsigns.setup({
+        attach_to_untracked = true,
         on_attach = function(bufnr)
             local gs = require("gitsigns")
             local o = { noremap = true, silent = true, buffer = bufnr }
