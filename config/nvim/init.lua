@@ -18,6 +18,11 @@ vim.o.background = "dark"
 vim.o.title = true
 vim.o.titlestring = "nvim"
 
+local fish_path = vim.fn.exepath("fish")
+if fish_path ~= "" then
+    vim.o.shell = fish_path
+end
+
 local gruvbox_ok, gruvbox = pcall(require, "gruvbox")
 if gruvbox_ok then
     gruvbox.setup({
@@ -312,12 +317,34 @@ vim.keymap.set("n", "<leader>cr", "<cmd>source $MYVIMRC<CR>", { noremap = true, 
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
 
 local function open_terminal_in_buffer_dir()
+    local cwd_state = {
+        win_local = vim.fn.haslocaldir(0, 0) == 1,
+        tab_local = vim.fn.haslocaldir(-1, 0) == 1,
+        win_cwd = vim.fn.getcwd(0, 0),
+        tab_cwd = vim.fn.getcwd(-1, 0),
+        global_cwd = vim.fn.getcwd(-1, -1),
+    }
     local path = vim.api.nvim_buf_get_name(0)
     if path ~= "" and vim.bo.buftype == "" then
         vim.cmd("lcd " .. vim.fn.fnameescape(vim.fn.fnamemodify(path, ":p:h")))
     end
 
-    vim.cmd.terminal()
+    local ok, err = pcall(vim.cmd.terminal)
+
+    if cwd_state.win_local then
+        vim.cmd("lcd " .. vim.fn.fnameescape(cwd_state.win_cwd))
+    elseif cwd_state.tab_local then
+        vim.cmd("cd " .. vim.fn.fnameescape(cwd_state.global_cwd))
+        vim.cmd("tcd " .. vim.fn.fnameescape(cwd_state.tab_cwd))
+    else
+        vim.cmd("cd " .. vim.fn.fnameescape(cwd_state.global_cwd))
+    end
+
+    if not ok then
+        vim.notify(err, vim.log.levels.ERROR)
+        return
+    end
+
     vim.cmd.startinsert()
 end
 
