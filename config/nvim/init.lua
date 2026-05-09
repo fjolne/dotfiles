@@ -647,6 +647,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, o)
         vim.keymap.set("n", "gr", vim.lsp.buf.references, o)
         vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, o)
+        vim.keymap.set("i", "<C-S-Space>", vim.lsp.buf.signature_help, o)
         vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, o)
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, o)
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, o)
