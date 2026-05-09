@@ -418,10 +418,10 @@ vim.api.nvim_create_autocmd("FileType", {
     group = augroups.netrw,
     pattern = "netrw",
     callback = function(event)
-        vim.keymap.set("n", "<M-y>", function()
+        vim.keymap.set("n", "<leader>y", function()
             copy_netrw_path(":.")
         end, { buffer = event.buf, noremap = true, silent = true, desc = "Copy netrw relative path" })
-        vim.keymap.set("n", "<M-Y>", function()
+        vim.keymap.set("n", "<leader>Y", function()
             copy_netrw_path(":p")
         end, { buffer = event.buf, noremap = true, silent = true, desc = "Copy netrw absolute path" })
     end,
