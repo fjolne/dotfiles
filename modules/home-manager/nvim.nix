@@ -48,6 +48,7 @@ in
   xdg.dataFile."nvim/site/pack/nix/start/gruvbox-nvim".source = pkgs.vimPlugins.gruvbox-nvim;
   xdg.dataFile."nvim/site/pack/nix/start/fff-nvim".source = pkgs-unstable.vimPlugins.fff-nvim;
   xdg.dataFile."nvim/site/pack/nix/start/gitsigns-nvim".source = pkgs.vimPlugins.gitsigns-nvim;
+  xdg.dataFile."nvim/site/pack/nix/start/vim-surround".source = pkgs.vimPlugins.vim-surround;
   xdg.dataFile."nvim/site/pack/nix/start/nvim-treesitter".source =
     pkgs.vimPlugins.nvim-treesitter.withPlugins (parsers: [
       parsers.markdown
