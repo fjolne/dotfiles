@@ -311,7 +311,10 @@ vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Ma
 
 -- cd to current file's directory
 vim.keymap.set("n", "<leader>cd", ":cd %:h<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>cr", "<cmd>source $MYVIMRC<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>cr", function()
+    vim.cmd("source $MYVIMRC")
+    vim.notify("Reloaded Neovim config")
+end, { noremap = true, silent = true })
 
 -- Terminal mode escape
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
@@ -650,7 +653,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("i", "<C-S-Space>", vim.lsp.buf.signature_help, o)
         vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, o)
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, o)
-        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, o)
+        vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, o)
         vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, o)
     end,
 })
