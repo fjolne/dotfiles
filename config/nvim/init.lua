@@ -430,6 +430,32 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+local function find_buffers()
+    local buffers = vim.fn.getbufinfo({ buflisted = 1 })
+    table.sort(buffers, function(a, b)
+        return a.lastused > b.lastused
+    end)
+
+    vim.ui.select(buffers, {
+        prompt = "Buffers:",
+        format_item = function(buffer)
+            local name = buffer.name ~= "" and vim.fn.fnamemodify(buffer.name, ":.") or "[No Name]"
+            return buffer.changed == 1 and (name .. " [+]") or name
+        end,
+    }, function(buffer)
+        if not buffer then
+            return
+        end
+
+        local ok, err = pcall(vim.api.nvim_set_current_buf, buffer.bufnr)
+        if not ok then
+            vim.notify(err, vim.log.levels.WARN)
+        end
+    end)
+end
+
+vim.keymap.set("n", "<C-q>", find_buffers, { desc = "Find buffers" })
+
 ----------------------------------------------------------------------
 -- FFF (fuzzy finder)
 ----------------------------------------------------------------------
@@ -653,6 +679,28 @@ local function apply_first_code_action_and_write()
     end, 250)
 end
 
+local function restart_buffer_lsps()
+    local configs = {}
+    local seen = {}
+    for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+        if not seen[client.name] then
+            seen[client.name] = true
+            table.insert(configs, client.name)
+        end
+    end
+
+    if #configs == 0 then
+        vim.notify("No LSP clients attached", vim.log.levels.INFO)
+        return
+    end
+
+    vim.lsp.enable(configs, false)
+    vim.defer_fn(function()
+        vim.lsp.enable(configs, true)
+        vim.notify("Restarted LSP: " .. table.concat(configs, ", "))
+    end, 100)
+end
+
 vim.api.nvim_create_autocmd("LspAttach", {
     group = augroups.lsp_attach,
     callback = function(args)
@@ -679,6 +727,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, o)
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, o)
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, o)
+        vim.keymap.set("n", "<leader>cl", restart_buffer_lsps, o)
         vim.keymap.set("n", "<C-.>", apply_first_code_action_and_write, o)
         vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, o)
     end,
