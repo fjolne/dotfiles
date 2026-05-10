@@ -628,6 +628,31 @@ end
 ----------------------------------------------------------------------
 -- LSP
 ----------------------------------------------------------------------
+local function apply_first_code_action_and_write()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local selected = false
+
+    vim.lsp.buf.code_action({
+        apply = true,
+        filter = function()
+            if selected then
+                return false
+            end
+
+            selected = true
+            return true
+        end,
+    })
+
+    vim.defer_fn(function()
+        if vim.api.nvim_buf_is_valid(bufnr) then
+            vim.api.nvim_buf_call(bufnr, function()
+                vim.cmd.write()
+            end)
+        end
+    end, 250)
+end
+
 vim.api.nvim_create_autocmd("LspAttach", {
     group = augroups.lsp_attach,
     callback = function(args)
@@ -653,7 +678,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("i", "<C-S-Space>", vim.lsp.buf.signature_help, o)
         vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, o)
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, o)
-        vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, o)
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, o)
+        vim.keymap.set("n", "<C-.>", apply_first_code_action_and_write, o)
         vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, o)
     end,
 })
