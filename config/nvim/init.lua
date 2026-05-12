@@ -627,6 +627,19 @@ if gitsigns_ok then
 end
 
 ----------------------------------------------------------------------
+-- Mini.nvim
+----------------------------------------------------------------------
+local mini_pairs_ok, mini_pairs = pcall(require, "mini.pairs")
+if mini_pairs_ok then
+    mini_pairs.setup()
+end
+
+local mini_ai_ok, mini_ai = pcall(require, "mini.ai")
+if mini_ai_ok then
+    mini_ai.setup()
+end
+
+----------------------------------------------------------------------
 -- Treesitter
 ----------------------------------------------------------------------
 local treesitter_ok, treesitter = pcall(require, "nvim-treesitter.configs")
@@ -729,7 +742,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, o)
         vim.keymap.set("n", "<leader>cl", restart_buffer_lsps, o)
         vim.keymap.set("n", "<C-.>", apply_first_code_action_and_write, o)
-        vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, o)
+        vim.keymap.set({ "n", "i" }, "<C-n>", function() vim.lsp.buf.format({ async = true }) end, o)
     end,
 })
 
