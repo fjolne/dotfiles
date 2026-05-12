@@ -319,29 +319,40 @@ end, { noremap = true, silent = true })
 -- Terminal mode escape
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
 
-local function open_terminal_in_buffer_dir()
-    local cwd_state = {
+local function current_cwd_state()
+    return {
         win_local = vim.fn.haslocaldir(0, 0) == 1,
         tab_local = vim.fn.haslocaldir(-1, 0) == 1,
         win_cwd = vim.fn.getcwd(0, 0),
         tab_cwd = vim.fn.getcwd(-1, 0),
         global_cwd = vim.fn.getcwd(-1, -1),
     }
+end
+
+local function restore_cwd(state)
+    if not state then
+        return
+    end
+
+    if state.win_local then
+        vim.cmd("lcd " .. vim.fn.fnameescape(state.win_cwd))
+    elseif state.tab_local then
+        vim.cmd("cd " .. vim.fn.fnameescape(state.global_cwd))
+        vim.cmd("tcd " .. vim.fn.fnameescape(state.tab_cwd))
+    else
+        vim.cmd("cd " .. vim.fn.fnameescape(state.global_cwd))
+    end
+end
+
+local function open_terminal_in_buffer_dir()
+    local cwd_state = current_cwd_state()
     local path = vim.api.nvim_buf_get_name(0)
     if path ~= "" and vim.bo.buftype == "" then
         vim.cmd("lcd " .. vim.fn.fnameescape(vim.fn.fnamemodify(path, ":p:h")))
     end
 
     local ok, err = pcall(vim.cmd.terminal)
-
-    if cwd_state.win_local then
-        vim.cmd("lcd " .. vim.fn.fnameescape(cwd_state.win_cwd))
-    elseif cwd_state.tab_local then
-        vim.cmd("cd " .. vim.fn.fnameescape(cwd_state.global_cwd))
-        vim.cmd("tcd " .. vim.fn.fnameescape(cwd_state.tab_cwd))
-    else
-        vim.cmd("cd " .. vim.fn.fnameescape(cwd_state.global_cwd))
-    end
+    restore_cwd(cwd_state)
 
     if not ok then
         vim.notify(err, vim.log.levels.ERROR)
@@ -379,14 +390,17 @@ vim.keymap.set("n", "<M-Down>", "<C-w>j", { noremap = true, silent = true, desc 
 vim.g.netrw_liststyle = 1
 vim.g.netrw_sizestyle = "H"
 vim.g.netrw_list_hide = [[\%(\d\+/\)\=\.\.\=/\s]]
+vim.g.netrw_keepdir = 0
 
 local function explore_current_file()
     local source_buf = vim.api.nvim_get_current_buf()
+    local source_cwd = current_cwd_state()
     local path = vim.api.nvim_buf_get_name(0)
     if path == "" or vim.bo.buftype ~= "" then
         vim.cmd.Explore()
         if vim.bo.filetype == "netrw" then
             vim.b.netrw_return_buf = source_buf
+            vim.b.netrw_return_cwd = source_cwd
         end
         return
     end
@@ -396,6 +410,7 @@ local function explore_current_file()
     vim.cmd("Explore " .. vim.fn.fnameescape(dir))
     if vim.bo.filetype == "netrw" then
         vim.b.netrw_return_buf = source_buf
+        vim.b.netrw_return_cwd = source_cwd
     end
 
     vim.schedule(function()
@@ -407,7 +422,7 @@ end
 
 vim.keymap.set("n", "<C-e>", explore_current_file, { desc = "Explore current file" })
 
-local function copy_netrw_path(modifier)
+local function netrw_item_under_cursor()
     local curdir = vim.b.netrw_curdir
     if not curdir or curdir == "" then
         vim.notify("No netrw directory for current buffer", vim.log.levels.WARN)
@@ -421,12 +436,56 @@ local function copy_netrw_path(modifier)
     end
 
     local path = vim.fn["netrw#Call"]("ComposePath", curdir, name)
+    return name, path, curdir
+end
+
+local function copy_netrw_path(modifier)
+    local _, path = netrw_item_under_cursor()
+    if not path then
+        return
+    end
+
     copy_text(vim.fn.fnamemodify(path, modifier))
+end
+
+local function copy_netrw_item()
+    local name, source, curdir = netrw_item_under_cursor()
+    if not source then
+        return
+    end
+
+    local target = vim.fn.input("Copy " .. name .. " to: ", name, "file")
+    if target == "" then
+        return
+    end
+
+    if not vim.startswith(target, "/") then
+        target = vim.fn["netrw#Call"]("ComposePath", curdir, target)
+    end
+
+    if source == target then
+        vim.notify("Copy target matches source", vim.log.levels.WARN)
+        return
+    end
+    if vim.uv.fs_stat(target) then
+        vim.notify("Copy target already exists: " .. target, vim.log.levels.WARN)
+        return
+    end
+
+    local result = vim.system({ "cp", "-R", source, target }, { text = true }):wait()
+    if result.code ~= 0 then
+        vim.notify(vim.trim(result.stderr), vim.log.levels.ERROR)
+        return
+    end
+
+    vim.cmd("edit " .. vim.fn.fnameescape(curdir))
+    vim.fn.search("\\V" .. vim.fn.escape(vim.fn.fnamemodify(target, ":t"), "\\") .. "\\m", "cw")
 end
 
 local function close_netrw()
     local netrw_buf = vim.api.nvim_get_current_buf()
     local return_buf = vim.b.netrw_return_buf
+    local return_cwd = vim.b.netrw_return_cwd
     if
         type(return_buf) == "number"
         and return_buf ~= netrw_buf
@@ -435,6 +494,7 @@ local function close_netrw()
     then
         vim.api.nvim_set_current_buf(return_buf)
         pcall(vim.api.nvim_buf_delete, netrw_buf, {})
+        restore_cwd(return_cwd)
         return
     end
 
@@ -443,6 +503,7 @@ local function close_netrw()
     else
         vim.cmd.bdelete()
     end
+    restore_cwd(return_cwd)
 end
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -455,6 +516,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.keymap.set("n", "<leader>Y", function()
             copy_netrw_path(":p")
         end, { buffer = event.buf, noremap = true, silent = true, desc = "Copy netrw absolute path" })
+        vim.keymap.set("n", "C", copy_netrw_item, { buffer = event.buf, noremap = true, silent = true, nowait = true, desc = "Copy netrw item" })
         vim.keymap.set("n", "q", close_netrw, { buffer = event.buf, noremap = true, silent = true, nowait = true, desc = "Close netrw" })
     end,
 })
