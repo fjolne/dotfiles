@@ -381,15 +381,22 @@ vim.g.netrw_sizestyle = "H"
 vim.g.netrw_list_hide = [[\%(\d\+/\)\=\.\.\=/\s]]
 
 local function explore_current_file()
+    local source_buf = vim.api.nvim_get_current_buf()
     local path = vim.api.nvim_buf_get_name(0)
     if path == "" or vim.bo.buftype ~= "" then
         vim.cmd.Explore()
+        if vim.bo.filetype == "netrw" then
+            vim.b.netrw_return_buf = source_buf
+        end
         return
     end
 
     local dir = vim.fn.fnamemodify(path, ":p:h")
     local name = vim.fn.fnamemodify(path, ":t")
     vim.cmd("Explore " .. vim.fn.fnameescape(dir))
+    if vim.bo.filetype == "netrw" then
+        vim.b.netrw_return_buf = source_buf
+    end
 
     vim.schedule(function()
         if vim.bo.filetype == "netrw" then
@@ -417,6 +424,27 @@ local function copy_netrw_path(modifier)
     copy_text(vim.fn.fnamemodify(path, modifier))
 end
 
+local function close_netrw()
+    local netrw_buf = vim.api.nvim_get_current_buf()
+    local return_buf = vim.b.netrw_return_buf
+    if
+        type(return_buf) == "number"
+        and return_buf ~= netrw_buf
+        and vim.api.nvim_buf_is_valid(return_buf)
+        and vim.bo[return_buf].buflisted
+    then
+        vim.api.nvim_set_current_buf(return_buf)
+        pcall(vim.api.nvim_buf_delete, netrw_buf, {})
+        return
+    end
+
+    if #vim.api.nvim_list_wins() > 1 then
+        vim.cmd.close()
+    else
+        vim.cmd.bdelete()
+    end
+end
+
 vim.api.nvim_create_autocmd("FileType", {
     group = augroups.netrw,
     pattern = "netrw",
@@ -427,6 +455,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.keymap.set("n", "<leader>Y", function()
             copy_netrw_path(":p")
         end, { buffer = event.buf, noremap = true, silent = true, desc = "Copy netrw absolute path" })
+        vim.keymap.set("n", "q", close_netrw, { buffer = event.buf, noremap = true, silent = true, nowait = true, desc = "Close netrw" })
     end,
 })
 
