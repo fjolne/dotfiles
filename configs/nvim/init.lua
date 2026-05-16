@@ -505,6 +505,12 @@ local function close_netrw()
     end
 end
 
+local pending_fff_netrw_return_cwd
+
+local function is_fff_filetype(filetype)
+    return filetype:match("^fff_") ~= nil
+end
+
 local function restore_cwd_after_netrw(event)
     local return_cwd = vim.w.netrw_return_cwd
     if not return_cwd then
@@ -512,7 +518,7 @@ local function restore_cwd_after_netrw(event)
     end
 
     vim.schedule(function()
-        if vim.bo.filetype ~= "netrw" then
+        if vim.bo.filetype ~= "netrw" and not is_fff_filetype(vim.bo.filetype) then
             restore_cwd(return_cwd)
             vim.w.netrw_return_buf = nil
             vim.w.netrw_return_cwd = nil
@@ -540,6 +546,17 @@ vim.api.nvim_create_autocmd("BufLeave", {
     callback = function(event)
         if vim.bo[event.buf].filetype == "netrw" then
             restore_cwd_after_netrw(event)
+        elseif is_fff_filetype(vim.bo[event.buf].filetype) then
+            vim.schedule(function()
+                if not is_fff_filetype(vim.bo.filetype) then
+                    if pending_fff_netrw_return_cwd and vim.bo.filetype ~= "netrw" then
+                        restore_cwd(pending_fff_netrw_return_cwd)
+                        vim.w.netrw_return_buf = nil
+                        vim.w.netrw_return_cwd = nil
+                    end
+                    pending_fff_netrw_return_cwd = nil
+                end
+            end)
         end
     end,
 })
@@ -594,6 +611,15 @@ if fff_ok then
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "nx", false)
     end
 
+    local function fff_opts(opts)
+        opts = opts or {}
+        if vim.bo.filetype == "netrw" and vim.b.netrw_curdir then
+            opts.cwd = vim.b.netrw_curdir
+            pending_fff_netrw_return_cwd = vim.w.netrw_return_cwd
+        end
+        return opts
+    end
+
     fff.setup({
         lazy_sync = true,
         prompt_vim_mode = false,
@@ -607,9 +633,9 @@ if fff_ok then
         },
     })
 
-    vim.keymap.set("n", "<C-p>", function() fff.find_files() end, { desc = "FFFind files" })
+    vim.keymap.set("n", "<C-p>", function() fff.find_files(fff_opts()) end, { desc = "FFFind files" })
     vim.keymap.set("n", "<C-f>", function()
-        fff.live_grep({ grep = { modes = { "fuzzy", "plain" } } })
+        fff.live_grep(fff_opts({ grep = { modes = { "fuzzy", "plain" } } }))
     end, { desc = "Live fffuzy grep" })
     vim.keymap.set("n", "<leader>rf", refresh_fff, { desc = "Refresh FFF files and git status" })
     vim.keymap.set("x", "<C-f>", function()
@@ -617,7 +643,7 @@ if fff_ok then
         if query:match("%S") then
             exit_visual_mode()
             vim.schedule(function()
-                fff.live_grep({ query = query })
+                fff.live_grep(fff_opts({ query = query }))
             end)
         end
     end, { desc = "Search selection" })
