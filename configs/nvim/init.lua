@@ -401,8 +401,8 @@ local function explore_current_file()
     if path == "" or vim.bo.buftype ~= "" then
         vim.cmd.Explore()
         if vim.bo.filetype == "netrw" then
-            vim.b.netrw_return_buf = source_buf
-            vim.b.netrw_return_cwd = source_cwd
+            vim.w.netrw_return_buf = source_buf
+            vim.w.netrw_return_cwd = source_cwd
         end
         return
     end
@@ -411,8 +411,8 @@ local function explore_current_file()
     local name = vim.fn.fnamemodify(path, ":t")
     vim.cmd("Explore " .. vim.fn.fnameescape(dir))
     if vim.bo.filetype == "netrw" then
-        vim.b.netrw_return_buf = source_buf
-        vim.b.netrw_return_cwd = source_cwd
+        vim.w.netrw_return_buf = source_buf
+        vim.w.netrw_return_cwd = source_cwd
     end
 
     vim.schedule(function()
@@ -486,7 +486,7 @@ end
 
 local function close_netrw()
     local netrw_buf = vim.api.nvim_get_current_buf()
-    local return_buf = vim.b.netrw_return_buf
+    local return_buf = vim.w.netrw_return_buf
     if
         type(return_buf) == "number"
         and return_buf ~= netrw_buf
@@ -506,7 +506,7 @@ local function close_netrw()
 end
 
 local function restore_cwd_after_netrw(event)
-    local return_cwd = vim.b[event.buf].netrw_return_cwd
+    local return_cwd = vim.w.netrw_return_cwd
     if not return_cwd then
         return
     end
@@ -514,6 +514,8 @@ local function restore_cwd_after_netrw(event)
     vim.schedule(function()
         if vim.bo.filetype ~= "netrw" then
             restore_cwd(return_cwd)
+            vim.w.netrw_return_buf = nil
+            vim.w.netrw_return_cwd = nil
         end
     end)
 end
