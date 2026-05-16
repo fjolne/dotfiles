@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, username, lib, ... }:
+{ config, pkgs, pkgs-self, pkgs-unstable, username, lib, ... }:
 
 let
   dotfilesPath = "${config.home.homeDirectory}/dotfiles";
@@ -30,6 +30,7 @@ in
     jq
     just
     less
+    bubblewrap
     ripgrep
     tree
     unzip
@@ -37,7 +38,9 @@ in
     (pkgs.writeShellScriptBin ",," ''nix shell dot-unstable#$1'')
     (pkgs.writeShellScriptBin ",u" ''nix run unstable#$1 -- "''${@:2}"'')
     (pkgs.writeShellScriptBin ",,u" ''nix shell unstable#$1'')
-  ]) ++ (with pkgs-unstable; [
+    (pkgs.writeShellScriptBin "ucodex" ''exec ${lib.getExe pkgs-self.codex-bin} "$@"'')
+  ])
+  ++ (with pkgs-unstable; [
     # use https://github.com/fjolne/flake for per-project deps
     nodejs
     python3 # cannot make an alias for python=`uv run` because it leads to inf recursion

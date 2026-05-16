@@ -1,5 +1,4 @@
 { pkgs
-, self
 , ...
 }: {
   programs.nix-ld.enable = true;

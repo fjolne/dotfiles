@@ -1,4 +1,4 @@
-{ self, pkgs, pkgs-unstable, lib, ... }:
+{ pkgs, pkgs-unstable, lib, ... }:
 
 {
   imports = [ ../base.nix ./gnome.nix ];

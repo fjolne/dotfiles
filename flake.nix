@@ -45,6 +45,7 @@
       };
       pkgs = import nixpkgs ({ inherit system; } // pkgs-params);
       pkgs-unstable = import nixpkgs-unstable ({ inherit system; } // pkgs-params);
+      pkgs-self = self.packages.${system};
 
       mkNixosConfig = { hardwareModules, extraModules ? [ ] }:
         let
@@ -55,7 +56,7 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           modules = baseModules ++ hardwareModules ++ extraModules;
-          specialArgs = { inherit self pkgs-unstable; };
+          specialArgs = { inherit self pkgs-self pkgs-unstable; };
         };
 
       mkHomeConfig = { username, extraModules ? [ ] }:
@@ -65,7 +66,7 @@
         in
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit self username pkgs-unstable; };
+          extraSpecialArgs = { inherit username pkgs-self pkgs-unstable; };
           modules = baseModules ++ extraModules;
         };
     in
