@@ -5,7 +5,7 @@
 
   programs.ssh.enable = lib.mkForce false;
   systemd.user.tmpfiles.rules = [
-    "L /home/${username}/.ssh/config - - - - /home/${username}/dotfiles/modules/home-manager/desktop/ssh_config"
+    "L /home/${username}/.ssh/config - - - - /home/${username}/dotfiles/home-manager/desktop/ssh_config"
   ];
 
   programs.gpg = {

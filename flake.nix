@@ -50,7 +50,7 @@
       mkNixosConfig = { hardwareModules, extraModules ? [ ] }:
         let
           baseModules = [
-            ./modules/nixos/configuration.nix
+            ./nixos/configuration.nix
           ];
         in
         nixpkgs.lib.nixosSystem {
@@ -91,43 +91,43 @@
         nixosConfigurations = {
           "g14-nixos" = mkNixosConfig {
             hardwareModules = [
-              ./modules/hardware/g14.nix
+              ./hardware/g14.nix
               nixos-hardware.nixosModules.asus-zephyrus-ga401
             ];
-            extraModules = [ ./modules/nixos/g14.nix ];
+            extraModules = [ ./nixos/g14.nix ];
           };
           "g2-nixos" = mkNixosConfig {
             hardwareModules = [
-              ./modules/hardware/g2.nix
+              ./hardware/g2.nix
             ];
-            extraModules = [ ./modules/nixos/g2.nix ];
+            extraModules = [ ./nixos/g2.nix ];
           };
         };
 
         homeConfigurations = {
           "fjolne@g14-nixos" = mkHomeConfig {
             username = "fjolne";
-            extraModules = [ ./modules/home-manager/desktop/g14.nix ];
+            extraModules = [ ./home-manager/desktop/g14.nix ];
           };
           "gamer@g14-nixos" = mkHomeConfig {
             username = "gamer";
-            extraModules = [ ./modules/home-manager/desktop/g14-gamer.nix ];
+            extraModules = [ ./home-manager/desktop/g14-gamer.nix ];
           };
           "fjolne@g2-nixos" = mkHomeConfig {
             username = "fjolne";
-            extraModules = [ ./modules/home-manager/desktop/g2.nix ];
+            extraModules = [ ./home-manager/desktop/g2.nix ];
           };
           "ec2-user@nixos" = mkHomeConfig {
             username = "ec2-user";
-            extraModules = [ ./modules/home-manager/base.nix ];
+            extraModules = [ ./home-manager/base.nix ];
           };
           "fjolne@nixos" = mkHomeConfig {
             username = "fjolne";
-            extraModules = [ ./modules/home-manager/base.nix ];
+            extraModules = [ ./home-manager/base.nix ];
           };
           "piglet@nixos" = mkHomeConfig {
             username = "piglet";
-            extraModules = [ ./modules/home-manager/base.nix ];
+            extraModules = [ ./home-manager/base.nix ];
           };
         };
       };
