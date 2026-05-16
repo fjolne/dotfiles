@@ -315,7 +315,7 @@ local function reload_nvim_config()
 end
 
 -- cd to current file's directory
-vim.keymap.set("n", "<leader>cd", ":cd %:h<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>cd", ":tcd %:h<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>rc", reload_nvim_config, { noremap = true, silent = true })
 
 -- Terminal mode escape
