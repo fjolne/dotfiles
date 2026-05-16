@@ -370,6 +370,18 @@ vim.keymap.set("n", "<leader>t", function()
 end, { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>T", open_terminal_in_buffer_dir, { noremap = true, silent = true })
 
+local function open_terminal_command(command)
+    vim.cmd.terminal(command)
+    vim.cmd.startinsert()
+end
+
+vim.keymap.set("n", "<leader>gd", function()
+    open_terminal_command("git d")
+end, { noremap = true, silent = true, desc = "Git diff" })
+vim.keymap.set("n", "<leader>gD", function()
+    open_terminal_command("git d | delta")
+end, { noremap = true, silent = true, desc = "Git diff with delta" })
+
 local function delete_buffer_or_quit()
     if #vim.fn.getbufinfo({ buflisted = 1 }) <= 1 then
         vim.cmd("quit")
