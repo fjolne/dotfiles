@@ -1,12 +1,14 @@
-{ username, lib, pkgs, pkgs-unstable, ... }:
+{ config, lib, pkgs, pkgs-unstable, ... }:
 
+let
+  dotfilesPath = "${config.home.homeDirectory}/dotfiles";
+in
 {
   imports = [ ./common.nix ];
 
   programs.ssh.enable = lib.mkForce false;
-  systemd.user.tmpfiles.rules = [
-    "L /home/${username}/.ssh/config - - - - /home/${username}/dotfiles/home-manager/desktop/ssh_config"
-  ];
+  home.file.".ssh/config".source =
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/home-manager/desktop/ssh_config";
 
   programs.gpg = {
     enable = true;
