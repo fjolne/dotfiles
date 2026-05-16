@@ -309,12 +309,14 @@ vim.keymap.set("n", "<leader>z", toggle_line_centering, { noremap = true, silent
 -- Markdown rendering
 vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { desc = "Markdown render toggle" })
 
--- cd to current file's directory
-vim.keymap.set("n", "<leader>cd", ":cd %:h<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>cr", function()
+local function reload_nvim_config()
     vim.cmd("source $MYVIMRC")
     vim.notify("Reloaded Neovim config")
-end, { noremap = true, silent = true })
+end
+
+-- cd to current file's directory
+vim.keymap.set("n", "<leader>cd", ":cd %:h<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>rc", reload_nvim_config, { noremap = true, silent = true })
 
 -- Terminal mode escape
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
@@ -570,6 +572,16 @@ vim.keymap.set("n", "<C-q>", find_buffers, { desc = "Find buffers" })
 -- FFF (fuzzy finder)
 ----------------------------------------------------------------------
 local fff_ok, fff = pcall(require, "fff")
+local function refresh_fff()
+    if not fff_ok then
+        vim.notify("FFF is not available", vim.log.levels.WARN)
+        return
+    end
+
+    fff.scan_files()
+    fff.refresh_git_status()
+end
+
 if fff_ok then
     local function get_visual_selection()
         local lines = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = vim.fn.mode() })
@@ -597,10 +609,7 @@ if fff_ok then
     vim.keymap.set("n", "<C-f>", function()
         fff.live_grep({ grep = { modes = { "fuzzy", "plain" } } })
     end, { desc = "Live fffuzy grep" })
-    vim.keymap.set("n", "<leader>fr", function()
-        fff.scan_files()
-        fff.refresh_git_status()
-    end, { desc = "Refresh FFF files and git status" })
+    vim.keymap.set("n", "<leader>rf", refresh_fff, { desc = "Refresh FFF files and git status" })
     vim.keymap.set("x", "<C-f>", function()
         local query = get_visual_selection()
         if query:match("%S") then
@@ -700,8 +709,8 @@ if review_ok then
         callback = restore_review_buffer_options,
     })
 
-    vim.keymap.set("n", "<leader>r", "<cmd>Review<CR>", { desc = "Review" })
-    vim.keymap.set("n", "<leader>R", "<cmd>Review commits<CR>", { desc = "Review commits" })
+    vim.keymap.set("n", "<leader>cr", "<cmd>Review<CR>", { desc = "Review" })
+    vim.keymap.set("n", "<leader>cR", "<cmd>Review commits<CR>", { desc = "Review commits" })
 end
 
 ----------------------------------------------------------------------
@@ -824,6 +833,15 @@ local function restart_buffer_lsps()
     end, 100)
 end
 
+local function reload_all()
+    reload_nvim_config()
+    refresh_fff()
+    restart_buffer_lsps()
+end
+
+vim.keymap.set("n", "<leader>ra", reload_all, { noremap = true, silent = true, desc = "Reload all" })
+vim.keymap.set("n", "<leader>rl", restart_buffer_lsps, { noremap = true, silent = true, desc = "Restart buffer LSPs" })
+
 vim.api.nvim_create_autocmd("LspAttach", {
     group = augroups.lsp_attach,
     callback = function(args)
@@ -848,9 +866,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, o)
         vim.keymap.set("i", "<C-S-Space>", vim.lsp.buf.signature_help, o)
         vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, o)
-        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, o)
+        vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, o)
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, o)
-        vim.keymap.set("n", "<leader>cl", restart_buffer_lsps, o)
         vim.keymap.set("n", "<C-.>", apply_first_code_action_and_write, o)
         vim.keymap.set({ "n", "i" }, "<M-f>", function() vim.lsp.buf.format({ async = true }) end, o)
     end,
