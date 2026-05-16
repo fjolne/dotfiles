@@ -42,7 +42,7 @@ in
 {
   # Out-of-store symlinks for configs that change frequently
   xdg.configFile."nvim".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/config/nvim";
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/configs/nvim";
 
   # Neovim plugins from nix (symlinked to packpath)
   xdg.dataFile."nvim/site/pack/nix/start/gruvbox-nvim".source = pkgs.vimPlugins.gruvbox-nvim;

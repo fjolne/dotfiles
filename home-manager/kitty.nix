@@ -13,5 +13,5 @@ in
   ];
 
   xdg.configFile."kitty".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/config/kitty";
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/configs/kitty";
 }

@@ -62,10 +62,10 @@ in
   '';
 
   home.file.".codex/config.toml".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/config/codex/config.toml";
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/configs/codex/config.toml";
 
   xdg.configFile."tmux".source =
-    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/config/tmux";
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/configs/tmux";
 
   home.shellAliases = {
     "sctl" = "systemctl --user";
