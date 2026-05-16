@@ -8,6 +8,7 @@ suppress_unstable_features_warning = true
 default_mode_request_user_input = true
 terminal_resize_reflow = true
 apps = false
+goals = true
 
 [notice]
 hide_rate_limit_model_nudge = true
