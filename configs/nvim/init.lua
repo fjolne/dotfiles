@@ -485,7 +485,6 @@ end
 local function close_netrw()
     local netrw_buf = vim.api.nvim_get_current_buf()
     local return_buf = vim.b.netrw_return_buf
-    local return_cwd = vim.b.netrw_return_cwd
     if
         type(return_buf) == "number"
         and return_buf ~= netrw_buf
@@ -494,7 +493,6 @@ local function close_netrw()
     then
         vim.api.nvim_set_current_buf(return_buf)
         pcall(vim.api.nvim_buf_delete, netrw_buf, {})
-        restore_cwd(return_cwd)
         return
     end
 
@@ -503,7 +501,19 @@ local function close_netrw()
     else
         vim.cmd.bdelete()
     end
-    restore_cwd(return_cwd)
+end
+
+local function restore_cwd_after_netrw(event)
+    local return_cwd = vim.b[event.buf].netrw_return_cwd
+    if not return_cwd then
+        return
+    end
+
+    vim.schedule(function()
+        if vim.bo.filetype ~= "netrw" then
+            restore_cwd(return_cwd)
+        end
+    end)
 end
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -518,6 +528,15 @@ vim.api.nvim_create_autocmd("FileType", {
         end, { buffer = event.buf, noremap = true, silent = true, desc = "Copy netrw absolute path" })
         vim.keymap.set("n", "C", copy_netrw_item, { buffer = event.buf, noremap = true, silent = true, nowait = true, desc = "Copy netrw item" })
         vim.keymap.set("n", "q", close_netrw, { buffer = event.buf, noremap = true, silent = true, nowait = true, desc = "Close netrw" })
+    end,
+})
+
+vim.api.nvim_create_autocmd("BufLeave", {
+    group = augroups.netrw,
+    callback = function(event)
+        if vim.bo[event.buf].filetype == "netrw" then
+            restore_cwd_after_netrw(event)
+        end
     end,
 })
 
