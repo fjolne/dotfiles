@@ -364,7 +364,11 @@ local function open_terminal_in_buffer_dir()
     vim.cmd.startinsert()
 end
 
-vim.keymap.set("n", "<leader>t", open_terminal_in_buffer_dir, { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>t", function()
+    vim.cmd.terminal()
+    vim.cmd.startinsert()
+end, { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>T", open_terminal_in_buffer_dir, { noremap = true, silent = true })
 
 local function delete_buffer_or_quit()
     if #vim.fn.getbufinfo({ buflisted = 1 }) <= 1 then
