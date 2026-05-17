@@ -124,8 +124,6 @@ end
 ----------------------------------------------------------------------
 -- Key Mappings
 ----------------------------------------------------------------------
-pcall(vim.keymap.del, "n", "<C-l>")
-
 local function navigate_hunk(direction, diff_key)
     if vim.wo.diff then
         vim.cmd("normal! " .. diff_key)
