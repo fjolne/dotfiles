@@ -1005,7 +1005,7 @@ vim.api.nvim_create_autocmd("FileType", {
             end
         end)
 
-        vim.keymap.set("n", "<leader>f", function()
+        vim.keymap.set({ "n", "i" }, "<M-f>", function()
             if vim.fn.executable("jq") == 0 then
                 vim.notify("jq not found", vim.log.levels.WARN)
                 return
