@@ -342,6 +342,9 @@ local function open_terminal_command(command)
     vim.cmd.startinsert()
 end
 
+vim.keymap.set("n", "<leader>gg", function()
+    open_terminal_command("git s")
+end, { noremap = true, silent = true, desc = "Git diff" })
 vim.keymap.set("n", "<leader>gd", function()
     open_terminal_command("git d")
 end, { noremap = true, silent = true, desc = "Git diff" })
