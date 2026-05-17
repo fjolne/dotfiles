@@ -45,7 +45,7 @@ in
     config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/configs/nvim";
 
   # Neovim plugins from nix (symlinked to packpath)
-  xdg.dataFile."nvim/site/pack/nix/start/gruvbox-nvim".source = pkgs.vimPlugins.gruvbox-nvim;
+  xdg.dataFile."nvim/site/pack/nix/start/everforest".source = pkgs.vimPlugins.everforest;
   xdg.dataFile."nvim/site/pack/nix/start/fff-nvim".source = pkgs-unstable.vimPlugins.fff-nvim;
   xdg.dataFile."nvim/site/pack/nix/start/gitsigns-nvim".source = pkgs.vimPlugins.gitsigns-nvim;
   xdg.dataFile."nvim/site/pack/nix/start/mini-nvim".source = pkgs.vimPlugins.mini-nvim;
