@@ -348,6 +348,12 @@ end, { noremap = true, silent = true, desc = "Git diff" })
 vim.keymap.set("n", "<leader>gD", function()
     open_terminal_command("git d | delta")
 end, { noremap = true, silent = true, desc = "Git diff with delta" })
+vim.keymap.set("n", "<leader>gs", function()
+    open_terminal_command("git ds")
+end, { noremap = true, silent = true, desc = "Git diff --staged" })
+vim.keymap.set("n", "<leader>gS", function()
+    open_terminal_command("git ds | delta")
+end, { noremap = true, silent = true, desc = "Git diff --staged with delta" })
 
 local function delete_buffer_or_quit()
     if #vim.fn.getbufinfo({ buflisted = 1 }) <= 1 then
