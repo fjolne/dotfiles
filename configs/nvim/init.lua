@@ -775,6 +775,11 @@ if mini_ai_ok then
     mini_ai.setup()
 end
 
+local mini_surround_ok, mini_surround = pcall(require, "mini.surround")
+if mini_surround_ok then
+    mini_surround.setup()
+end
+
 ----------------------------------------------------------------------
 -- Treesitter
 ----------------------------------------------------------------------
