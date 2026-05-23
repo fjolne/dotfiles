@@ -129,6 +129,10 @@
             username = "piglet";
             extraModules = [ ./home-manager/base.nix ];
           };
+          "agent@nixos" = mkHomeConfig {
+            username = "agent";
+            extraModules = [ ./home-manager/base.nix ];
+          };
         };
       };
     });
