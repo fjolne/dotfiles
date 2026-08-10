@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, lib, ... }:
+{ pkgs, pkgs-self, pkgs-unstable, lib, ... }:
 
 {
   imports = [ ../base.nix ./gnome.nix ];
@@ -7,6 +7,7 @@
     # desktop apps
     google-chrome
     pkgs-unstable.telegram-desktop
+    pkgs-self.claude-desktop
     gnome-tweaks
 
     # terminal apps
