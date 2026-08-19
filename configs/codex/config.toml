@@ -1,14 +1,16 @@
-model = "gpt-5.5"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
 service_tier = "fast"
 web_search = "disabled"
 suppress_unstable_features_warning = true
+approvals_reviewer = "auto_review"
 
 [features]
 default_mode_request_user_input = true
 terminal_resize_reflow = true
 apps = false
 goals = true
+js_repl = false
 
 [notice]
 hide_rate_limit_model_nudge = true
@@ -23,6 +25,25 @@ approval_mode = "approve"
 [mcp_servers.openaiDeveloperDocs.tools.fetch_openai_doc]
 approval_mode = "approve"
 
+[mcp_servers.node_repl]
+args = []
+command = "/nix/store/3h6h7w79dgzhjx8kgbadbrz1ba4xw98s-chatgpt-desktop-26.814.41957/lib/chatgpt/resources/cua_node/bin/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "/nix/store/3h6h7w79dgzhjx8kgbadbrz1ba4xw98s-chatgpt-desktop-26.814.41957/lib/chatgpt/resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/nix/store/3h6h7w79dgzhjx8kgbadbrz1ba4xw98s-chatgpt-desktop-26.814.41957/lib/chatgpt/resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/home/fjolne/.codex:/nix/store/3h6h7w79dgzhjx8kgbadbrz1ba4xw98s-chatgpt-desktop-26.814.41957/lib/chatgpt/resources/cua_node/lib/node_modules"
+CODEX_HOME = "/home/fjolne/.codex"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.814.41957"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/home/fjolne/.codex/plugins/cache/openai-bundled/browser/26.814.41957/scripts/browser-service.mjs"}'
+CODEX_CLI_PATH = "/nix/store/3h6h7w79dgzhjx8kgbadbrz1ba4xw98s-chatgpt-desktop-26.814.41957/lib/chatgpt/resources/codex"
+
 [tui]
 terminal_title = ["thread-title"]
 status_line = ["model-with-reasoning", "current-dir", "git-branch", "context-remaining", "five-hour-limit", "weekly-limit"]
@@ -30,3 +51,28 @@ theme = "gruvbox-dark"
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
+"gpt-5.6-sol" = 1
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-08-19T00:32:35Z"
+source_type = "local"
+source = "/home/fjolne/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[desktop]
+conversationDetailMode = "STEPS_COMMANDS"
+ambient-suggestions-enabled = false

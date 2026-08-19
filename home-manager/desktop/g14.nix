@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgs-unstable, ... }:
+{ config, lib, pkgs, pkgs-self, pkgs-unstable, ... }:
 
 let
   dotfilesPath = "${config.home.homeDirectory}/dotfiles";
@@ -23,6 +23,7 @@ in
 
   home.packages = with pkgs;[
     openssh
+    pkgs-self.chatgpt-desktop
     # pkgs-unstable.dbeaver-bin
     # pkgs-unstable.prismlauncher
     # pkgs-unstable.mcrcon
